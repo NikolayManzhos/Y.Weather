@@ -1,7 +1,7 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-import android.util.Log;
+import android.support.annotation.VisibleForTesting;
 
 import com.example.weather.R;
 import com.example.weather.domain.GetCurrentWeatherInteractor;
@@ -31,23 +31,26 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
         getWeather();
     }
 
-    private void getWeather() {
-        getCurrentWeatherInteractor.execute(detailedWeather -> {
-            if (getView() != null) {
-                getView().showWeather(HomeViewModel.create(detailedWeather));
-                getView().onGetWeather();
-            }
-        }, throwable -> {
-            if (getView() != null) {
-                getView().showError(R.string.error);
-                getView().onGetWeather();
-                Log.i(TAG, "onAttach: " + throwable.toString());
-            }
-        });
+    @VisibleForTesting
+    void getWeather() {
+        if (getView() != null) {
+            getView().showLoad();
+        }
+        getCurrentWeatherInteractor.requestWeather().subscribe(
+                detailedWeather -> {
+                    if (getView() != null) {
+                        getView().showWeather(HomeViewModel.create(detailedWeather));
+                        getView().hideLoad();
+                    }
+                }, throwable -> {
+                    if (getView() != null) {
+                        getView().showError(R.string.error);
+                        getView().hideLoad();
+                    }
+                }
+        );
     }
 
     @Override
-    public void onDetach() {
-
-    }
+    public void onDetach() {}
 }

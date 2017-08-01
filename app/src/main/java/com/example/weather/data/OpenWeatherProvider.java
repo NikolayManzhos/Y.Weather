@@ -1,13 +1,10 @@
 package com.example.weather.data;
 
-import android.util.Log;
-
 import com.example.weather.cache.CacheManager;
 import com.example.weather.domain.entities.DetailedWeather;
 import com.example.weather.cache.PreferencesManager;
 
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 
 public class OpenWeatherProvider implements WeatherProvider {
     private static final String TAG = "OpenWeatherProvider";
@@ -27,19 +24,8 @@ public class OpenWeatherProvider implements WeatherProvider {
     public Observable<DetailedWeather> getWeather(String key) {
         float latitude = preferencesManager.getLatitude();
         float longitude = preferencesManager.getLongitude();
-        Observable<DetailedWeather> observable = weatherApi.getCurrentWeather(latitude, longitude, key)
-                .subscribeOn(Schedulers.io())
-                .doOnNext(detailedWeather -> cacheManager.saveWeather(detailedWeather));
-
-        DetailedWeather cachedWeather = cacheManager.getLastWeather();
-
-        if (cachedWeather != null) {
-            observable = Observable.mergeDelayError(observable, Observable.just(cachedWeather));
-        }
-        observable.subscribe(detailedWeather ->
-                Log.i(TAG, "getWeather: " + detailedWeather.toString()),
-                err -> Log.d(TAG, "error, stack trace: " + err.getMessage()));
-
-        return observable;
+        Observable<DetailedWeather> observable = weatherApi.getCurrentWeather(latitude, longitude, key);
+        Observable<DetailedWeather> cachedWeather = Observable.fromCallable(() -> cacheManager.getLastWeather());
+        return Observable.mergeDelayError(cachedWeather, observable);
     }
 }

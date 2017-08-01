@@ -68,12 +68,12 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
 
     @Override
     public void showLoad() {
-        //TODO
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoad() {
-        //TODO
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -103,11 +103,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
         tvWind.setText(homeViewModel.getWind());
         Picasso.with(getContext()).load(homeViewModel.getIconId()).into(ivIcon);
         Log.i(TAG, "showWeather: " + homeViewModel.toString());
-    }
-
-    @Override
-    public void onGetWeather() {
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

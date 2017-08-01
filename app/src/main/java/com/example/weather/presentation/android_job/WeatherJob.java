@@ -8,7 +8,6 @@ import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.example.weather.WeatherApp;
 import com.example.weather.domain.GetCurrentWeatherInteractor;
-import com.example.weather.domain.GetCurrentWeatherInteractorImpl;
 
 import javax.inject.Inject;
 
@@ -26,7 +25,7 @@ public class WeatherJob extends Job {
     protected Result onRunJob(Params params) {
         inject();
         Log.i(TAG, "onRunJob: ");
-        getCurrentWeatherInteractor.execute(detailedWeather -> {
+        getCurrentWeatherInteractor.requestWeather().subscribe(detailedWeather -> {
             Log.i(TAG, "onRunJob: get weather");
             result = Result.SUCCESS;
         }, throwable -> {
