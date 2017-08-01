@@ -7,10 +7,10 @@ import android.preference.PreferenceManager;
 import com.example.weather.BuildConfig;
 import com.example.weather.cache.CacheManager;
 import com.example.weather.cache.PreferenceCacheManager;
-import com.example.weather.data.OpenWeatherProvider;
+import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
 import com.example.weather.data.WeatherApi;
-import com.example.weather.data.WeatherProvider;
-import com.example.weather.cache.PreferencesManager;
+import com.example.weather.data.repository.weather.WeatherRepository;
+import com.example.weather.data.local.PreferencesManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,10 +40,10 @@ public class DataModule {
 
     @Provides
     @Singleton
-    WeatherProvider provideWeatherProvider(WeatherApi weatherApi,
-                                           CacheManager cacheManager,
-                                           PreferencesManager preferencesManager) {
-        return new OpenWeatherProvider(weatherApi, cacheManager, preferencesManager);
+    WeatherRepository provideWeatherProvider(WeatherApi weatherApi,
+                                             CacheManager cacheManager,
+                                             PreferencesManager preferencesManager) {
+        return new WeatherRepositoryImpl(weatherApi, cacheManager, preferencesManager);
     }
 
     @Provides

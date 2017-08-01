@@ -25,7 +25,7 @@ public class WeatherJob extends Job {
     protected Result onRunJob(Params params) {
         inject();
         Log.i(TAG, "onRunJob: ");
-        getCurrentWeatherInteractor.requestWeather().subscribe(detailedWeather -> {
+        getCurrentWeatherInteractor.requestWeather(true).subscribe(detailedWeather -> {
             Log.i(TAG, "onRunJob: get weather");
             result = Result.SUCCESS;
         }, throwable -> {

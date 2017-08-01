@@ -6,5 +6,5 @@ import com.example.weather.domain.entities.DetailedWeather;
 import io.reactivex.Observable;
 
 public interface GetCurrentWeatherInteractor {
-    Observable<DetailedWeather> requestWeather();
+    Observable<DetailedWeather> requestWeather(boolean force);
 }

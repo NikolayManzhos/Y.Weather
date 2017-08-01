@@ -23,10 +23,9 @@ public class AboutAppFragment extends BaseMainFragment implements AboutAppView {
         return new AboutAppFragment();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_about_app, container, false);
+    protected int provideLayout() {
+        return R.layout.fragment_about_app;
     }
 
     @Override

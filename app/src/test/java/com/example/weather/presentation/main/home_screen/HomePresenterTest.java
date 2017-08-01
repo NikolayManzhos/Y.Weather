@@ -15,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,7 +27,7 @@ public class HomePresenterTest {
     private GetCurrentWeatherInteractor interactor;
 
     @Mock
-    HomeView view;
+    private HomeView view;
 
     private HomePresenter presenter;
     private TestScheduler testScheduler;
@@ -41,29 +42,20 @@ public class HomePresenterTest {
 
     @Test
     public void callInteractorOnAttach() {
-        when(interactor.requestWeather())
+        when(interactor.requestWeather(false))
                 .thenReturn(Observable.just(new DetailedWeather()));
         presenter.onAttach();
 
-        verify(interactor).requestWeather();
-    }
-
-    @Test
-    public void callInteractorOnRefresh() {
-        when(interactor.requestWeather())
-                .thenReturn(Observable.just(new DetailedWeather()));
-        presenter.refreshweather();
-
-        verify(interactor).requestWeather();
+        verify(interactor).requestWeather(false);
     }
 
     @Test
     public void getWeatherSuccess() {
-        DetailedWeather result = provideDetailerWeather();
-        when(interactor.requestWeather())
+        DetailedWeather result = provideDetailedWeather();
+        when(interactor.requestWeather(anyBoolean()))
                 .thenReturn(Observable.just(result).subscribeOn(testScheduler));
 
-        presenter.getWeather();
+        presenter.getCurrentWeather(true);
         verify(view).showLoad();
 
         testScheduler.triggerActions();
@@ -74,10 +66,10 @@ public class HomePresenterTest {
 
     @Test
     public void getWeatherFailure() {
-        when(interactor.requestWeather())
+        when(interactor.requestWeather(anyBoolean()))
                 .thenReturn(Observable.error(new Exception("Something goes wrong")));
 
-        presenter.getWeather();
+        presenter.getCurrentWeather(true);
         verify(view).showLoad();
 
         verify(view).showError(anyInt());
@@ -89,7 +81,7 @@ public class HomePresenterTest {
         presenter.onDetach();
     }
 
-    private DetailedWeather provideDetailerWeather() {
+    private DetailedWeather provideDetailedWeather() {
         return EnhancedRandom.random(DetailedWeather.class);
     }
 }

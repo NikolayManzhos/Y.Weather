@@ -22,21 +22,11 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
         this.getCurrentWeatherInteractor = getCurrentWeatherInteractor;
     }
 
-    @Override
-    public void onAttach() {
-        getWeather();
-    }
-
-    public void refreshweather() {
-        getWeather();
-    }
-
-    @VisibleForTesting
-    void getWeather() {
+    public void getCurrentWeather(boolean force) {
         if (getView() != null) {
             getView().showLoad();
         }
-        getCurrentWeatherInteractor.requestWeather().subscribe(
+        getCurrentWeatherInteractor.requestWeather(force).subscribe(
                 detailedWeather -> {
                     if (getView() != null) {
                         getView().showWeather(HomeViewModel.create(detailedWeather));
@@ -49,6 +39,12 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                     }
                 }
         );
+    }
+
+
+    @Override
+    public void onAttach() {
+        getCurrentWeather(false);
     }
 
     @Override

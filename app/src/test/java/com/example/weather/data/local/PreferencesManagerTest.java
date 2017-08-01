@@ -1,7 +1,9 @@
-package com.example.weather.cache;
+package com.example.weather.data.local;
 
 
 import android.content.SharedPreferences;
+
+import com.example.weather.data.local.PreferencesManager;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.example.weather.cache.PreferencesManager;
+import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.utils.rx.AppSchedulerProvider;
+import com.example.weather.utils.rx.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -29,5 +31,11 @@ public class AppModule {
     @Provides
     public PreferencesManager providePreferenceManager(SharedPreferences sharedPreferences) {
         return new PreferencesManager(sharedPreferences);
+    }
+
+    @Singleton
+    @Provides
+    SchedulerProvider provideScedulers() {
+        return new AppSchedulerProvider();
     }
 }

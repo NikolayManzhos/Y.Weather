@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.example.weather.R;
 import com.example.weather.WeatherApp;
-import com.example.weather.cache.PreferencesManager;
+import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.presentation.android_job.WeatherJob;
 import com.example.weather.presentation.common.BaseActivity;
 import com.example.weather.presentation.main.aboutapp_screen.AboutAppFragment;
@@ -113,14 +113,10 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void showLoad() {
-
-    }
+    public void showLoad() {}
 
     @Override
-    public void hideLoad() {
-
-    }
+    public void hideLoad() {}
 
     @Override
     protected void inject() {
