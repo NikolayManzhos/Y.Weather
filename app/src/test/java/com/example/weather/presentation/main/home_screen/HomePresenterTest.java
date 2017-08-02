@@ -1,7 +1,7 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-import com.example.weather.domain.GetCurrentWeatherInteractor;
+import com.example.weather.domain.CurrentWeatherInteractor;
 import com.example.weather.domain.entities.DetailedWeather;
 
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class HomePresenterTest {
 
 
     @Mock
-    private GetCurrentWeatherInteractor interactor;
+    private CurrentWeatherInteractor interactor;
 
     @Mock
     private HomeView view;

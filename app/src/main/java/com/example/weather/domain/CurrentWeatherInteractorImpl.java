@@ -8,7 +8,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.ReplaySubject;
 
-public class GetCurrentWeatherInteractorImpl implements GetCurrentWeatherInteractor {
+public class CurrentWeatherInteractorImpl implements CurrentWeatherInteractor {
 
     private WeatherRepository weatherRepository;
     private SchedulerProvider schedulerProvider;
@@ -16,8 +16,8 @@ public class GetCurrentWeatherInteractorImpl implements GetCurrentWeatherInterac
     private Disposable weatherDisposable;
     private ReplaySubject<DetailedWeather> weatherReplaySubject;
 
-    public GetCurrentWeatherInteractorImpl(WeatherRepository weatherRepository,
-                                           SchedulerProvider schedulerProvider) {
+    public CurrentWeatherInteractorImpl(WeatherRepository weatherRepository,
+                                        SchedulerProvider schedulerProvider) {
         this.weatherRepository = weatherRepository;
         this.schedulerProvider = schedulerProvider;
     }

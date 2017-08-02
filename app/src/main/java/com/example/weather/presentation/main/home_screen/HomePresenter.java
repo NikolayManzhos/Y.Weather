@@ -1,10 +1,8 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-import android.support.annotation.VisibleForTesting;
-
 import com.example.weather.R;
-import com.example.weather.domain.GetCurrentWeatherInteractor;
+import com.example.weather.domain.CurrentWeatherInteractor;
 import com.example.weather.presentation.di.main_activity_component.home_component.HomeScope;
 import com.example.weather.presentation.main.common.BaseMainPresenter;
 
@@ -15,18 +13,18 @@ import javax.inject.Inject;
 public class HomePresenter extends BaseMainPresenter<HomeView> {
     public static final String TAG = "tag_home_presenter";
 
-    private GetCurrentWeatherInteractor getCurrentWeatherInteractor;
+    private CurrentWeatherInteractor currentWeatherInteractor;
 
     @Inject
-    public HomePresenter(GetCurrentWeatherInteractor getCurrentWeatherInteractor) {
-        this.getCurrentWeatherInteractor = getCurrentWeatherInteractor;
+    public HomePresenter(CurrentWeatherInteractor currentWeatherInteractor) {
+        this.currentWeatherInteractor = currentWeatherInteractor;
     }
 
     public void getCurrentWeather(boolean force) {
         if (getView() != null) {
             getView().showLoad();
         }
-        getCurrentWeatherInteractor.requestWeather(force).subscribe(
+        currentWeatherInteractor.requestWeather(force).subscribe(
                 detailedWeather -> {
                     if (getView() != null) {
                         getView().showWeather(HomeViewModel.create(detailedWeather));
