@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.weather.WeatherApp;
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
 
 import org.junit.Before;
 import org.junit.Test;

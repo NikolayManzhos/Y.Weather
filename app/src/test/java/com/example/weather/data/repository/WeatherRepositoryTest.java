@@ -1,18 +1,18 @@
 package com.example.weather.data.repository;
 
 import com.example.weather.data.local.CacheManager;
-import com.example.weather.data.WeatherApi;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.network.WeatherApi;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Matchers.anyFloat;
@@ -25,10 +25,10 @@ public class WeatherRepositoryTest {
     private WeatherApi api;
 
     @Mock
-    CacheManager cacheManager;
+    private CacheManager cacheManager;
 
     @Mock
-    PreferencesManager preferencesManager;
+    private PreferencesManager preferencesManager;
 
     private WeatherRepository weatherRepository;
 
@@ -43,7 +43,7 @@ public class WeatherRepositoryTest {
     @Test
     public void getWeatherForce() {
         DetailedWeather networkResponse = new DetailedWeather();
-        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Observable.just(networkResponse));
+        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.just(networkResponse));
 
         weatherRepository.getWeather(true)
                 .test()
@@ -55,7 +55,7 @@ public class WeatherRepositoryTest {
     public void getWeatherLocalSuccess() {
         DetailedWeather localResponse = provideRandomResponse();
         when(cacheManager.getLastWeather()).thenReturn(localResponse);
-        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Observable.empty());
+        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.never());
 
         weatherRepository.getWeather(false)
                 .test()
@@ -67,7 +67,7 @@ public class WeatherRepositoryTest {
     public void getWeatherLocalFailure() {
         Exception networkException = new Exception("Network exception");
         when(cacheManager.getLastWeather()).thenReturn(new DetailedWeather());
-        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Observable.error(networkException));
+        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.error(networkException));
 
         weatherRepository.getWeather(false)
                 .test()
@@ -79,7 +79,7 @@ public class WeatherRepositoryTest {
     public void getWeatherLocalRedirectToNetwork() {
         DetailedWeather networkResponse = provideRandomResponse();
         when(cacheManager.getLastWeather()).thenReturn(new DetailedWeather());
-        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Observable.just(networkResponse));
+        when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.just(networkResponse));
 
         weatherRepository.getWeather(false)
                 .test()

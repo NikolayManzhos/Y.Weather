@@ -7,14 +7,18 @@ import android.preference.PreferenceManager;
 import com.example.weather.BuildConfig;
 import com.example.weather.data.local.CacheManager;
 import com.example.weather.data.local.PreferenceCacheManager;
-import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
-import com.example.weather.data.WeatherApi;
-import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.network.PlacesApi;
+import com.example.weather.data.network.WeatherApi;
+import com.example.weather.data.repository.suggest.SuggestRepository;
+import com.example.weather.data.repository.suggest.SuggestRepositoryImpl;
+import com.example.weather.data.repository.weather.WeatherRepository;
+import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
 import com.example.weather.presentation.di.ApplicationContext;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -41,7 +45,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    WeatherRepository provideWeatherProvider(WeatherApi weatherApi,
+    WeatherRepository provideWeatherProvider(@Named("weather") WeatherApi weatherApi,
                                              CacheManager cacheManager,
                                              PreferencesManager preferencesManager) {
         return new WeatherRepositoryImpl(weatherApi, cacheManager, preferencesManager);
@@ -49,9 +53,16 @@ public class DataModule {
 
     @Provides
     @Singleton
+    SuggestRepository provideSuggestRepository(@Named("places") PlacesApi placesApi) {
+        return new SuggestRepositoryImpl(placesApi);
+    }
+
+    @Provides
+    @Singleton
+    @Named("weather")
     WeatherApi provideWeatherApi(OkHttpClient client) {
         return new Retrofit.Builder()
-                .baseUrl(WeatherApi.URL)
+                .baseUrl(BuildConfig.WEATHER_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -61,6 +72,18 @@ public class DataModule {
 
     @Provides
     @Singleton
+    @Named("places")
+    PlacesApi providePlacesApi(OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .baseUrl(BuildConfig.PLACES_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(PlacesApi.class);
+    }
+
+    @Provides
     OkHttpClient provideOkHttpClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {

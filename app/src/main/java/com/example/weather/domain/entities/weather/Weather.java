@@ -1,5 +1,5 @@
 
-package com.example.weather.domain.entities;
+package com.example.weather.domain.entities.weather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -38,7 +38,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    SchedulerProvider provideScedulers() {
+    SchedulerProvider provideSchedulers() {
         return new AppSchedulerProvider();
     }
 }

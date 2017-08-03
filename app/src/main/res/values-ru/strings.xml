@@ -10,9 +10,15 @@
     <string name="settings_update_interval">Интервал</string>
     <string name="settings_select_city">Выберите город</string>
 
-    <string name="about_app">О приложении</string>
-    <string name="settings">Настройки</string>
-    <string name="weather">Погода</string>
+    <!--Suggest fragment-->
+    <string name="suggest_edit_text_hint">Введите город</string>
+
+    <!--Drawer strings-->
+    <string name="drawer_weather">Погода</string>
+    <string name="drawer_change_city">Выберите место</string>
+    <string name="drawer_settings">Настройки</string>
+    <string name="drawer_about_app">О приложении</string>
+
     <string name="homework_1">Домашняя работа №1</string>
     <string name="main">Главная</string>
     <string name="minutes_15">15 минут</string>

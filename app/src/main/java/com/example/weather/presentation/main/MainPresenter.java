@@ -17,6 +17,10 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
         getRouter().showHomeScreen();
     }
 
+    public void selectSuggestScreen() {
+        getRouter().showSuggestScreen();
+    }
+
     public void selectedSettings() {
         getRouter().showSettingsScreen();
     }

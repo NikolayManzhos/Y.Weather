@@ -3,8 +3,6 @@ package com.example.weather.data.local;
 
 import android.content.SharedPreferences;
 
-import com.example.weather.data.local.PreferencesManager;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

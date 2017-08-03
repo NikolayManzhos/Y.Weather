@@ -1,7 +1,7 @@
-package com.example.weather.domain;
+package com.example.weather.domain.interactor;
 
 import com.example.weather.data.repository.weather.WeatherRepository;
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
 import com.example.weather.utils.rx.SchedulerProvider;
 
 import io.reactivex.Observable;

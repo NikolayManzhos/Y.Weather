@@ -63,11 +63,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     }
 
     @Override
-    public String getTitle() {
-        return getString(R.string.app_name);
-    }
-
-    @Override
     protected BasePresenter getPresenter() {
         return homePresenter;
     }

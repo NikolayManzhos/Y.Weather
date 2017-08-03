@@ -1,11 +1,12 @@
 package com.example.weather.data.repository.weather;
 
+import com.example.weather.BuildConfig;
 import com.example.weather.data.local.CacheManager;
-import com.example.weather.data.WeatherApi;
-import com.example.weather.domain.entities.DetailedWeather;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.network.WeatherApi;
+import com.example.weather.domain.entities.weather.DetailedWeather;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class WeatherRepositoryImpl implements WeatherRepository {
     private PreferencesManager preferencesManager;
@@ -21,18 +22,18 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     }
 
     @Override
-    public Observable<DetailedWeather> getWeather(boolean force) {
+    public Single<DetailedWeather> getWeather(boolean force) {
         float latitude = preferencesManager.getLatitude();
         float longitude = preferencesManager.getLongitude();
-        Observable<DetailedWeather> networkWeather =
-                weatherApi.getCurrentWeather(latitude, longitude, WeatherApi.API_KEY)
-                .doOnNext(cacheManager::saveWeather);
-        Observable<DetailedWeather> cachedWeather =
-                Observable
+        Single<DetailedWeather> networkWeather =
+                weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
+                .doOnSuccess(cacheManager::saveWeather);
+        Single<DetailedWeather> cachedWeather =
+                Single
                         .fromCallable(() -> cacheManager.getLastWeather())
                         .onErrorReturnItem(new DetailedWeather());
 
-        return force ? networkWeather : Observable.concat(cachedWeather, networkWeather)
-                .filter(detailedWeather -> detailedWeather.getBase() != null).firstOrError().toObservable();
+        return force ? networkWeather : Single.concat(cachedWeather, networkWeather)
+                .filter(detailedWeather -> detailedWeather.getBase() != null).firstOrError();
     }
 }

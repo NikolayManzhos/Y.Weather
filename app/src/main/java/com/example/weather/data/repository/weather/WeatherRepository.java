@@ -1,10 +1,9 @@
 package com.example.weather.data.repository.weather;
 
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface WeatherRepository {
-    Observable<DetailedWeather> getWeather(boolean force);
+    Single<DetailedWeather> getWeather(boolean force);
 }

@@ -2,7 +2,10 @@ apply plugin: 'com.android.application'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
+def apiPropertiesFile = rootProject.file("api.properties")
+def apiProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+apiProperties.load(new FileInputStream(apiPropertiesFile))
 
 android {
     signingConfigs {
@@ -17,7 +20,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.example.weather"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -29,6 +32,12 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    buildTypes.each {
+        it.buildConfigField 'String', 'WEATHER_URL', apiProperties['BaseWeatherUrl']
+        it.buildConfigField 'String', 'WEATHER_KEY', apiProperties['OpenWeatherMapKey']
+        it.buildConfigField 'String', 'PLACES_URL', apiProperties['PlacesUrl']
+        it.buildConfigField 'String', 'PLACES_KEY', apiProperties['PlacesKey']
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,11 +55,12 @@ dependencies {
     //RxJava
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxbindings"
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
     //Dagger
     implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"

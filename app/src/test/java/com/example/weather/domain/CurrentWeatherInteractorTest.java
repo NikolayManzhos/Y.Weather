@@ -3,14 +3,16 @@ package com.example.weather.domain;
 
 import com.example.weather.TestSchedulerProvider;
 import com.example.weather.data.repository.weather.WeatherRepository;
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.domain.interactor.CurrentWeatherInteractor;
+import com.example.weather.domain.interactor.CurrentWeatherInteractorImpl;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.when;
@@ -32,7 +34,7 @@ public class CurrentWeatherInteractorTest {
     public void requestWeatherSuccess() {
         DetailedWeather response = new DetailedWeather();
         when(weatherRepository.getWeather(anyBoolean()))
-                .thenReturn(Observable.just(response));
+                .thenReturn(Single.just(response));
         interactor.requestWeather(true)
                 .test()
                 .assertNoErrors()
@@ -43,12 +45,12 @@ public class CurrentWeatherInteractorTest {
     public void requestWeatherReset() {
         DetailedWeather response = new DetailedWeather();
         when(weatherRepository.getWeather(anyBoolean()))
-                .thenReturn(Observable.just(response));
+                .thenReturn(Single.just(response));
         interactor.requestWeather(true);
 
         DetailedWeather response2 = new DetailedWeather();
         when(weatherRepository.getWeather(anyBoolean()))
-                .thenReturn(Observable.just(response2));
+                .thenReturn(Single.just(response2));
         interactor.requestWeather(true)
                 .test()
                 .assertNoErrors()

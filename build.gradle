@@ -24,6 +24,7 @@ ext {
     support = '26.0.0'
     constraint = '1.0.2'
     rxjava = '2.1.1'
+    rxbindings = '2.0.0'
     rxandroid = '2.0.1'
     retrofit = '2.3.0'
     okhttp = '3.8.1'

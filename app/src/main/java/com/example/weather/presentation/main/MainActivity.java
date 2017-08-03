@@ -24,6 +24,7 @@ import com.example.weather.presentation.di.module.ActivityModule;
 import com.example.weather.presentation.main.aboutapp_screen.AboutAppFragment;
 import com.example.weather.presentation.main.home_screen.HomeFragment;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
+import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -115,12 +116,22 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
-            getPresenter().selectedSettings();
-        } else if (id == R.id.nav_about_app) {
-            getPresenter().selectedAboutApp();
-        } else if (id == R.id.nav_home) {
-            getPresenter().selectedHome();
+        switch (id) {
+            case R.id.nav_home:
+                getPresenter().selectedHome();
+                break;
+            case R.id.nav_change_city:
+                getPresenter().selectSuggestScreen();
+                break;
+            case R.id.nav_settings:
+                getPresenter().selectedSettings();
+                break;
+            case R.id.nav_about_app:
+                getPresenter().selectedAboutApp();
+                break;
+            default:
+                getPresenter().selectedHome();
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -131,6 +142,11 @@ public class MainActivity extends BaseActivity
     @Override
     public void showHomeScreen() {
         replaceFragment(R.id.fl_main_frame, HomeFragment.newInstance(), false);
+    }
+
+    @Override
+    public void showSuggestScreen() {
+        replaceFragment(R.id.fl_main_frame, SuggestFragment.newInstance(), false);
     }
 
     @Override

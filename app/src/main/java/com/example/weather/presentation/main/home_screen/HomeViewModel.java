@@ -1,8 +1,8 @@
 package com.example.weather.presentation.main.home_screen;
 
 
+import com.example.weather.domain.entities.weather.DetailedWeather;
 import com.example.weather.utils.TemperatureConverter;
-import com.example.weather.domain.entities.DetailedWeather;
 
 public class HomeViewModel {
 

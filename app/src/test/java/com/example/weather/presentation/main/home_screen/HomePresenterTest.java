@@ -1,14 +1,13 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-import com.example.weather.domain.CurrentWeatherInteractor;
-import com.example.weather.domain.entities.DetailedWeather;
+import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.reactivex.Observable;
