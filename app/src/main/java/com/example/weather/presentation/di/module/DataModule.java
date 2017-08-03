@@ -1,16 +1,17 @@
-package com.example.weather.presentation.di;
+package com.example.weather.presentation.di.module;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.example.weather.BuildConfig;
-import com.example.weather.cache.CacheManager;
-import com.example.weather.cache.PreferenceCacheManager;
+import com.example.weather.data.local.CacheManager;
+import com.example.weather.data.local.PreferenceCacheManager;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
 import com.example.weather.data.WeatherApi;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.presentation.di.ApplicationContext;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,13 +29,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataModule {
 
     @Provides
-    CacheManager provideCacheManager(Context context) {
+    CacheManager provideCacheManager(@ApplicationContext Context context) {
         return new PreferenceCacheManager(context);
     }
 
     @Provides
     @Singleton
-    SharedPreferences provideDefaultSharedPreferences(Context context) {
+    SharedPreferences provideDefaultSharedPreferences(@ApplicationContext Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -58,8 +59,8 @@ public class DataModule {
                 .create(WeatherApi.class);
     }
 
-    @Singleton
     @Provides
+    @Singleton
     OkHttpClient provideOkHttpClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {

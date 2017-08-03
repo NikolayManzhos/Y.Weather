@@ -11,20 +11,13 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+
 public abstract class BaseFragment extends Fragment {
 
     private Unbinder unbinder;
 
     @LayoutRes
     protected abstract int provideLayout();
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        inject();
-        getPresenter().setView(this);
-        getPresenter().setRouter(getActivity());
-    }
 
     @Nullable
     @Override
@@ -35,30 +28,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        getPresenter().onAttach();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        getPresenter().onDetach();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getPresenter().setRouter(null);
-        getPresenter().setView(null);
-    }
-
-    protected abstract BasePresenter getPresenter();
-    protected abstract void inject();
 }

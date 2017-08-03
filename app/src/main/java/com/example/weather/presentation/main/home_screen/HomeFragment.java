@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.weather.R;
 import com.example.weather.WeatherApp;
 import com.example.weather.presentation.common.BasePresenter;
+import com.example.weather.presentation.di.component.FragmentComponent;
+import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +51,7 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -72,11 +75,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
         return homePresenter;
     }
 
-    @Override
-    protected void inject() {
-        WeatherApp.getInstance().plusHomeComponent().inject(this);
-    }
-
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -94,5 +92,10 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Override
     public void onRefresh() {
         homePresenter.getCurrentWeather(true);
+    }
+
+    @Override
+    protected void inject() {
+        ((MainActivity) getActivity()).getActivityComponent().plusFragmentComponent().inject(this);
     }
 }

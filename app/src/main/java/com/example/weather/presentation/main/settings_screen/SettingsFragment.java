@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.weather.R;
 import com.example.weather.presentation.android_job.WeatherJob;
+import com.example.weather.presentation.common.BaseFragment;
 import com.example.weather.utils.OnCityChangeListener;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -24,14 +22,12 @@ import com.yarolegovich.mp.MaterialStandardPreference;
 import com.yarolegovich.mp.MaterialSwitchPreference;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends BaseFragment {
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -48,22 +44,12 @@ public class SettingsFragment extends Fragment {
 
     private OnCityChangeListener cityChangeListener;
 
-    private Unbinder unbinder;
     private final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private final String TAG = "SettingsFragment";
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected int provideLayout() {
+        return R.layout.fragment_settings;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.weather.data.repository.weather;
 
-import com.example.weather.cache.CacheManager;
+import com.example.weather.data.local.CacheManager;
 import com.example.weather.data.WeatherApi;
 import com.example.weather.domain.entities.DetailedWeather;
 import com.example.weather.data.local.PreferencesManager;

@@ -3,13 +3,13 @@ package com.example.weather.presentation.main.home_screen;
 
 import com.example.weather.R;
 import com.example.weather.domain.CurrentWeatherInteractor;
-import com.example.weather.presentation.di.main_activity_component.home_component.HomeScope;
+import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.common.BaseMainPresenter;
 
 import javax.inject.Inject;
 
 
-@HomeScope
+@PerFragment
 public class HomePresenter extends BaseMainPresenter<HomeView> {
     public static final String TAG = "tag_home_presenter";
 

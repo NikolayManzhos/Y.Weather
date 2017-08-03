@@ -1,10 +1,12 @@
-package com.example.weather.presentation.di;
+package com.example.weather.presentation.di.module;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.presentation.di.ApplicationContext;
 import com.example.weather.utils.rx.AppSchedulerProvider;
 import com.example.weather.utils.rx.SchedulerProvider;
 
@@ -15,21 +17,22 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
-    private Context context;
+    private Application application;
 
-    public AppModule(@NonNull Context context) {
-        this.context = context;
+    public AppModule(@NonNull Application application) {
+        this.application = application;
     }
 
-    @Provides
+    @ApplicationContext
     @Singleton
-    public Context provideContext() {
-        return context;
+    @Provides
+    Context provideContext() {
+        return application;
     }
 
     @Singleton
     @Provides
-    public PreferencesManager providePreferenceManager(SharedPreferences sharedPreferences) {
+    PreferencesManager providePreferenceManager(SharedPreferences sharedPreferences) {
         return new PreferencesManager(sharedPreferences);
     }
 

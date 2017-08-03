@@ -1,6 +1,6 @@
 package com.example.weather.data.repository;
 
-import com.example.weather.cache.CacheManager;
+import com.example.weather.data.local.CacheManager;
 import com.example.weather.data.WeatherApi;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.repository.weather.WeatherRepository;
@@ -25,10 +25,10 @@ public class WeatherRepositoryTest {
     private WeatherApi api;
 
     @Mock
-    private CacheManager cacheManager;
+    CacheManager cacheManager;
 
     @Mock
-    private PreferencesManager preferencesManager;
+    PreferencesManager preferencesManager;
 
     private WeatherRepository weatherRepository;
 

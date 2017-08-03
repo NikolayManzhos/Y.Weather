@@ -1,4 +1,4 @@
-package com.example.weather.presentation.di;
+package com.example.weather.presentation.di.module;
 
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.domain.CurrentWeatherInteractor;

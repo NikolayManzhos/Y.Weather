@@ -15,6 +15,9 @@ import com.example.weather.WeatherApp;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.presentation.android_job.WeatherJob;
 import com.example.weather.presentation.common.BaseActivity;
+import com.example.weather.presentation.di.component.ActivityComponent;
+import com.example.weather.presentation.di.component.DaggerActivityComponent;
+import com.example.weather.presentation.di.module.ActivityModule;
 import com.example.weather.presentation.main.aboutapp_screen.AboutAppFragment;
 import com.example.weather.presentation.main.home_screen.HomeFragment;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
@@ -33,6 +36,7 @@ public class MainActivity extends BaseActivity
     PreferencesManager preferencesManager;
 
     private NavigationView navigationView;
+    private ActivityComponent activityComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,16 +123,25 @@ public class MainActivity extends BaseActivity
     public void hideLoad() {}
 
     @Override
-    protected void inject() {
-        WeatherApp.getInstance().plusMainActivityComponent().inject(this);
-    }
-
-    @Override
     public void cityChanged(LatLng latLng) {
         preferencesManager.setLatitude(latLng.latitude);
         preferencesManager.setLongitude(latLng.longitude);
         showHomeScreen();
         navigationView.setCheckedItem(R.id.nav_home);
+    }
+
+    @Override
+    protected void inject() {
+        activityComponent = DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(((WeatherApp) getApplication()).getAppComponent())
+                .build();
+        activityComponent.inject(this);
+    }
+
+    @Override
+    public ActivityComponent getActivityComponent() {
+        return activityComponent;
     }
 
     private void checkFirstTimeUser() {
