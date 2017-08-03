@@ -17,14 +17,10 @@ public class AboutAppFragment extends BaseFragment implements AboutAppView {
     }
 
     @Override
-    public void showLoad() {
-
-    }
+    public void showLoad() {}
 
     @Override
-    public void hideLoad() {
-
-    }
+    public void hideLoad() {}
 
     @Override
     public void showError(int message) {}

@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weather.R;
-import com.example.weather.WeatherApp;
 import com.example.weather.presentation.common.BasePresenter;
-import com.example.weather.presentation.di.component.FragmentComponent;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
 import com.squareup.picasso.Picasso;
@@ -51,7 +49,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
