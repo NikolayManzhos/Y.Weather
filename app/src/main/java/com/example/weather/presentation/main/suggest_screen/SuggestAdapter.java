@@ -27,6 +27,7 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
 
     private Context context;
     private List<Prediction> predictions;
+    private OnPlaceClickListener placeClickListener;
 
     @Inject
     public SuggestAdapter(@ActivityContext Context context) {
@@ -46,8 +47,10 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
 
     @Override
     public SuggestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SuggestViewHolder(LayoutInflater.from(parent.getContext())
+        SuggestViewHolder vh = new SuggestViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.item_suggest, parent, false));
+        vh.itemView.setOnClickListener(view -> placeClickListener.placeClicked(predictions.get(vh.getAdapterPosition()).getReference()) );
+        return vh;
     }
 
     @Override
@@ -64,7 +67,14 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
     public void setData(List<Prediction> predictions) {
         this.predictions.clear();
         this.predictions.addAll(predictions);
-        Log.d("SuggestAdapter", String.valueOf(this.predictions.size()));
         notifyDataSetChanged();
+    }
+
+    void setOnPaceClickListener(OnPlaceClickListener placeClickListener) {
+        this.placeClickListener = placeClickListener;
+    }
+
+    interface OnPlaceClickListener {
+        void placeClicked(String placeId);
     }
 }

@@ -10,5 +10,4 @@ public abstract class BaseMainFragment extends BaseViewFragment implements BaseM
     public void showError(@StringRes int message) {
         Toast.makeText(getContext(), getString(message), Toast.LENGTH_LONG).show();
     }
-
 }

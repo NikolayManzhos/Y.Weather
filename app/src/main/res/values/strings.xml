@@ -4,31 +4,29 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="homework_1">Homework №1</string>
-    <string name="main">Main</string>
     <string name="error">Error</string>
 
-    <string name="minutes_15">15 minutes</string>
-    <string name="minutes_30">30 minutes</string>
-    <string name="hour_1">1 hour</string>
-    <string name="hour_3">3 hour</string>
-    <string name="hour_6">6 hour</string>
-    <string name="hour_12">12 hour</string>
-    <string name="hour_24">24 hour</string>
-
     <!--Drawer strings-->
-    <string name="drawer_weather">Weather</string>
-    <string name="drawer_change_city">Select place</string>
+    <string name="drawer_home">Weather</string>
+    <string name="drawer_change_city">Select city</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about_app">About application</string>
 
+    <!--Home strings-->
+    <string name="home_toolbar_title">Overview</string>
+
+    <!--Suggest strings-->
+    <string name="suggest_toolbar_title">Select your location</string>
+    <string name="suggest_edit_text_hint">Type any place</string>
+
     <!--Settings strings -->
+    <string name="settings_toolbar_title">Settings</string>
     <string name="settings_update_switch">Background update</string>
     <string name="settings_update_interval">Update interval</string>
     <string name="settings_select_city">Select city</string>
 
-    <!--Suggest strings-->
-    <string name="suggest_edit_text_hint">Type any place</string>
+    <!--About strings-->
+    <string name="about_toolbar_title">About</string>
 
     <string name="pref_key_interval" translatable="false">pref_key_interval</string>
     <string-array name="intervals">
@@ -49,5 +47,13 @@
         <item>43200000</item>
         <item>86400000</item>
     </string-array>
+
+    <string name="minutes_15">15 minutes</string>
+    <string name="minutes_30">30 minutes</string>
+    <string name="hour_1">1 hour</string>
+    <string name="hour_3">3 hour</string>
+    <string name="hour_6">6 hour</string>
+    <string name="hour_12">12 hour</string>
+    <string name="hour_24">24 hour</string>
 
 </resources>

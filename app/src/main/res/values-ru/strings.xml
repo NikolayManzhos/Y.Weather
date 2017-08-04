@@ -5,16 +5,24 @@
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
 
+    <!--Home strings-->
+    <string name="home_toolbar_title">Обзор</string>
+
+    <!--Suggest fragment-->
+    <string name="suggest_toolbar_title">Выберите местоположение</string>
+    <string name="suggest_edit_text_hint">Введите город</string>
+
     <!--Settings strings -->
+    <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_update_switch">Обновление в фоне</string>
     <string name="settings_update_interval">Интервал</string>
     <string name="settings_select_city">Выберите город</string>
 
-    <!--Suggest fragment-->
-    <string name="suggest_edit_text_hint">Введите город</string>
+    <!--About strings-->
+    <string name="about_toolbar_title">О приложении</string>
 
     <!--Drawer strings-->
-    <string name="drawer_weather">Погода</string>
+    <string name="drawer_home">Погода</string>
     <string name="drawer_change_city">Выберите место</string>
     <string name="drawer_settings">Настройки</string>
     <string name="drawer_about_app">О приложении</string>

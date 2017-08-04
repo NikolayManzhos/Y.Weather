@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity
         if (savedInstanceState == null) {
             checkFirstTimeUser();
             getPresenter().selectedHome();
+            navigationView.setCheckedItem(R.id.nav_home);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             setHomeAsUp(true);
         }

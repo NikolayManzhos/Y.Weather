@@ -52,6 +52,12 @@ public class SettingsFragment extends BaseFragment {
         return R.layout.fragment_settings;
     }
 
+    @Nullable
+    @Override
+    protected String provideToolbarTitle() {
+        return getString(R.string.settings_toolbar_title);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -68,6 +74,7 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setChoicePreferenceStatus(switchPreference.getValue());
 
         switchPreference.setOnClickListener(v -> {

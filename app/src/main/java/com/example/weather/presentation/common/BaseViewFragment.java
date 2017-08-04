@@ -2,13 +2,19 @@ package com.example.weather.presentation.common;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 public abstract class BaseViewFragment extends BaseFragment {
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        inject();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        inject();
         getPresenter().setView(this);
         getPresenter().setRouter(getActivity());
     }

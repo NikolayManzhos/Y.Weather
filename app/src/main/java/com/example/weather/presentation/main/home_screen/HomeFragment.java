@@ -42,13 +42,25 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Inject
     HomePresenter homePresenter;
 
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
+
+
     @Override
     protected int provideLayout() {
         return R.layout.fragment_home;
     }
 
+    @Nullable
+    @Override
+    protected String provideToolbarTitle() {
+        return getString(R.string.home_toolbar_title);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -65,10 +77,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Override
     protected BasePresenter getPresenter() {
         return homePresenter;
-    }
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
     }
 
     @Override

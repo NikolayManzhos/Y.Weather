@@ -1,6 +1,5 @@
 package com.example.weather.presentation.main.suggest_screen;
 
-import android.util.Log;
 
 import com.example.weather.domain.interactor.SuggestViewInteractor;
 import com.example.weather.presentation.di.scope.PerFragment;
@@ -21,14 +20,15 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
     public void getSuggestions(String query, boolean force) {
         if (getView() != null) {
             getView().showLoad();
+            getView().hideData();
         }
         getCompositeDisposable().add(
                 interactor.requestSuggestItems(query, force)
                 .subscribe(
                         suggestResponse -> {
                             if (getView() != null) {
-                                Log.d("SuggestPresenter", suggestResponse.getStatus());
                                 getView().hideLoad();
+                                getView().showData();
                                 getView().showSuggestionList(SuggestViewModel.create(suggestResponse));
                             }
                         },
