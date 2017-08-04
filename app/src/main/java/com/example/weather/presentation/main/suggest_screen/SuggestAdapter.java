@@ -49,7 +49,7 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
     public SuggestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         SuggestViewHolder vh = new SuggestViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.item_suggest, parent, false));
-        vh.itemView.setOnClickListener(view -> placeClickListener.placeClicked(predictions.get(vh.getAdapterPosition()).getReference()) );
+        vh.itemView.setOnClickListener(view -> placeClickListener.placeClicked(predictions.get(vh.getAdapterPosition()).getPlaceId()) );
         return vh;
     }
 
