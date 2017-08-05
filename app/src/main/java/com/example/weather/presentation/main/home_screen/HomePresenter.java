@@ -1,53 +1,55 @@
 package com.example.weather.presentation.main.home_screen;
 
 
+
 import android.util.Log;
 
 import com.example.weather.R;
-import com.example.weather.domain.GetCurrentWeatherInteractor;
-import com.example.weather.presentation.di.main_activity_component.home_component.HomeScope;
+import com.example.weather.domain.interactor.CurrentWeatherInteractor;
+import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.common.BaseMainPresenter;
 
 import javax.inject.Inject;
 
 
-@HomeScope
+@PerFragment
 public class HomePresenter extends BaseMainPresenter<HomeView> {
     public static final String TAG = "tag_home_presenter";
 
-    private GetCurrentWeatherInteractor getCurrentWeatherInteractor;
+    private CurrentWeatherInteractor currentWeatherInteractor;
 
     @Inject
-    public HomePresenter(GetCurrentWeatherInteractor getCurrentWeatherInteractor) {
-        this.getCurrentWeatherInteractor = getCurrentWeatherInteractor;
+    public HomePresenter(CurrentWeatherInteractor currentWeatherInteractor) {
+        this.currentWeatherInteractor = currentWeatherInteractor;
     }
+
+    public void getCurrentWeather(boolean force) {
+        if (getView() != null) {
+            getView().showLoad();
+        }
+        getCompositeDisposable().add(
+                currentWeatherInteractor.requestWeather(force).subscribe(
+                        forecastModel -> {
+                            if (getView() != null) {
+                                getView().showWeather(forecastModel);
+                                getView().hideLoad();
+                            }
+                        }, throwable -> {
+                            if (getView() != null) {
+                                getView().showError(R.string.error);
+                                getView().hideLoad();
+                            }
+                        }
+                )
+        );
+    }
+
 
     @Override
     public void onAttach() {
-        getWeather();
-    }
-
-    public void refreshweather() {
-        getWeather();
-    }
-
-    private void getWeather() {
-        getCurrentWeatherInteractor.execute(detailedWeather -> {
-            if (getView() != null) {
-                getView().showWeather(HomeViewModel.create(detailedWeather));
-                getView().onGetWeather();
-            }
-        }, throwable -> {
-            if (getView() != null) {
-                getView().showError(R.string.error);
-                getView().onGetWeather();
-                Log.i(TAG, "onAttach: " + throwable.toString());
-            }
-        });
+        getCurrentWeather(false);
     }
 
     @Override
-    public void onDetach() {
-
-    }
+    public void onDetach() {}
 }

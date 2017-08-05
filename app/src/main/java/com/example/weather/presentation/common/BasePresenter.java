@@ -1,8 +1,11 @@
 package com.example.weather.presentation.common;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public abstract class BasePresenter<View, Router> {
     private View view;
     private Router router;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public abstract void onAttach();
 
@@ -10,6 +13,7 @@ public abstract class BasePresenter<View, Router> {
 
     public void setView(View view) {
         this.view = view;
+        if (view == null) compositeDisposable.clear();
     }
 
     public View getView() {
@@ -22,5 +26,9 @@ public abstract class BasePresenter<View, Router> {
 
     public Router getRouter() {
         return router;
+    }
+
+    protected CompositeDisposable getCompositeDisposable() {
+        return compositeDisposable;
     }
 }

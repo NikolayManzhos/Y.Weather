@@ -1,13 +1,15 @@
 package com.example.weather.presentation.common;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import com.example.weather.presentation.di.HasComponentActivity;
+
+public abstract class BaseActivity extends AppCompatActivity implements HasComponentActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         getPresenter().setRouter(null);
+        getPresenter().setView(null);
     }
 
     protected void replaceFragment(int containerId, Fragment fragment, boolean addToBackStack) {

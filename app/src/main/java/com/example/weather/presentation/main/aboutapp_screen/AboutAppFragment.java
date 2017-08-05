@@ -1,56 +1,35 @@
 package com.example.weather.presentation.main.aboutapp_screen;
 
-import android.os.Bundle;
+
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.weather.R;
-import com.example.weather.WeatherApp;
-import com.example.weather.presentation.common.BasePresenter;
-import com.example.weather.presentation.main.common.BaseMainFragment;
-
-import javax.inject.Inject;
+import com.example.weather.presentation.common.BaseFragment;
 
 
-public class AboutAppFragment extends BaseMainFragment implements AboutAppView {
-
-    @Inject
-    AboutAppPresenter aboutAppPresenter;
+public class AboutAppFragment extends BaseFragment implements AboutAppView {
 
     public static AboutAppFragment newInstance() {
         return new AboutAppFragment();
     }
 
+    @Override
+    protected int provideLayout() {
+        return R.layout.fragment_about_app;
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_about_app, container, false);
+    protected String provideToolbarTitle() {
+        return getString(R.string.about_toolbar_title);
     }
 
     @Override
-    public void showLoad() {
-
-    }
+    public void showLoad() {}
 
     @Override
-    public void hideLoad() {
-
-    }
+    public void hideLoad() {}
 
     @Override
-    public String getTitle() {
-        return null;
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return aboutAppPresenter;
-    }
-
-    @Override
-    protected void inject() {
-        WeatherApp.getInstance().plusAboutAppComponent().inject(this);
-    }
+    public void showError(int message) {}
 }

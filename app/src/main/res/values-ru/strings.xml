@@ -5,16 +5,41 @@
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
 
+    <!--Home strings-->
+    <string name="home_toolbar_title">Обзор</string>
+
+    <!--Suggest fragment-->
+    <string name="suggest_toolbar_title">Выберите местоположение</string>
+    <string name="suggest_edit_text_hint">Введите город</string>
+
     <!--Settings strings -->
+    <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_update_switch">Обновление в фоне</string>
     <string name="settings_update_interval">Интервал</string>
-    <string name="settings_select_city">Выберите город</string>
+    <string name="settings_units">Единицы измерения</string>
+    <string name="settings_units_temperature_title">Температура</string>
+    <string name="settings_units_wind_speed_title">Скорость ветра</string>
+    <string name="settings_units_pressure_title">Давление</string>
 
-    <string name="about_app">О приложении</string>
-    <string name="settings">Настройки</string>
-    <string name="weather">Погода</string>
-    <string name="homework_1">Домашняя работа №1</string>
-    <string name="main">Главная</string>
+    <!--About strings-->
+    <string name="about_toolbar_title">О приложении</string>
+
+    <!--Drawer strings-->
+    <string name="drawer_home">Погода</string>
+    <string name="drawer_change_city">Выберите место</string>
+    <string name="drawer_settings">Настройки</string>
+    <string name="drawer_about_app">О приложении</string>
+
+    <!-- Units wind speed description -->
+    <string name="meters">М/С</string>
+    <string name="kilometers">Км/Ч</string>
+    <string name="miles">Миль/Ч</string>
+    <string name="knots">Узлы</string>
+
+    <!--Units pressure description-->
+    <string name="hPa">гПа</string>
+    <string name="bar">Бар</string>
+
     <string name="minutes_15">15 минут</string>
     <string name="minutes_30">30 минут</string>
     <string name="hour_1">1 час</string>
@@ -22,6 +47,5 @@
     <string name="hour_6">6 часов</string>
     <string name="hour_12">12 часов</string>
     <string name="hour_24">24 часа</string>
-    <string name="update_interval">Интервал обновления</string>
     <string name="error">Ошибка</string>
 </resources>

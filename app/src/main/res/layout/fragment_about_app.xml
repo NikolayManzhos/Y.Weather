@@ -4,7 +4,7 @@
     <TextView
         android:gravity="center"
         android:id="@+id/tv_about_app"
-        android:text="@string/about_app"
+        android:text="@string/drawer_about_app"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>
