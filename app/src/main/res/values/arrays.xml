@@ -42,4 +42,14 @@
         <item>miles</item>
         <item>knots</item>
     </string-array>
+
+    <string-array name="units_pressure_description">
+        <item>@string/hPa</item>
+        <item>@string/bar</item>
+    </string-array>
+
+    <string-array name="units_pressure_values">
+        <item>hpa</item>
+        <item>bar</item>
+    </string-array>
 </resources>

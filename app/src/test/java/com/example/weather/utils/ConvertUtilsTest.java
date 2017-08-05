@@ -1,6 +1,7 @@
 package com.example.weather.utils;
 
 
+import com.example.weather.R;
 import com.example.weather.data.local.PreferencesManager;
 
 import org.junit.Before;

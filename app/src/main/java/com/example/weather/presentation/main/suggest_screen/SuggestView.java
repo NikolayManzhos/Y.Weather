@@ -11,6 +11,6 @@ public interface SuggestView extends BaseMainView {
     void hideRecyclerData();
     void showDetailsLoad();
     void hideDetailsLoad();
-    void receivePlaceDetails(DetailsResponse detailsResponse);
+    void receivePlaceDetails();
     void showSuggestionList(SuggestViewModel suggestViewModel);
 }

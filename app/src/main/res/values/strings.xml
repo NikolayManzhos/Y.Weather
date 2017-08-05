@@ -26,6 +26,8 @@
     <string name="settings_units">Units</string>
     <string name="settings_units_temperature_title">Temperature</string>
     <string name="settings_units_wind_speed_title">Wind Speed</string>
+    <string name="settings_units_pressure_title">Pressure</string>
+
     <!--About strings-->
     <string name="about_toolbar_title">About</string>
 
@@ -46,5 +48,9 @@
     <string name="kilometers">Km/H</string>
     <string name="miles">Mph</string>
     <string name="knots">Knots</string>
+
+    <!--Units pressure description-->
+    <string name="hPa">hPa</string>
+    <string name="bar">Bar</string>
 
 </resources>

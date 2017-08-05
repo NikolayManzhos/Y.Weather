@@ -3,10 +3,9 @@ package com.example.weather.domain;
 
 import com.example.weather.TestSchedulerProvider;
 import com.example.weather.data.repository.weather.WeatherRepository;
-import com.example.weather.data.entities.weather.DetailedWeather;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.domain.interactor.CurrentWeatherInteractorImpl;
-import com.example.weather.domain.models.CurrentWeather;
+import com.example.weather.domain.models.ForecastModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,66 +15,52 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.when;
 
-public class CurrentWeatherInteractorTest {
+public class CurrentWeatherModelInteractorTest {
 
     @Mock
     private WeatherRepository weatherRepository;
-
-    @Mock
-    private ModelMapper mapper;
 
     private CurrentWeatherInteractor interactor;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        interactor = new CurrentWeatherInteractorImpl(weatherRepository,
-                mapper,
-                new TestSchedulerProvider());
+        interactor = new CurrentWeatherInteractorImpl(weatherRepository, new TestSchedulerProvider());
     }
 
     @Test
     public void requestWeatherSuccess() {
-        DetailedWeather response = provideFilledEntity();
-        CurrentWeather model = provideFilledModel();
+        ForecastModel forecastModel = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
-                .thenReturn(Single.just(response));
-        when(mapper.entityToModel(any(DetailedWeather.class))).thenReturn(model);
+                .thenReturn(Single.just(forecastModel));
         interactor.requestWeather(true)
                 .test()
                 .assertNoErrors()
                 .assertValueCount(1)
-                .assertValues(model);
+                .assertValues(forecastModel);
     }
 
     @Test
     public void requestWeatherReset() {
-        DetailedWeather response = provideFilledEntity();
+        ForecastModel response = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
                 .thenReturn(Single.just(response));
         interactor.requestWeather(true);
 
-        DetailedWeather response2 = new DetailedWeather();
+        ForecastModel response2 = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
                 .thenReturn(Single.just(response2));
-        CurrentWeather model = provideFilledModel();
-        when(mapper.entityToModel(response2)).thenReturn(model);
         interactor.requestWeather(true)
                 .test()
                 .assertNoErrors()
                 .assertValueCount(1)
-                .assertValues(model);
+                .assertValues(response2);
     }
 
-    private DetailedWeather provideFilledEntity() {
-        return random(DetailedWeather.class);
-    }
-
-    private CurrentWeather provideFilledModel() {
-        return random(CurrentWeather.class);
+    private ForecastModel provideFilledModel() {
+        return random(ForecastModel.class);
     }
 }

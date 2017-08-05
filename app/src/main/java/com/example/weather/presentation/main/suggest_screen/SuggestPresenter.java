@@ -54,7 +54,7 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
                             if (getView() != null) {
                                 getView().hideDetailsLoad();
                                 getView().showContainerData();
-                                getView().receivePlaceDetails(detailsResponse);
+                                getView().receivePlaceDetails();
                             }
                         },
                         err -> {

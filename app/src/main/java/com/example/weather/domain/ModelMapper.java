@@ -1,12 +1,17 @@
 package com.example.weather.domain;
 
-import com.example.weather.data.entities.weather.DetailedWeather;
+import com.example.weather.data.entities.weather.ForecastWeather;
 import com.example.weather.data.local.PreferencesManager;
-import com.example.weather.domain.models.CurrentWeather;
+import com.example.weather.domain.models.CurrentWeatherModel;
+import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.utils.ConvertUtils;
+
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Observable;
+import io.realm.RealmList;
 
 @Singleton
 public class ModelMapper {
@@ -21,13 +26,23 @@ public class ModelMapper {
         this.utils = utils;
     }
 
-    public CurrentWeather entityToModel(DetailedWeather detailedWeather) {
-        return new CurrentWeather(
-                preferencesManager.getCurrentCityName(),
-                detailedWeather.getWeather().get(0).getMain(),
-                utils.convertTemperature(detailedWeather.getMain().getTemp()),
-                utils.convertWindSpeed(detailedWeather.getWind().getSpeed()),
-                detailedWeather.getMain().getHumidity());
+    public ForecastModel entityToModel(ForecastWeather forecastWeather) {
+        RealmList<CurrentWeatherModel> weatherList = new RealmList<>();
+        Observable.fromIterable(forecastWeather.getList())
+                .forEach(list -> weatherList.add(new CurrentWeatherModel(
+                        list.getWeather().get(0).getMain(),
+                        list.getDt(),
+                        list.getWeather().get(0).getId(),
+                        utils.convertTemperature(list.getTemp().getDay()),
+                        utils.convertTemperature(list.getTemp().getNight()),
+                        utils.convertWindSpeed(list.getSpeed()),
+                        list.getHumidity(),
+                        (int)list.getPressure() // TODO FOR TEST, FIX ASAP!!!
+                )));
+        return new ForecastModel(preferencesManager.getCurrentCityName(),
+                weatherList,
+                preferencesManager.getCurrentLatitude(),
+                preferencesManager.getCurrentLongitude());
     }
 
 }

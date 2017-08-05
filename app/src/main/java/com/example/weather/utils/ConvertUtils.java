@@ -13,7 +13,7 @@ public class ConvertUtils {
     private PreferencesManager preferencesManager;
 
     @Inject
-    public ConvertUtils(PreferencesManager preferencesManager) {
+    ConvertUtils(PreferencesManager preferencesManager) {
         this.preferencesManager = preferencesManager;
     }
 

@@ -5,15 +5,15 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.example.weather.BuildConfig;
-import com.example.weather.data.local.CacheManager;
-import com.example.weather.data.local.PreferenceCacheManager;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.PlacesApi;
 import com.example.weather.data.network.WeatherApi;
 import com.example.weather.data.repository.suggest.PlacesRepository;
 import com.example.weather.data.repository.suggest.PlacesRepositoryImpl;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
+import com.example.weather.domain.ModelMapper;
 import com.example.weather.presentation.di.ApplicationContext;
 
 import java.util.concurrent.TimeUnit;
@@ -33,11 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataModule {
 
     @Provides
-    CacheManager provideCacheManager(@ApplicationContext Context context) {
-        return new PreferenceCacheManager(context);
-    }
-
-    @Provides
     @Singleton
     SharedPreferences provideDefaultSharedPreferences(@ApplicationContext Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -46,9 +41,10 @@ public class DataModule {
     @Provides
     @Singleton
     WeatherRepository provideWeatherProvider(@Named("weather") WeatherApi weatherApi,
-                                             CacheManager cacheManager,
-                                             PreferencesManager preferencesManager) {
-        return new WeatherRepositoryImpl(weatherApi, cacheManager, preferencesManager);
+                                             PreferencesManager preferencesManager,
+                                             RealmHelper realmHelper,
+                                             ModelMapper mapper) {
+        return new WeatherRepositoryImpl(weatherApi, preferencesManager, realmHelper, mapper);
     }
 
     @Provides

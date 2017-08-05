@@ -3,17 +3,16 @@ package com.example.weather.presentation.main.home_screen;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weather.R;
-import com.example.weather.domain.models.CurrentWeather;
+import com.example.weather.domain.models.CurrentWeatherModel;
+import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -83,11 +82,12 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     }
 
     @Override
-    public void showWeather(CurrentWeather currentWeather) {
-        tvCity.setText(currentWeather.getCityName());
-        tvTemperature.setText(valueOf(currentWeather.getTemperature()));
-        tvWeather.setText(currentWeather.getCondition());
-        tvWind.setText(valueOf(currentWeather.getWindSpeed()));
+    public void showWeather(ForecastModel forecastModel) {
+        getActivity().setTitle(forecastModel.getCityName());
+//        tvCity.setText(currentWeatherModel.getCityName());
+//        tvTemperature.setText(valueOf(currentWeatherModel.getTemperature()));
+//        tvWeather.setText(currentWeatherModel.getCondition());
+//        tvWind.setText(valueOf(currentWeatherModel.getWindSpeed()));
     }
 
     @Override

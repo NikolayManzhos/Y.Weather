@@ -16,6 +16,7 @@ import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
+import com.example.weather.utils.OnCityChangeListener;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
@@ -151,8 +152,11 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
     }
 
     @Override
-    public void receivePlaceDetails(DetailsResponse detailsResponse) {
-        Log.d("SuggestView", detailsResponse.getResult().getVicinity());
+    public void receivePlaceDetails() {
+        if (!(getActivity() instanceof OnCityChangeListener)) {
+            throw new IllegalStateException("Activity must implement OnCityChangeListener.");
+        }
+        ((OnCityChangeListener) getActivity()).cityChanged();
     }
 
     @OnClick(R.id.iconClear)

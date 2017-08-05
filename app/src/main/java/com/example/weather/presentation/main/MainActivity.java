@@ -169,6 +169,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void cityChanged() {
+        navigationView.setCheckedItem(R.id.nav_home);
         getPresenter().selectedHome();
     }
 

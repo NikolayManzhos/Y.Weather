@@ -54,6 +54,17 @@
             app:mp_entry_descriptions="@array/units_wind_speed_description"
             app:mp_entry_values="@array/units_wind_speed_values"
             app:mp_show_value="onRight"/>
+
+        <com.yarolegovich.mp.MaterialChoicePreference
+            android:id="@+id/unitsPressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_key="b_pressure"
+            app:mp_title="@string/settings_units_pressure_title"
+            app:mp_default_value="hpa"
+            app:mp_entry_descriptions="@array/units_pressure_description"
+            app:mp_entry_values="@array/units_pressure_values"
+            app:mp_show_value="onRight"/>
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 
 </LinearLayout>

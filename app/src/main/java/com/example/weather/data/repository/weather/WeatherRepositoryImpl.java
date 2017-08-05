@@ -1,39 +1,45 @@
 package com.example.weather.data.repository.weather;
 
 import com.example.weather.BuildConfig;
-import com.example.weather.data.local.CacheManager;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.WeatherApi;
-import com.example.weather.data.entities.weather.DetailedWeather;
+import com.example.weather.domain.ModelMapper;
+import com.example.weather.domain.models.ForecastModel;
 
 import io.reactivex.Single;
 
 public class WeatherRepositoryImpl implements WeatherRepository {
-    private PreferencesManager preferencesManager;
-    private CacheManager cacheManager;
+
     private WeatherApi weatherApi;
+    private PreferencesManager preferencesManager;
+    private RealmHelper realmHelper;
+    private ModelMapper mapper;
 
     public WeatherRepositoryImpl(WeatherApi weatherApi,
-                                 CacheManager cacheManager,
-                                 PreferencesManager preferencesManager) {
+                                 PreferencesManager preferencesManager,
+                                 RealmHelper realmHelper,
+                                 ModelMapper mapper) {
         this.weatherApi = weatherApi;
-        this.cacheManager = cacheManager;
         this.preferencesManager = preferencesManager;
+        this.realmHelper = realmHelper;
+        this.mapper = mapper;
     }
 
     @Override
-    public Single<DetailedWeather> getWeather(boolean force) {
+    public Single<ForecastModel> getWeather(boolean force) {
         float latitude = preferencesManager.getCurrentLatitude();
         float longitude = preferencesManager.getCurrentLongitude();
-        Single<DetailedWeather> networkWeather =
+        Single<ForecastModel> networkWeather =
                 weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
-                .doOnSuccess(cacheManager::saveWeather);
-        Single<DetailedWeather> cachedWeather =
-                Single.fromCallable(() -> cacheManager.getLastWeather())
-                        .onErrorReturnItem(new DetailedWeather());
+                        .map(mapper::entityToModel)
+                        .doOnSuccess(realmHelper::writeForecast);
+        Single<ForecastModel> cachedWeather =
+                Single.fromCallable(() -> realmHelper.readForecast(latitude, longitude))
+                        .onErrorReturnItem(new ForecastModel());
 
         return force ? networkWeather : Single.concat(cachedWeather, networkWeather)
-                .filter(detailedWeather -> detailedWeather.getBase() != null).firstOrError();
+                .filter(forecastModel -> forecastModel.getCurrentWeatherModels() != null).firstOrError();
     }
 
 }

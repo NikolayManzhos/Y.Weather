@@ -2,7 +2,8 @@ package com.example.weather.presentation.main.home_screen;
 
 
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
-import com.example.weather.domain.models.CurrentWeather;
+import com.example.weather.domain.models.CurrentWeatherModel;
+import com.example.weather.domain.models.ForecastModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class HomePresenterTest {
 
     @Test
     public void getWeatherSuccess() {
-        CurrentWeather result = provideFilledModel();
+        ForecastModel result = provideFilledModel();
         when(interactor.requestWeather(anyBoolean()))
                 .thenReturn(Observable.just(result).subscribeOn(testScheduler));
 
@@ -79,7 +80,7 @@ public class HomePresenterTest {
         presenter.onDetach();
     }
 
-    private CurrentWeather provideFilledModel() {
-        return random(CurrentWeather.class);
+    private ForecastModel provideFilledModel() {
+        return random(ForecastModel.class);
     }
 }

@@ -8,6 +8,8 @@ import com.example.weather.presentation.di.component.AppComponent;
 import com.example.weather.presentation.di.component.DaggerAppComponent;
 import com.example.weather.presentation.di.module.AppModule;
 
+import io.realm.Realm;
+
 public class WeatherApp extends Application {
     public static final String PREF_NAME = "weather_prefs";
 
@@ -16,6 +18,7 @@ public class WeatherApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.init(this);
         JobManager.create(this).addJobCreator(new WeatherJobCreator());
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

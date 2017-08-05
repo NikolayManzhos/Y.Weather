@@ -19,6 +19,7 @@
     <string name="settings_units">Единицы измерения</string>
     <string name="settings_units_temperature_title">Температура</string>
     <string name="settings_units_wind_speed_title">Скорость ветра</string>
+    <string name="settings_units_pressure_title">Давление</string>
 
     <!--About strings-->
     <string name="about_toolbar_title">О приложении</string>
@@ -34,6 +35,10 @@
     <string name="kilometers">Км/Ч</string>
     <string name="miles">Миль/Ч</string>
     <string name="knots">Узлы</string>
+
+    <!--Units pressure description-->
+    <string name="hPa">гПа</string>
+    <string name="bar">Бар</string>
 
     <string name="minutes_15">15 минут</string>
     <string name="minutes_30">30 минут</string>
