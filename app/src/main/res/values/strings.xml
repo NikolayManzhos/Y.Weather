@@ -23,30 +23,11 @@
     <string name="settings_toolbar_title">Settings</string>
     <string name="settings_update_switch">Background update</string>
     <string name="settings_update_interval">Update interval</string>
-    <string name="settings_select_city">Select city</string>
-
+    <string name="settings_units">Units</string>
+    <string name="settings_units_temperature_title">Temperature</string>
+    <string name="settings_units_wind_speed_title">Wind Speed</string>
     <!--About strings-->
     <string name="about_toolbar_title">About</string>
-
-    <string name="pref_key_interval" translatable="false">pref_key_interval</string>
-    <string-array name="intervals">
-        <item>@string/minutes_15</item>
-        <item>@string/minutes_30</item>
-        <item>@string/hour_1</item>
-        <item>@string/hour_3</item>
-        <item>@string/hour_6</item>
-        <item>@string/hour_12</item>
-        <item>@string/hour_24</item>
-    </string-array>
-    <string-array name="intervals_values">
-        <item>900000</item>
-        <item>1800000</item>
-        <item>3600000</item>
-        <item>10800000</item>
-        <item>21600000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-    </string-array>
 
     <string name="minutes_15">15 minutes</string>
     <string name="minutes_30">30 minutes</string>
@@ -55,5 +36,15 @@
     <string name="hour_6">6 hour</string>
     <string name="hour_12">12 hour</string>
     <string name="hour_24">24 hour</string>
+
+    <!-- Units temperature description-->
+    <string name="celsius" translatable="false">°C</string>
+    <string name="fahrenheit" translatable="false">°F</string>
+
+    <!-- Units wind speed description -->
+    <string name="meters">M/S</string>
+    <string name="kilometers">Km/H</string>
+    <string name="miles">Mph</string>
+    <string name="knots">Knots</string>
 
 </resources>

@@ -1,19 +1,18 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-import com.example.weather.domain.entities.weather.DetailedWeather;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
+import com.example.weather.domain.models.CurrentWeather;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.TestScheduler;
 
-import static org.mockito.Matchers.any;
+import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
@@ -42,7 +41,7 @@ public class HomePresenterTest {
     @Test
     public void callInteractorOnAttach() {
         when(interactor.requestWeather(false))
-                .thenReturn(Observable.just(new DetailedWeather()));
+                .thenReturn(Observable.just(provideFilledModel()));
         presenter.onAttach();
 
         verify(interactor).requestWeather(false);
@@ -50,7 +49,7 @@ public class HomePresenterTest {
 
     @Test
     public void getWeatherSuccess() {
-        DetailedWeather result = provideDetailedWeather();
+        CurrentWeather result = provideFilledModel();
         when(interactor.requestWeather(anyBoolean()))
                 .thenReturn(Observable.just(result).subscribeOn(testScheduler));
 
@@ -59,7 +58,7 @@ public class HomePresenterTest {
 
         testScheduler.triggerActions();
 
-        verify(view).showWeather(any(HomeViewModel.class));
+        verify(view).showWeather(result);
         verify(view).hideLoad();
     }
 
@@ -80,7 +79,7 @@ public class HomePresenterTest {
         presenter.onDetach();
     }
 
-    private DetailedWeather provideDetailedWeather() {
-        return EnhancedRandom.random(DetailedWeather.class);
+    private CurrentWeather provideFilledModel() {
+        return random(CurrentWeather.class);
     }
 }

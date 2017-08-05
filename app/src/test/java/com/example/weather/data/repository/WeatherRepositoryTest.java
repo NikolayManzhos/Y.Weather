@@ -5,7 +5,7 @@ import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.network.WeatherApi;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
-import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.data.entities.weather.DetailedWeather;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,8 +36,8 @@ public class WeatherRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         weatherRepository = new WeatherRepositoryImpl(api, cacheManager, preferencesManager);
-        when(preferencesManager.getLatitude()).thenReturn(55.5F);
-        when(preferencesManager.getLongitude()).thenReturn(34.4F);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5F);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.4F);
     }
 
     @Test

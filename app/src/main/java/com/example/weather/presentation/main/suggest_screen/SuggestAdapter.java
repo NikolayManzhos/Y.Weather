@@ -3,14 +3,13 @@ package com.example.weather.presentation.main.suggest_screen;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.weather.R;
-import com.example.weather.domain.entities.autocomplete.Prediction;
+import com.example.weather.data.entities.autocomplete.Prediction;
 import com.example.weather.presentation.di.ActivityContext;
 import com.example.weather.presentation.di.scope.PerFragment;
 

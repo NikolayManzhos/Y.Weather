@@ -26,8 +26,6 @@ import com.example.weather.presentation.main.home_screen.HomeFragment;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
 import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
-import com.google.android.gms.maps.model.LatLng;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -170,10 +168,8 @@ public class MainActivity extends BaseActivity
     public void hideLoad() {}
 
     @Override
-    public void cityChanged(LatLng latLng) {
-        preferencesManager.setLatitude(latLng.latitude);
-        preferencesManager.setLongitude(latLng.longitude);
-        onBackPressed();
+    public void cityChanged() {
+        getPresenter().selectedHome();
     }
 
     @Override

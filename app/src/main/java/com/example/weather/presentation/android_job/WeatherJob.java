@@ -54,6 +54,6 @@ public class WeatherJob extends Job {
     }
 
     private void inject() {
-        ((WeatherApp) getContext()).getAppComponent().inject(this);
+        ((WeatherApp) getContext().getApplicationContext()).getAppComponent().inject(this);
     }
 }

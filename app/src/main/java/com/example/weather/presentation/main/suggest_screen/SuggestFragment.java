@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.example.weather.R;
+import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
@@ -23,7 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class SuggestFragment extends BaseMainFragment implements SuggestView, SuggestAdapter.OnPlaceClickListener {
 
@@ -33,8 +35,14 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
     @BindView(R.id.suggestEditText)
     EditText suggestEditText;
 
+    @BindView(R.id.containerEditText)
+    FrameLayout editTextContainer;
+
     @BindView(R.id.suggestProgressBar)
-    ProgressBar progressBar;
+    ProgressBar suggestProgressBar;
+
+    @BindView(R.id.detailsProgressBar)
+    ProgressBar detailsProgressBar;
 
     @Inject
     SuggestPresenter presenter;
@@ -42,7 +50,7 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
     @Inject
     SuggestAdapter adapter;
 
-    private Disposable editTextSubscription;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public static SuggestFragment newInstance() {
         return new SuggestFragment();
@@ -64,48 +72,87 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         adapter.setOnPaceClickListener(this);
-        editTextSubscription = RxTextView
+        compositeDisposable.add(RxTextView
                 .textChanges(suggestEditText)
                 .debounce(600, TimeUnit.MILLISECONDS)
-                .skip(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(text ->  {
                     String query = text.toString().trim();
-                    if (!query.equals("")) presenter.getSuggestions(query, true);
-                    else hideData();
-                });
+                    if (!query.equals("")) presenter.getSuggestions(query);
+                    else hideRecyclerData();
+                })
+        );
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        editTextSubscription.dispose();
+        compositeDisposable.clear();
         adapter.setOnPaceClickListener(null);
     }
 
     @Override
     public void hideLoad() {
-        progressBar.setVisibility(View.GONE);
+        suggestProgressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showLoad() {
-        progressBar.setVisibility(View.VISIBLE);
+        suggestProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideData() {
+    public void hideDetailsLoad() {
+        detailsProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showDetailsLoad() {
+        detailsProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hides only RecyclerView content.
+     */
+    @Override
+    public void hideRecyclerData() {
         suggestRecycler.setVisibility(View.GONE);
     }
 
+    /**
+     * Shows only RecyclerView content.
+     */
     @Override
-    public void showData() {
+    public void showRecyclerData() {
         suggestRecycler.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hides whole container.
+     */
+    @Override
+    public void hideContainerData() {
+        suggestRecycler.setVisibility(View.GONE);
+        editTextContainer.setVisibility(View.GONE);
+    }
+
+    /**
+     * Shows whole container.
+     */
+    @Override
+    public void showContainerData() {
+        suggestRecycler.setVisibility(View.VISIBLE);
+        editTextContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showSuggestionList(SuggestViewModel suggestViewModel) {
         adapter.setData(suggestViewModel.getPredictions());
+    }
+
+    @Override
+    public void receivePlaceDetails(DetailsResponse detailsResponse) {
+        Log.d("SuggestView", detailsResponse.getResult().getVicinity());
     }
 
     @OnClick(R.id.iconClear)
@@ -115,7 +162,7 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
 
     @Override
     public void placeClicked(String placeId) {
-        Log.d("SuggestView", placeId);
+        presenter.getPlaceDetails(placeId);
     }
 
     @Override

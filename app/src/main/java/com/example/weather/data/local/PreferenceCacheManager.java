@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.weather.WeatherApp;
-import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.data.entities.weather.DetailedWeather;
 import com.example.weather.presentation.di.ApplicationContext;
 import com.google.gson.Gson;
 

@@ -1,7 +1,7 @@
 package com.example.weather.presentation.main.suggest_screen;
 
-import com.example.weather.domain.entities.autocomplete.Prediction;
-import com.example.weather.domain.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.entities.autocomplete.Prediction;
+import com.example.weather.data.entities.autocomplete.SuggestResponse;
 
 import java.util.List;
 

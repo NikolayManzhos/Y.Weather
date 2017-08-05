@@ -10,8 +10,8 @@ import com.example.weather.data.local.PreferenceCacheManager;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.network.PlacesApi;
 import com.example.weather.data.network.WeatherApi;
-import com.example.weather.data.repository.suggest.SuggestRepository;
-import com.example.weather.data.repository.suggest.SuggestRepositoryImpl;
+import com.example.weather.data.repository.suggest.PlacesRepository;
+import com.example.weather.data.repository.suggest.PlacesRepositoryImpl;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
 import com.example.weather.presentation.di.ApplicationContext;
@@ -53,8 +53,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    SuggestRepository provideSuggestRepository(@Named("places") PlacesApi placesApi) {
-        return new SuggestRepositoryImpl(placesApi);
+    PlacesRepository provideSuggestRepository(@Named("places") PlacesApi placesApi,
+                                              PreferencesManager preferencesManager) {
+        return new PlacesRepositoryImpl(placesApi, preferencesManager);
     }
 
     @Provides

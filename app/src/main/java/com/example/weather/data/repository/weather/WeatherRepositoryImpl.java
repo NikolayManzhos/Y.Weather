@@ -4,7 +4,7 @@ import com.example.weather.BuildConfig;
 import com.example.weather.data.local.CacheManager;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.network.WeatherApi;
-import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.data.entities.weather.DetailedWeather;
 
 import io.reactivex.Single;
 
@@ -23,17 +23,17 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 
     @Override
     public Single<DetailedWeather> getWeather(boolean force) {
-        float latitude = preferencesManager.getLatitude();
-        float longitude = preferencesManager.getLongitude();
+        float latitude = preferencesManager.getCurrentLatitude();
+        float longitude = preferencesManager.getCurrentLongitude();
         Single<DetailedWeather> networkWeather =
                 weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
                 .doOnSuccess(cacheManager::saveWeather);
         Single<DetailedWeather> cachedWeather =
-                Single
-                        .fromCallable(() -> cacheManager.getLastWeather())
+                Single.fromCallable(() -> cacheManager.getLastWeather())
                         .onErrorReturnItem(new DetailedWeather());
 
         return force ? networkWeather : Single.concat(cachedWeather, networkWeather)
                 .filter(detailedWeather -> detailedWeather.getBase() != null).firstOrError();
     }
+
 }

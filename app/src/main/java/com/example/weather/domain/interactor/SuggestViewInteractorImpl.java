@@ -1,38 +1,37 @@
 package com.example.weather.domain.interactor;
 
-
-import com.example.weather.data.repository.suggest.SuggestRepository;
-import com.example.weather.domain.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.repository.suggest.PlacesRepository;
+import com.example.weather.data.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.utils.rx.SchedulerProvider;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.ReplaySubject;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import io.reactivex.Single;
+
+@Singleton
 public class SuggestViewInteractorImpl implements SuggestViewInteractor {
 
-    private Disposable suggestDisposable;
-    private ReplaySubject<SuggestResponse> suggestReplaySubject;
-
-    private SuggestRepository suggestRepository;
+    private PlacesRepository placesRepository;
     private SchedulerProvider schedulerProvider;
 
-    public SuggestViewInteractorImpl(SuggestRepository suggestRepository,
+    @Inject
+    SuggestViewInteractorImpl(PlacesRepository placesRepository,
                                      SchedulerProvider schedulerProvider) {
-        this.suggestRepository = suggestRepository;
+        this.placesRepository = placesRepository;
         this.schedulerProvider = schedulerProvider;
     }
 
     @Override
-    public Observable<SuggestResponse> requestSuggestItems(String query, boolean force) {
-        if (force && suggestDisposable != null) suggestDisposable.dispose();
-        if (suggestDisposable == null || suggestDisposable.isDisposed()) {
-            suggestReplaySubject = ReplaySubject.create(1);
+    public Single<SuggestResponse> requestSuggestItems(String query) {
+        return placesRepository.getSuggestions(query)
+                .compose(schedulerProvider.applyIoSchedulers());
+    }
 
-            suggestDisposable = suggestRepository.getSuggestions(query)
-                    .compose(schedulerProvider.applyIoSchedulers())
-                    .subscribe(suggestReplaySubject::onNext, suggestReplaySubject::onError);
-        }
-        return suggestReplaySubject;
+    @Override
+    public Single<DetailsResponse> requestPlaceDetails(String placeId) {
+        return placesRepository.getPlaceDetails(placeId)
+                .compose(schedulerProvider.applyIoSchedulers());
     }
 }

@@ -13,28 +13,54 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
     private SuggestViewInteractor interactor;
 
     @Inject
-    public SuggestPresenter(SuggestViewInteractor interactor) {
+    SuggestPresenter(SuggestViewInteractor interactor) {
         this.interactor = interactor;
     }
 
-    public void getSuggestions(String query, boolean force) {
+    public void getSuggestions(String query) {
         if (getView() != null) {
             getView().showLoad();
-            getView().hideData();
+            getView().hideRecyclerData();
         }
         getCompositeDisposable().add(
-                interactor.requestSuggestItems(query, force)
+                interactor.requestSuggestItems(query)
                 .subscribe(
                         suggestResponse -> {
                             if (getView() != null) {
                                 getView().hideLoad();
-                                getView().showData();
+                                getView().showRecyclerData();
                                 getView().showSuggestionList(SuggestViewModel.create(suggestResponse));
                             }
                         },
                         err -> {
                             if (getView() != null) {
                                 getView().hideLoad();
+                                //TODO Handle error
+                            }
+                        }
+                )
+        );
+    }
+
+    public void getPlaceDetails(String placeId) {
+        if (getView() != null) {
+            getView().showDetailsLoad();
+            getView().hideContainerData();
+        }
+        getCompositeDisposable().add(
+                interactor.requestPlaceDetails(placeId)
+                .subscribe(
+                        detailsResponse -> {
+                            if (getView() != null) {
+                                getView().hideDetailsLoad();
+                                getView().showContainerData();
+                                getView().receivePlaceDetails(detailsResponse);
+                            }
+                        },
+                        err -> {
+                            if (getView() != null) {
+                                getView().hideDetailsLoad();
+                                getView().showContainerData();
                                 //TODO Handle error
                             }
                         }

@@ -16,7 +16,9 @@
     <string name="settings_toolbar_title">Настройки</string>
     <string name="settings_update_switch">Обновление в фоне</string>
     <string name="settings_update_interval">Интервал</string>
-    <string name="settings_select_city">Выберите город</string>
+    <string name="settings_units">Единицы измерения</string>
+    <string name="settings_units_temperature_title">Температура</string>
+    <string name="settings_units_wind_speed_title">Скорость ветра</string>
 
     <!--About strings-->
     <string name="about_toolbar_title">О приложении</string>
@@ -27,8 +29,12 @@
     <string name="drawer_settings">Настройки</string>
     <string name="drawer_about_app">О приложении</string>
 
-    <string name="homework_1">Домашняя работа №1</string>
-    <string name="main">Главная</string>
+    <!-- Units wind speed description -->
+    <string name="meters">М/С</string>
+    <string name="kilometers">Км/Ч</string>
+    <string name="miles">Миль/Ч</string>
+    <string name="knots">Узлы</string>
+
     <string name="minutes_15">15 минут</string>
     <string name="minutes_30">30 минут</string>
     <string name="hour_1">1 час</string>
@@ -36,6 +42,5 @@
     <string name="hour_6">6 часов</string>
     <string name="hour_12">12 часов</string>
     <string name="hour_24">24 часа</string>
-    <string name="update_interval">Интервал обновления</string>
     <string name="error">Ошибка</string>
 </resources>

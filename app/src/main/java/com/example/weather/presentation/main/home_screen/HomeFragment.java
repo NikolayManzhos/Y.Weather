@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weather.R;
+import com.example.weather.domain.models.CurrentWeather;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
@@ -17,6 +18,8 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+
+import static java.lang.String.valueOf;
 
 public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "tag_home_fragment";
@@ -80,13 +83,11 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     }
 
     @Override
-    public void showWeather(HomeViewModel homeViewModel) {
-        tvCity.setText(homeViewModel.getCity());
-        tvTemperature.setText(homeViewModel.getTemperature());
-        tvWeather.setText(homeViewModel.getMain());
-        tvWind.setText(homeViewModel.getWind());
-        Picasso.with(getContext()).load(homeViewModel.getIconId()).into(ivIcon);
-        Log.i(TAG, "showWeather: " + homeViewModel.toString());
+    public void showWeather(CurrentWeather currentWeather) {
+        tvCity.setText(currentWeather.getCityName());
+        tvTemperature.setText(valueOf(currentWeather.getTemperature()));
+        tvWeather.setText(currentWeather.getCondition());
+        tvWind.setText(valueOf(currentWeather.getWindSpeed()));
     }
 
     @Override

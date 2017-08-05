@@ -1,10 +1,12 @@
 package com.example.weather.domain.interactor;
 
 
-import com.example.weather.domain.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.entities.details.DetailsResponse;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface SuggestViewInteractor {
-    Observable<SuggestResponse> requestSuggestItems(String query, boolean force);
+    Single<SuggestResponse> requestSuggestItems(String query);
+    Single<DetailsResponse> requestPlaceDetails(String placeId);
 }

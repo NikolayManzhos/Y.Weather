@@ -10,11 +10,6 @@ public abstract class BaseViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         inject();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         getPresenter().setView(this);
         getPresenter().setRouter(getActivity());
     }
@@ -32,8 +27,8 @@ public abstract class BaseViewFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         getPresenter().setRouter(null);
         getPresenter().setView(null);
     }

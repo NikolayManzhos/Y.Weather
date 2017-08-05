@@ -1,6 +1,6 @@
 package com.example.weather.data.network;
 
-import com.example.weather.domain.entities.weather.DetailedWeather;
+import com.example.weather.data.entities.weather.DetailedWeather;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

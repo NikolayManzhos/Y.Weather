@@ -1,6 +1,8 @@
 package com.example.weather.presentation.main.home_screen;
 
 
+import android.util.Log;
+
 import com.example.weather.R;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.presentation.di.scope.PerFragment;
@@ -26,9 +28,9 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
         }
         getCompositeDisposable().add(
                 currentWeatherInteractor.requestWeather(force).subscribe(
-                        detailedWeather -> {
+                        currentWeather -> {
                             if (getView() != null) {
-                                getView().showWeather(HomeViewModel.create(detailedWeather));
+                                getView().showWeather(currentWeather);
                                 getView().hideLoad();
                             }
                         }, throwable -> {

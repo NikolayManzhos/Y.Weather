@@ -5,7 +5,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public abstract class BasePresenter<View, Router> {
     private View view;
     private Router router;
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public abstract void onAttach();
 
@@ -13,8 +13,7 @@ public abstract class BasePresenter<View, Router> {
 
     public void setView(View view) {
         this.view = view;
-        if (view != null) compositeDisposable = new CompositeDisposable();
-        else compositeDisposable.clear();
+        if (view == null) compositeDisposable.clear();
     }
 
     public View getView() {

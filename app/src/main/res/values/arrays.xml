@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="intervals">
+        <item>@string/minutes_15</item>
+        <item>@string/minutes_30</item>
+        <item>@string/hour_1</item>
+        <item>@string/hour_3</item>
+        <item>@string/hour_6</item>
+        <item>@string/hour_12</item>
+        <item>@string/hour_24</item>
+    </string-array>
+    <string-array name="intervals_values" translatable="false">
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>10800000</item>
+        <item>21600000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+    </string-array>
+
+    <string-array name="units_temperature_description">
+        <item>@string/celsius</item>
+        <item>@string/fahrenheit</item>
+    </string-array>
+
+    <string-array name="units_temperature_values">
+        <item>C</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="units_wind_speed_description">
+        <item>@string/meters</item>
+        <item>@string/kilometers</item>
+        <item>@string/miles</item>
+        <item>@string/knots</item>
+    </string-array>
+
+    <string-array name="units_wind_speed_values">
+        <item>meters</item>
+        <item>kilometers</item>
+        <item>miles</item>
+        <item>knots</item>
+    </string-array>
+</resources>

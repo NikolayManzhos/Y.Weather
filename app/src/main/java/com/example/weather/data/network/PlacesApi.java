@@ -1,7 +1,7 @@
 package com.example.weather.data.network;
 
-import com.example.weather.domain.entities.autocomplete.SuggestResponse;
-import com.example.weather.domain.entities.details.DetailsResponse;
+import com.example.weather.data.entities.autocomplete.SuggestResponse;
+import com.example.weather.data.entities.details.DetailsResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -18,5 +18,6 @@ public interface PlacesApi {
     @GET("details/json")
     Single<DetailsResponse> getPlaceDetails(
             @Query("placeid") String placeId,
+            @Query("language") String language,
             @Query("key") String apiKey);
 }
