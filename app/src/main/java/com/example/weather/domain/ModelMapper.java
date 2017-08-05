@@ -20,7 +20,7 @@ public class ModelMapper {
     private ConvertUtils utils;
 
     @Inject
-    public ModelMapper(PreferencesManager preferencesManager,
+    ModelMapper(PreferencesManager preferencesManager,
                        ConvertUtils utils) {
         this.preferencesManager = preferencesManager;
         this.utils = utils;

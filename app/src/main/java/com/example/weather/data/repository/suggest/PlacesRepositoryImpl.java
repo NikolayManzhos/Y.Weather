@@ -11,6 +11,7 @@ import com.example.weather.data.entities.details.DetailsResponse;
 
 import java.util.Locale;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class PlacesRepositoryImpl implements PlacesRepository {
@@ -32,7 +33,7 @@ public class PlacesRepositoryImpl implements PlacesRepository {
     }
 
     @Override
-    public Single<DetailsResponse> getPlaceDetails(String placeId) {
+    public Completable getPlaceDetails(String placeId) {
         return placesApi.getPlaceDetails(placeId,
                 Locale.getDefault().toString(),
                 BuildConfig.PLACES_KEY)
@@ -42,6 +43,7 @@ public class PlacesRepositoryImpl implements PlacesRepository {
                     preferencesManager.setCurrentCityName(result.getVicinity());
                     preferencesManager.setCurrentLatitude(location.getLat());
                     preferencesManager.setCurrentLongitude(location.getLng());
-                });
+                })
+                .toCompletable();
     }
 }

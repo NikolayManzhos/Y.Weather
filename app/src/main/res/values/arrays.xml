@@ -50,6 +50,6 @@
 
     <string-array name="units_pressure_values">
         <item>hpa</item>
-        <item>bar</item>
+        <item>mbar</item>
     </string-array>
 </resources>

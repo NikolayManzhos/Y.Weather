@@ -85,4 +85,30 @@ public class PreferencesManagerTest {
 
         assertEquals(ACTUAL_FIRST_TIME_USER, preferencesManager.getFirstTimeUser());
     }
+
+    @Test
+    public void checkDefaultTempUnits() {
+        String DEFAULT_TEMP_UNITS = "C";
+        assertEquals(DEFAULT_TEMP_UNITS, preferencesManager.getTemperatureUnits());
+    }
+
+    @Test
+    public void checkDefaultWindSpeedUnits() {
+        String DEFAULT_WIND_SPEED_UNITS = "meters";
+        assertEquals(DEFAULT_WIND_SPEED_UNITS, preferencesManager.getWindSpeedUnits());
+    }
+
+    @Test
+    public void checkDefaultCityName() {
+        String DEFAULT_CITY_NAME = "Moscow";
+        assertEquals(DEFAULT_CITY_NAME, preferencesManager.getCurrentCityName());
+    }
+
+    @Test
+    public void setCurrentCityName() {
+        String CITY_NAME = "Sidney";
+        preferencesManager.setCurrentCityName(CITY_NAME);
+
+        assertEquals(CITY_NAME, preferencesManager.getCurrentCityName());
+    }
 }

@@ -50,7 +50,7 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
         getCompositeDisposable().add(
                 interactor.requestPlaceDetails(placeId)
                 .subscribe(
-                        detailsResponse -> {
+                        () -> {
                             if (getView() != null) {
                                 getView().hideDetailsLoad();
                                 getView().showContainerData();

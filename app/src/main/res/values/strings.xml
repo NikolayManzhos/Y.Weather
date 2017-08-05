@@ -51,6 +51,6 @@
 
     <!--Units pressure description-->
     <string name="hPa">hPa</string>
-    <string name="bar">Bar</string>
+    <string name="bar">mBar</string>
 
 </resources>

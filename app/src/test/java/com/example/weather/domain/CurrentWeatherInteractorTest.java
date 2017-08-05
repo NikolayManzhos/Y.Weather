@@ -18,7 +18,7 @@ import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.when;
 
-public class CurrentWeatherModelInteractorTest {
+public class CurrentWeatherInteractorTest {
 
     @Mock
     private WeatherRepository weatherRepository;

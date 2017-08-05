@@ -38,7 +38,7 @@
 
     <!--Units pressure description-->
     <string name="hPa">гПа</string>
-    <string name="bar">Бар</string>
+    <string name="bar">мБар</string>
 
     <string name="minutes_15">15 минут</string>
     <string name="minutes_30">30 минут</string>
