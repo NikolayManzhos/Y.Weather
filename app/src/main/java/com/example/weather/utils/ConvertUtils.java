@@ -44,4 +44,8 @@ public class ConvertUtils {
                 return (int) round(windSpeed);
         }
     }
+
+    public int convertPressure(double pressure) {
+        return (int) round(pressure);
+    }
 }

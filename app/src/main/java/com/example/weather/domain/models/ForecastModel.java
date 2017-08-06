@@ -41,7 +41,7 @@ public class ForecastModel extends RealmObject {
         return longitude;
     }
 
-    public List<CurrentWeatherModel> getCurrentWeatherModels() {
+    public RealmList<CurrentWeatherModel> getCurrentWeatherModels() {
         return currentWeatherModels;
     }
 

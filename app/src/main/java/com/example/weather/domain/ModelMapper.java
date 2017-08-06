@@ -37,7 +37,7 @@ public class ModelMapper {
                         utils.convertTemperature(list.getTemp().getNight()),
                         utils.convertWindSpeed(list.getSpeed()),
                         list.getHumidity(),
-                        (int)list.getPressure() // TODO FOR TEST, FIX ASAP!!!
+                        utils.convertPressure(list.getPressure())
                 )));
         return new ForecastModel(preferencesManager.getCurrentCityName(),
                 weatherList,

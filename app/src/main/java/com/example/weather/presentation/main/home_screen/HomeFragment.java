@@ -3,40 +3,26 @@ package com.example.weather.presentation.main.home_screen;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.weather.R;
-import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
+import com.example.weather.presentation.main.detail_screen.DetailFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
-import static java.lang.String.valueOf;
-
 public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "tag_home_fragment";
 
-    @BindView(R.id.tv_temperature)
-    TextView tvTemperature;
-
-    @BindView(R.id.tv_city)
-    TextView tvCity;
-
-    @BindView(R.id.tv_weather)
-    TextView tvWeather;
-
-    @BindView(R.id.tv_wind)
-    TextView tvWind;
-
-    @BindView(R.id.iv_icon)
-    ImageView ivIcon;
+    @BindView(R.id.forecast_recycler_view)
+    RecyclerView forecastRecyclerView;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -44,10 +30,14 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Inject
     HomePresenter homePresenter;
 
+    @Inject
+    HomeAdapter homeAdapter;
+
+    private boolean twoPane;
+
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
 
     @Override
     protected int provideLayout() {
@@ -64,6 +54,21 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        if (view.findViewById(R.id.details_container) != null) {
+            twoPane = true;
+
+            if (savedInstanceState == null) {
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.details_container, DetailFragment.newInstance())
+                        .commit();
+            }
+
+            ((MainActivity) getActivity()).getSupportActionBar().setElevation(0f);
+        } else {
+            twoPane = false;
+        }
+        initRecyclerView();
     }
 
     @Override
@@ -84,6 +89,7 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Override
     public void showWeather(ForecastModel forecastModel) {
         getActivity().setTitle(forecastModel.getCityName());
+        homeAdapter.setData(forecastModel.getCurrentWeatherModels());
 //        tvCity.setText(currentWeatherModel.getCityName());
 //        tvTemperature.setText(valueOf(currentWeatherModel.getTemperature()));
 //        tvWeather.setText(currentWeatherModel.getCondition());
@@ -98,5 +104,11 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     @Override
     protected void inject() {
         ((MainActivity) getActivity()).getActivityComponent().plusFragmentComponent().inject(this);
+    }
+
+    private void initRecyclerView() {
+        homeAdapter.setUseTodayLayout(!twoPane);
+        forecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        forecastRecyclerView.setAdapter(homeAdapter);
     }
 }

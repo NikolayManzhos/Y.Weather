@@ -1,55 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/forecast_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:gravity="center"
-            android:id="@+id/tv_city"
-            android:textSize="30sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:gravity="center"
-            android:id="@+id/tv_temperature"
-            android:textSize="80sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_gravity="right"
-                android:id="@+id/iv_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
-
-            <TextView
-                android:gravity="center"
-                android:id="@+id/tv_weather"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:gravity="center"
-            android:id="@+id/tv_wind"
-            android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </android.support.v4.widget.SwipeRefreshLayout>
