@@ -29,6 +29,12 @@ public class MainPresenterTest {
     }
 
     @Test
+    public void checkSuggestSelection() {
+        presenter.selectSuggestScreen();
+        verify(router).showSuggestScreen();
+    }
+
+    @Test
     public void checkSettingsSelection() {
         presenter.selectedSettings();
         verify(router).showSettingsScreen();

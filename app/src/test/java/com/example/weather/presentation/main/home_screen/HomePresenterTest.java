@@ -40,15 +40,6 @@ public class HomePresenterTest {
     }
 
     @Test
-    public void callInteractorOnAttach() {
-        when(interactor.requestWeather(false))
-                .thenReturn(Observable.just(provideFilledModel()));
-        presenter.onAttach();
-
-        verify(interactor).requestWeather(false);
-    }
-
-    @Test
     public void getWeatherSuccess() {
         ForecastModel result = provideFilledModel();
         when(interactor.requestWeather(anyBoolean()))

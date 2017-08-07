@@ -10,7 +10,7 @@ import javax.inject.Inject;
 /**
  * Created on 8/6/2017.
  */
-
+//TODO implement layout and navigation
 public class DetailFragment extends BaseMainFragment {
 
     public static DetailFragment newInstance() {

@@ -2,8 +2,6 @@ package com.example.weather.presentation.main.home_screen;
 
 
 
-import android.util.Log;
-
 import com.example.weather.R;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.presentation.di.scope.PerFragment;
@@ -43,13 +41,4 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                 )
         );
     }
-
-
-    @Override
-    public void onAttach() {
-        getCurrentWeather(false);
-    }
-
-    @Override
-    public void onDetach() {}
 }

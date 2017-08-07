@@ -28,9 +28,9 @@ public abstract class BaseViewFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         getPresenter().setRouter(null);
         getPresenter().setView(null);
+        super.onDestroyView();
     }
 
     protected abstract BasePresenter getPresenter();

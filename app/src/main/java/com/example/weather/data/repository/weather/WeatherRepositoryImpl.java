@@ -34,8 +34,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
                 weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
                         .map(mapper::entityToModel)
                         .doOnSuccess(realmHelper::writeForecast);
-        Single<ForecastModel> cachedWeather =
-                Single.fromCallable(() -> realmHelper.readForecast(latitude, longitude))
+        Single<ForecastModel> cachedWeather = realmHelper.readForecast(latitude, longitude)
                         .onErrorReturnItem(new ForecastModel());
 
         return force ? networkWeather : Single.concat(cachedWeather, networkWeather)

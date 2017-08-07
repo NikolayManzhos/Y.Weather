@@ -57,12 +57,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int aPosition = holder.getAdapterPosition();
         switch (holder.getItemViewType()) {
             case TODAY:
                 TodayViewHolder todayViewHolder = (TodayViewHolder) holder;
+                configureTodayViewHolder(todayViewHolder, aPosition);
                 break;
             case FUTURE:
                 FutureViewHolder futureViewHolder = (FutureViewHolder) holder;
+                configureFutureViewHolder(futureViewHolder, aPosition);
                 break;
         }
     }
@@ -89,5 +92,19 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
+    }
+
+    private void configureTodayViewHolder(TodayViewHolder vh, int aPosition) {
+        CurrentWeatherModel currentWeather = items.get(aPosition);
+        vh.condition.setText(currentWeather.getCondition());
+        vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
+        vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
+    }
+
+    private void configureFutureViewHolder(FutureViewHolder vh, int aPosition) {
+        CurrentWeatherModel currentWeather = items.get(aPosition);
+        vh.condition.setText(currentWeather.getCondition());
+        vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
+        vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
     }
 }

@@ -14,7 +14,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.internal.operators.single.SingleAmb;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Matchers.any;
@@ -52,6 +54,7 @@ public class WeatherRepositoryTest {
         ForecastWeather forecastWeather = provideRandomResponse();
         ForecastModel forecastModel = provideRandomModel();
         when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.just(forecastWeather));
+        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(Single.just(new ForecastModel()));
         when(mapper.entityToModel(forecastWeather)).thenReturn(forecastModel);
 
         weatherRepository.getWeather(true)
@@ -63,7 +66,7 @@ public class WeatherRepositoryTest {
     @Test
     public void getWeatherLocalSuccess() {
         ForecastModel forecastModel = provideRandomModel();
-        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(forecastModel);
+        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(Single.just(forecastModel));
         when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.never());
 
         weatherRepository.getWeather(false)
@@ -75,7 +78,7 @@ public class WeatherRepositoryTest {
     @Test
     public void getWeatherLocalFailure() {
         Exception networkException = new Exception("Network exception");
-        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(new ForecastModel());
+        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(Single.error(new Exception()));
         when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.error(networkException));
 
         weatherRepository.getWeather(false)
@@ -88,7 +91,7 @@ public class WeatherRepositoryTest {
     public void getWeatherLocalRedirectToNetwork() {
         ForecastWeather networkResponse = provideRandomResponse();
         ForecastModel convertedResponse = provideRandomModel();
-        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(new ForecastModel());
+        when(realmHelper.readForecast(anyDouble(), anyDouble())).thenReturn(Single.error(new Exception()));
         when(api.getCurrentWeather(anyFloat(), anyFloat(), anyString())).thenReturn(Single.just(networkResponse));
         when(mapper.entityToModel(any(ForecastWeather.class))).thenReturn(convertedResponse);
 

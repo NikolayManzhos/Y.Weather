@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:src="@drawable/ic_clear_day"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <TextView
+        android:id="@+id/date"
         android:text="FUTURE"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_marginStart="16dp"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:layout_alignStart="@+id/date" />
+
+    <TextView
+        android:id="@+id/temperatureDay"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/temperatureNight"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/temperatureDay"
+        android:layout_alignStart="@+id/temperatureDay"/>
+
+</RelativeLayout>

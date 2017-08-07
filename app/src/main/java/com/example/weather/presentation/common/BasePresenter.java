@@ -12,8 +12,8 @@ public abstract class BasePresenter<View, Router> {
     public abstract void onDetach();
 
     public void setView(View view) {
-        this.view = view;
         if (view == null) compositeDisposable.clear();
+        this.view = view;
     }
 
     public View getView() {

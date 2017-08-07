@@ -31,9 +31,10 @@ public class CurrentWeatherInteractorImpl implements CurrentWeatherInteractor {
     public Observable<ForecastModel> requestWeather(boolean force) {
         if (force && weatherDisposable != null) {
             weatherDisposable.dispose();
+            weatherDisposable = null;
         }
-        if (weatherDisposable == null || weatherDisposable.isDisposed()) {
-            weatherReplaySubject = ReplaySubject.create(1);
+        if (weatherDisposable == null) {
+            weatherReplaySubject = ReplaySubject.create();
 
             weatherDisposable = weatherRepository.getWeather(force)
                     .compose(schedulerProvider.applyIoSchedulers())

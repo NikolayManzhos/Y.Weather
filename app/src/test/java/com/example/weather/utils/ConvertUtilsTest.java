@@ -57,4 +57,15 @@ public class ConvertUtilsTest {
         when(preferencesManager.getWindSpeedUnits()).thenReturn("knots");
         assertEquals(39, utils.convertWindSpeed(20.5));
     }
+
+    @Test
+    public void convertWindSpeedUnknown() {
+        when(preferencesManager.getWindSpeedUnits()).thenReturn("unknown");
+        assertEquals(11, utils.convertWindSpeed(11.4));
+    }
+
+    @Test
+    public void convertPressure() {
+        assertEquals(976, utils.convertPressure(976.45));
+    }
 }
