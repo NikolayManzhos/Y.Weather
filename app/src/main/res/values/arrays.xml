@@ -45,7 +45,7 @@
 
     <string-array name="units_pressure_description">
         <item>@string/hPa</item>
-        <item>@string/bar</item>
+        <item>@string/mbar</item>
     </string-array>
 
     <string-array name="units_pressure_values">

@@ -28,8 +28,15 @@ public class CurrentWeatherInteractorImpl implements CurrentWeatherInteractor {
     }
 
     @Override
-    public Observable<ForecastModel> requestWeather(boolean force) {
+    public Observable<ForecastModel> requestWeather(boolean force, boolean checkForCityChange) {
+        if (weatherDisposable != null && weatherReplaySubject.hasThrowable()) {
+            weatherDisposable.dispose();
+            weatherDisposable = null;
+        }
         if (force && weatherDisposable != null) {
+            weatherDisposable.dispose();
+            weatherDisposable = null;
+        } else if (!force && checkForCityChange && weatherDisposable != null) {
             weatherDisposable.dispose();
             weatherDisposable = null;
         }

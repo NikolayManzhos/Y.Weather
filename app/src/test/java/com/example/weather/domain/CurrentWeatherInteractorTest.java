@@ -36,7 +36,7 @@ public class CurrentWeatherInteractorTest {
         ForecastModel forecastModel = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
                 .thenReturn(Single.just(forecastModel));
-        interactor.requestWeather(true)
+        interactor.requestWeather(true, false)
                 .test()
                 .assertNoErrors()
                 .assertValueCount(1)
@@ -48,12 +48,45 @@ public class CurrentWeatherInteractorTest {
         ForecastModel response = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
                 .thenReturn(Single.just(response));
-        interactor.requestWeather(true);
+        interactor.requestWeather(true, false);
 
         ForecastModel response2 = provideFilledModel();
         when(weatherRepository.getWeather(anyBoolean()))
                 .thenReturn(Single.just(response2));
-        interactor.requestWeather(true)
+        interactor.requestWeather(true, false)
+                .test()
+                .assertNoErrors()
+                .assertValueCount(1)
+                .assertValues(response2);
+    }
+
+    @Test
+    public void requestWeatherTryAgainOnError() {
+        when(weatherRepository.getWeather(anyBoolean()))
+                .thenReturn(Single.error(new Exception()));
+        interactor.requestWeather(true, false);
+
+        ForecastModel response2 = provideFilledModel();
+        when(weatherRepository.getWeather(anyBoolean()))
+                .thenReturn(Single.just(response2));
+        interactor.requestWeather(true, false)
+                .test()
+                .assertNoErrors()
+                .assertValueCount(1)
+                .assertValues(response2);
+    }
+
+    @Test
+    public void requestWeatherCheckCache() {
+        ForecastModel response = provideFilledModel();
+        when(weatherRepository.getWeather(anyBoolean()))
+                .thenReturn(Single.just(response));
+        interactor.requestWeather(true, false);
+
+        ForecastModel response2 = provideFilledModel();
+        when(weatherRepository.getWeather(anyBoolean()))
+                .thenReturn(Single.just(response2));
+        interactor.requestWeather(false, true)
                 .test()
                 .assertNoErrors()
                 .assertValueCount(1)

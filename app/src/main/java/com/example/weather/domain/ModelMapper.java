@@ -33,11 +33,11 @@ public class ModelMapper {
                         list.getWeather().get(0).getMain(),
                         list.getDt(),
                         list.getWeather().get(0).getId(),
-                        utils.convertTemperature(list.getTemp().getDay()),
-                        utils.convertTemperature(list.getTemp().getNight()),
-                        utils.convertWindSpeed(list.getSpeed()),
+                        list.getTemp().getDay(),
+                        list.getTemp().getNight(),
+                        list.getSpeed(),
                         list.getHumidity(),
-                        utils.convertPressure(list.getPressure())
+                        list.getPressure()
                 )));
         return new ForecastModel(preferencesManager.getCurrentCityName(),
                 weatherList,

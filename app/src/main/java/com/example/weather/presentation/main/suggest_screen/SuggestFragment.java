@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.example.weather.R;
-import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;

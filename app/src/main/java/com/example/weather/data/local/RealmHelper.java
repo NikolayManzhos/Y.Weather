@@ -27,9 +27,13 @@ public class RealmHelper {
     public Single<ForecastModel> readForecast(double latitude, double longitude) {
         return Single.fromCallable(() -> {
             Realm realm = Realm.getDefaultInstance();
-            String primaryKey = String.valueOf(latitude) + String.valueOf(longitude);
-            ForecastModel forecastModel = realm.where(ForecastModel.class).equalTo("primaryKey", primaryKey).findFirst();
+            ForecastModel forecastModel = realm.where(ForecastModel.class)
+                    .equalTo("primaryKey", "forecast")
+                    .equalTo("latitude", latitude)
+                    .equalTo("longitude", longitude)
+                    .findFirst();
             if (forecastModel != null) {
+                Log.d("RealmHelper", "not null");
                 ForecastModel finalData = realm.copyFromRealm(forecastModel);
                 realm.close();
                 return finalData;

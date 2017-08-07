@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.weather.R;
@@ -14,13 +13,13 @@ import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
 import com.example.weather.presentation.main.detail_screen.DetailFragment;
+import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRefreshLayout.OnRefreshListener {
-    public static final String TAG = "tag_home_fragment";
 
     @BindView(R.id.forecast_recycler_view)
     RecyclerView forecastRecyclerView;
@@ -69,9 +68,9 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
         }
         initRecyclerView();
         if (savedInstanceState == null) {
-            homePresenter.getCurrentWeather(true);
+            homePresenter.getCurrentWeather(false, true);
         } else {
-            homePresenter.getCurrentWeather(false);
+            homePresenter.getCurrentWeather(false, false);
         }
     }
 
@@ -91,9 +90,9 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     }
 
     @Override
-    public void showWeather(ForecastModel forecastModel) {
-        getActivity().setTitle(forecastModel.getCityName());
-        homeAdapter.setData(forecastModel.getCurrentWeatherModels());
+    public void showWeather(HomeViewModel homeViewModel) {
+        getActivity().setTitle(homeViewModel.getCityName());
+        homeAdapter.setData(homeViewModel.getForecast());
 //        tvCity.setText(currentWeatherModel.getCityName());
 //        tvTemperature.setText(valueOf(currentWeatherModel.getTemperature()));
 //        tvWeather.setText(currentWeatherModel.getCondition());
@@ -102,7 +101,7 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
 
     @Override
     public void onRefresh() {
-        homePresenter.getCurrentWeather(true);
+        homePresenter.getCurrentWeather(true, false);
     }
 
     @Override

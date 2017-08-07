@@ -1,25 +1,39 @@
 package com.example.weather.utils;
 
 
+import android.content.Context;
+
+import com.example.weather.BuildConfig;
 import com.example.weather.R;
 import com.example.weather.data.local.PreferencesManager;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+//TODO Find way to provide resources for test runner
+@Ignore
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21, manifest = "src/main/AndroidManifest.xml", packageName = "com.example.weather")
 public class ConvertUtilsTest {
 
     private ConvertUtils utils;
     private PreferencesManager preferencesManager;
+    private Context context;
 
     @Before
     public void setup() {
         preferencesManager = mock(PreferencesManager.class);
-        utils = new ConvertUtils(preferencesManager);
+        context = RuntimeEnvironment.application.getApplicationContext();
+        utils = new ConvertUtils(preferencesManager, context.getResources());
     }
 
     @Test
@@ -67,5 +81,10 @@ public class ConvertUtilsTest {
     @Test
     public void convertPressure() {
         assertEquals(976, utils.convertPressure(976.45));
+    }
+
+    @Test
+    public void testCase() {
+        assertEquals("Weather", context.getString(R.string.app_name));
     }
 }

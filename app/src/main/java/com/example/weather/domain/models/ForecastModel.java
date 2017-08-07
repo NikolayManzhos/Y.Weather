@@ -26,7 +26,7 @@ public class ForecastModel extends RealmObject {
         this.currentWeatherModels = currentWeatherModels;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.primaryKey = String.valueOf(latitude) + String.valueOf(longitude);
+        this.primaryKey = "forecast";
     }
 
     public String getPrimaryKey() {

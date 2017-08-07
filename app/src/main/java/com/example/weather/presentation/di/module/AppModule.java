@@ -3,6 +3,7 @@ package com.example.weather.presentation.di.module;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
 import com.example.weather.data.local.PreferencesManager;
@@ -23,11 +24,17 @@ public class AppModule {
         this.application = application;
     }
 
-    @ApplicationContext
     @Singleton
+    @ApplicationContext
     @Provides
     Context provideContext() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    Resources provideResources() {
+        return application.getResources();
     }
 
     @Singleton

@@ -16,6 +16,11 @@ public class PreferencesManager {
         this.sharedPreferences = sharedPreferences;
     }
 
+    public String getPressureUnits() {
+        String UNITS_PRESSURE = "b_pressure";
+        return sharedPreferences.getString(UNITS_PRESSURE, "hpa");
+    }
+
     public String getWindSpeedUnits() {
         String UNITS_WIND_SPEED = "b_wind_speed";
         return sharedPreferences.getString(UNITS_WIND_SPEED, "meters");

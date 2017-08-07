@@ -14,9 +14,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.internal.operators.single.SingleAmb;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Matchers.any;

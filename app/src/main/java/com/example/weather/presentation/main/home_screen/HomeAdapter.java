@@ -12,25 +12,28 @@ import com.example.weather.presentation.di.ActivityContext;
 import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.home_screen.vh.FutureViewHolder;
 import com.example.weather.presentation.main.home_screen.vh.TodayViewHolder;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.RealmList;
 
 
 @PerFragment
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private RealmList<CurrentWeatherModel> items;
+    private List<WeatherViewModel> items;
 
     private final int TODAY =0, FUTURE = 1;
     private boolean useTodayLayout;
 
     @Inject
-    public HomeAdapter(@ActivityContext Context context) {
+    HomeAdapter(@ActivityContext Context context) {
         this.context = context;
-        items = new RealmList<>();
+        items = new ArrayList<>();
     }
 
     @Override
@@ -84,25 +87,27 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void setUseTodayLayout(boolean useTodayLayout) {
+    void setUseTodayLayout(boolean useTodayLayout) {
         this.useTodayLayout = useTodayLayout;
     }
 
-    public void setData(RealmList<CurrentWeatherModel> items) {
+    public void setData(List<WeatherViewModel> items) {
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
     }
 
     private void configureTodayViewHolder(TodayViewHolder vh, int aPosition) {
-        CurrentWeatherModel currentWeather = items.get(aPosition);
+        WeatherViewModel currentWeather = items.get(aPosition);
+        vh.icon.setImageResource(currentWeather.getIconId());
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
     }
 
     private void configureFutureViewHolder(FutureViewHolder vh, int aPosition) {
-        CurrentWeatherModel currentWeather = items.get(aPosition);
+        WeatherViewModel currentWeather = items.get(aPosition);
+        vh.icon.setImageResource(currentWeather.getIconId());
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));

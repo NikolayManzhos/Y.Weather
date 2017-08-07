@@ -39,6 +39,9 @@
     <string name="hour_12">12 hour</string>
     <string name="hour_24">24 hour</string>
 
+    <string name="percent" translatable="false">%d%%</string>
+    <string name="degree" translatable="false">%d°</string>
+
     <!-- Units temperature description-->
     <string name="celsius" translatable="false">°C</string>
     <string name="fahrenheit" translatable="false">°F</string>
@@ -51,6 +54,6 @@
 
     <!--Units pressure description-->
     <string name="hPa">hPa</string>
-    <string name="bar">mBar</string>
+    <string name="mbar">mBar</string>
 
 </resources>
