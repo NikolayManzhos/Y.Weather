@@ -2,12 +2,11 @@ package com.example.weather.data.repository.suggest;
 
 
 import com.example.weather.BuildConfig;
+import com.example.weather.data.entities.autocomplete.SuggestResponse;
 import com.example.weather.data.entities.details.Location;
 import com.example.weather.data.entities.details.Result;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.network.PlacesApi;
-import com.example.weather.data.entities.autocomplete.SuggestResponse;
-import com.example.weather.data.entities.details.DetailsResponse;
 
 import java.util.Locale;
 

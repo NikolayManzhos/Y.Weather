@@ -6,7 +6,6 @@ import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.utils.ConvertUtils;
 
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

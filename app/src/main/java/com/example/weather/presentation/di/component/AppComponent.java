@@ -1,7 +1,5 @@
 package com.example.weather.presentation.di.component;
 
-import android.content.Context;
-
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.domain.interactor.SuggestViewInteractor;
@@ -21,6 +19,6 @@ public interface AppComponent {
     PreferencesManager preferencesManager();
     CurrentWeatherInteractor currentWeatherInteractor();
     SuggestViewInteractor suggestViewInteractor();
-    ViewModelMapper viewModdelMapper();
+    ViewModelMapper viewModelMapper();
     void inject(WeatherJob weatherJob);
 }

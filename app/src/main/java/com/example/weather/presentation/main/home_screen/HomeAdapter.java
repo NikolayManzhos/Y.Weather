@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.weather.R;
-import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.presentation.di.ActivityContext;
 import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.home_screen.vh.FutureViewHolder;

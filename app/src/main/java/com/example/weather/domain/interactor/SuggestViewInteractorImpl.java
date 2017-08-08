@@ -1,8 +1,7 @@
 package com.example.weather.domain.interactor;
 
-import com.example.weather.data.repository.suggest.PlacesRepository;
 import com.example.weather.data.entities.autocomplete.SuggestResponse;
-import com.example.weather.data.entities.details.DetailsResponse;
+import com.example.weather.data.repository.suggest.PlacesRepository;
 import com.example.weather.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;

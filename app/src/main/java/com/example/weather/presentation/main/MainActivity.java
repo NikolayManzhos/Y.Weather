@@ -3,7 +3,6 @@ package com.example.weather.presentation.main;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +25,7 @@ import com.example.weather.presentation.main.home_screen.HomeFragment;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
 import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -159,7 +159,7 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void showError(@StringRes int message) {}
+    public void showError() {}
 
     @Override
     public void showLoad() {}

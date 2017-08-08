@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.weather.R;
-import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
@@ -93,10 +92,6 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     public void showWeather(HomeViewModel homeViewModel) {
         getActivity().setTitle(homeViewModel.getCityName());
         homeAdapter.setData(homeViewModel.getForecast());
-//        tvCity.setText(currentWeatherModel.getCityName());
-//        tvTemperature.setText(valueOf(currentWeatherModel.getTemperature()));
-//        tvWeather.setText(currentWeatherModel.getCondition());
-//        tvWind.setText(valueOf(currentWeatherModel.getWindSpeed()));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.weather.utils;
 
-import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.weather.R;
@@ -9,7 +8,7 @@ import com.example.weather.data.local.PreferencesManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static java.lang.Math.*;
+import static java.lang.Math.round;
 
 @Singleton
 public class ConvertUtils {

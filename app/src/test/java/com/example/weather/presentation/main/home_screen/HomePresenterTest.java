@@ -67,7 +67,7 @@ public class HomePresenterTest {
         presenter.getCurrentWeather(true, false);
         verify(view).showLoad();
 
-        verify(view).showError(anyInt());
+        verify(view).showError();
         verify(view).hideLoad();
     }
 

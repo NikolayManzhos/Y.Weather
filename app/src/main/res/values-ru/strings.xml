@@ -11,6 +11,7 @@
     <!--Suggest fragment-->
     <string name="suggest_toolbar_title">Выберите местоположение</string>
     <string name="suggest_edit_text_hint">Введите город</string>
+    <string name="suggest_error_message">Что-то пошло не так :( Пожалуйста, попробуйте еще раз.</string>
 
     <!--Settings strings -->
     <string name="settings_toolbar_title">Настройки</string>

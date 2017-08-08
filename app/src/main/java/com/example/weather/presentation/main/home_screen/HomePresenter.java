@@ -1,8 +1,6 @@
 package com.example.weather.presentation.main.home_screen;
 
 
-
-import com.example.weather.R;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.common.BaseMainPresenter;
@@ -38,7 +36,7 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                             }
                         }, throwable -> {
                             if (getView() != null) {
-                                getView().showError(R.string.error);
+                                getView().showError();
                                 getView().hideLoad();
                             }
                         }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.weather.R;
 import com.example.weather.presentation.common.BasePresenter;
@@ -147,6 +148,11 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
     @Override
     public void showSuggestionList(SuggestViewModel suggestViewModel) {
         adapter.setData(suggestViewModel.getPredictions());
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getContext().getApplicationContext(), R.string.suggest_error_message, Toast.LENGTH_LONG).show();
     }
 
     @Override
