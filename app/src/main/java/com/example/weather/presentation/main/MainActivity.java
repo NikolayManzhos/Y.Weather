@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
@@ -21,7 +22,9 @@ import com.example.weather.presentation.di.component.ActivityComponent;
 import com.example.weather.presentation.di.component.DaggerActivityComponent;
 import com.example.weather.presentation.di.module.ActivityModule;
 import com.example.weather.presentation.main.aboutapp_screen.AboutAppFragment;
+import com.example.weather.presentation.main.detail_screen.DetailFragment;
 import com.example.weather.presentation.main.home_screen.HomeFragment;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
 import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity
     private ActivityComponent activityComponent;
 
     private DrawerArrowDrawable homeDrawable;
+    private RecyclerView favoritesRecyclerView;
     private boolean isHomeAsUp = false;
 
     @Override
@@ -77,6 +81,7 @@ public class MainActivity extends BaseActivity
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         navigationView.setNavigationItemSelectedListener(this);
+        favoritesRecyclerView = navigationView.findViewById(R.id.favoritesRecyclerView);
 
         if (savedInstanceState == null) {
             checkFirstTimeUser();
@@ -156,6 +161,11 @@ public class MainActivity extends BaseActivity
     @Override
     public void showAboutApplicationScreen() {
         replaceFragment(R.id.fl_main_frame, AboutAppFragment.newInstance(), true);
+    }
+
+    @Override
+    public void showDetailsScreen(WeatherViewModel weatherViewModel) {
+        replaceFragment(R.id.fl_main_frame, DetailFragment.newInstance(weatherViewModel), true);
     }
 
     @Override

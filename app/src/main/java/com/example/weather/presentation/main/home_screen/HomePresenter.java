@@ -5,6 +5,7 @@ import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.presentation.di.scope.PerFragment;
 import com.example.weather.presentation.main.common.BaseMainPresenter;
 import com.example.weather.presentation.main.common.ViewModelMapper;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
 
 import javax.inject.Inject;
 
@@ -42,5 +43,9 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                         }
                 )
         );
+    }
+
+    public void showDetailsScreen(WeatherViewModel weatherViewModel) {
+        getRouter().showDetailsScreen(weatherViewModel);
     }
 }

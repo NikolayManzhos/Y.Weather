@@ -29,7 +29,7 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
     private OnPlaceClickListener placeClickListener;
 
     @Inject
-    public SuggestAdapter(@ActivityContext Context context) {
+    SuggestAdapter(@ActivityContext Context context) {
         this.context = context;
         predictions = new LinkedList<>();
     }

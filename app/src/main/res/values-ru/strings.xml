@@ -5,6 +5,11 @@
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
 
+    <!--Details strings-->
+    <string name="details_humidity">Влажность</string>
+    <string name="details_wind_speed">Скорость ветра</string>
+    <string name="details_pressure">Давление</string>
+
     <!--Home strings-->
     <string name="home_toolbar_title">Обзор</string>
 

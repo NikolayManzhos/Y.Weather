@@ -12,6 +12,11 @@
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about_app">About application</string>
 
+    <!--Details strings-->
+    <string name="details_humidity">Humidity</string>
+    <string name="details_wind_speed">Wind Speed</string>
+    <string name="details_pressure">Pressure</string>
+
     <!--Home strings-->
     <string name="home_toolbar_title">Overview</string>
 

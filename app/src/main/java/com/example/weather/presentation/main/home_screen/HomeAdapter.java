@@ -1,10 +1,12 @@
 package com.example.weather.presentation.main.home_screen;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.weather.R;
 import com.example.weather.presentation.di.ActivityContext;
@@ -29,6 +31,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TODAY =0, FUTURE = 1;
     private boolean useTodayLayout;
 
+    private OnDayClickListener onDayClickListener;
+
     @Inject
     HomeAdapter(@ActivityContext Context context) {
         this.context = context;
@@ -39,19 +43,18 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(context);
-
         switch (viewType) {
             case TODAY:
                 View vToday = inflater.inflate(R.layout.item_forecast_today, parent, false);
-                viewHolder = new TodayViewHolder(vToday);
+                viewHolder = createTodayViewHolder(vToday);
                 break;
             case FUTURE:
                 View vFuture = inflater.inflate(R.layout.item_forecast_future, parent, false);
-                viewHolder = new FutureViewHolder(vFuture);
+                viewHolder = createFutureViewHolder(vFuture);
                 break;
             default:
                 View vTodayDefault = inflater.inflate(R.layout.item_forecast_today, parent, false);
-                viewHolder = new TodayViewHolder(vTodayDefault);
+                viewHolder = createTodayViewHolder(vTodayDefault);
                 break;
         }
         return viewHolder;
@@ -96,9 +99,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    void setOnDayClickListener(OnDayClickListener onDayClickListener) {
+        this.onDayClickListener = onDayClickListener;
+    }
+
     private void configureTodayViewHolder(TodayViewHolder vh, int aPosition) {
         WeatherViewModel currentWeather = items.get(aPosition);
         vh.icon.setImageResource(currentWeather.getIconId());
+        final String transitionName = "weather_image" + String.valueOf(aPosition);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            vh.icon.setTransitionName(transitionName);
+        }
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
@@ -110,5 +121,25 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
+    }
+
+    private TodayViewHolder createTodayViewHolder(View v) {
+        TodayViewHolder viewHolder = new TodayViewHolder(v);
+        viewHolder.todayContainer
+                .setOnClickListener(view -> onDayClickListener
+                        .onDayClick(items.get(viewHolder.getAdapterPosition())));
+        return viewHolder;
+    }
+
+    private FutureViewHolder createFutureViewHolder(View v) {
+        FutureViewHolder viewHolder = new FutureViewHolder(v);
+        viewHolder.futureContainer
+                .setOnClickListener(view -> onDayClickListener
+                        .onDayClick(items.get(viewHolder.getAdapterPosition())));
+        return viewHolder;
+    }
+
+    interface OnDayClickListener {
+        void onDayClick(WeatherViewModel weatherViewModel);
     }
 }

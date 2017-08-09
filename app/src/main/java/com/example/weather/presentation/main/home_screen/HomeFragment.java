@@ -2,6 +2,7 @@ package com.example.weather.presentation.main.home_screen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,18 +14,24 @@ import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
 import com.example.weather.presentation.main.detail_screen.DetailFragment;
 import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseMainFragment
+        implements HomeView, SwipeRefreshLayout.OnRefreshListener, HomeAdapter.OnDayClickListener {
 
     @BindView(R.id.forecast_recycler_view)
     RecyclerView forecastRecyclerView;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.favoriteFab)
+    FloatingActionButton favorite;
 
     @Inject
     HomePresenter homePresenter;
@@ -33,6 +40,7 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
     HomeAdapter homeAdapter;
 
     private boolean twoPane;
+    private boolean backFromDetails = false;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -57,17 +65,19 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
         if (view.findViewById(R.id.details_container) != null) {
             twoPane = true;
 
-            if (savedInstanceState == null) {
-                getChildFragmentManager().beginTransaction()
-                        .replace(R.id.details_container, DetailFragment.newInstance())
-                        .commit();
-            }
+//            if (savedInstanceState == null) {
+//                getChildFragmentManager().beginTransaction()
+//                        .replace(R.id.details_container, DetailFragment.newInstance())
+//                        .commit();
+//            }
         } else {
             twoPane = false;
         }
         initRecyclerView();
-        if (savedInstanceState == null) {
+        initFavoriteFab();
+        if (savedInstanceState == null && !backFromDetails) {
             homePresenter.getCurrentWeather(false, true);
+            backFromDetails = false;
         } else {
             homePresenter.getCurrentWeather(false, false);
         }
@@ -99,6 +109,23 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
         homePresenter.getCurrentWeather(true, false);
     }
 
+    @OnClick(R.id.favoriteFab)
+    void onFavoriteClick() {
+
+    }
+
+    @Override
+    public void onDayClick(WeatherViewModel weatherViewModel) {
+        if (twoPane) {
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.details_container, DetailFragment.newInstance(weatherViewModel))
+                    .commit();
+        } else {
+            backFromDetails = true;
+            homePresenter.showDetailsScreen(weatherViewModel);
+        }
+    }
+
     @Override
     protected void inject() {
         ((MainActivity) getActivity()).getActivityComponent().plusFragmentComponent().inject(this);
@@ -106,7 +133,31 @@ public class HomeFragment extends BaseMainFragment implements HomeView, SwipeRef
 
     private void initRecyclerView() {
         homeAdapter.setUseTodayLayout(!twoPane);
+        homeAdapter.setOnDayClickListener(this);
         forecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         forecastRecyclerView.setAdapter(homeAdapter);
+        if (!twoPane) {
+            forecastRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    if (dy >0) {
+                        if (favorite.isShown()) {
+                            favorite.hide();
+                        }
+                    }
+                    else if (dy <0) {
+                        if (!favorite.isShown()) {
+                            favorite.show();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private void initFavoriteFab() {
+        favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
     }
 }
