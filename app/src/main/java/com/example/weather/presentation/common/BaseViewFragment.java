@@ -12,22 +12,12 @@ public abstract class BaseViewFragment extends BaseFragment {
         inject();
         getPresenter().setView(this);
         getPresenter().setRouter(getActivity());
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         getPresenter().onAttach();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        getPresenter().onDetach();
-    }
-
-    @Override
     public void onDestroyView() {
+        getPresenter().onDetach();
         getPresenter().setRouter(null);
         getPresenter().setView(null);
         super.onDestroyView();

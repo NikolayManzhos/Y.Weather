@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.presentation.di.ApplicationContext;
+import com.example.weather.utils.rx.AppMainScheduler;
 import com.example.weather.utils.rx.AppSchedulerProvider;
+import com.example.weather.utils.rx.MainScheduler;
 import com.example.weather.utils.rx.SchedulerProvider;
 
 import javax.inject.Singleton;
@@ -47,5 +49,11 @@ public class AppModule {
     @Provides
     SchedulerProvider provideSchedulers() {
         return new AppSchedulerProvider();
+    }
+
+    @Singleton
+    @Provides
+    MainScheduler provideMainScheduler() {
+        return new AppMainScheduler();
     }
 }

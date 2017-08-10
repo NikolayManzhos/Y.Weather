@@ -7,6 +7,7 @@ import com.example.weather.data.network.WeatherApi;
 import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.data.repository.weather.WeatherRepositoryImpl;
 import com.example.weather.domain.ModelMapper;
+import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.domain.models.ForecastModel;
 
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
@@ -97,6 +99,43 @@ public class WeatherRepositoryTest {
                 .test()
                 .assertNoErrors()
                 .assertValue(convertedResponse);
+    }
+
+    @Test
+    public void writePlaceToFavoriteCall() {
+        when(preferencesManager.getCurrentCityName()).thenReturn("Moscow");
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(35.4f);
+        when(realmHelper.writeFavoritePlace(any(FavoritePlace.class))).thenReturn(Completable.complete());
+
+        weatherRepository.writeCurrentPlaceToFavorites()
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+    }
+
+    @Test
+    public void deleteCurrentPlaceFromFavoritesCall() {
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5f);
+        when(realmHelper.removeFavoritePlace(anyDouble(), anyDouble())).thenReturn(Completable.complete());
+
+        weatherRepository.deleteCurrentPlaceFromFavorites()
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+    }
+
+    @Test
+    public void checkIsCurrentPlaceFavorite() {
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5f);
+        when(realmHelper.checkCurrentPlaceInFavorites(anyDouble(), anyDouble())).thenReturn(Single.just(true));
+
+        weatherRepository.checkIsCurrentPlaceFavorite()
+                .test()
+                .assertNoErrors()
+                .assertValue(true);
     }
 
     private ForecastWeather provideRandomResponse() {

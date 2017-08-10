@@ -30,7 +30,7 @@ public class WeatherJob extends Job {
             result = Result.SUCCESS;
         }, throwable -> {
             Log.i(TAG, "onRunJob: error" + throwable.getMessage());
-            result = Result.RESCHEDULE;
+            result = Result.FAILURE;
         });
         return result;
     }

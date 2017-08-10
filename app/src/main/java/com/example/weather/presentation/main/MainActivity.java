@@ -8,14 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
 import com.example.weather.R;
 import com.example.weather.WeatherApp;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.presentation.android_job.WeatherJob;
 import com.example.weather.presentation.common.BaseActivity;
 import com.example.weather.presentation.di.component.ActivityComponent;
@@ -29,13 +32,16 @@ import com.example.weather.presentation.main.settings_screen.SettingsFragment;
 import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
-        implements MainRouter, MainView, NavigationView.OnNavigationItemSelectedListener, OnCityChangeListener, FragmentManager.OnBackStackChangedListener {
+        implements MainRouter, MainView, NavigationView.OnNavigationItemSelectedListener,
+        OnCityChangeListener, FragmentManager.OnBackStackChangedListener, FavoritesAdapter.OnFavoriteClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -48,6 +54,9 @@ public class MainActivity extends BaseActivity
 
     @Inject
     MainPresenter mainPresenter;
+
+    @Inject
+    FavoritesAdapter adapter;
 
     @Inject
     PreferencesManager preferencesManager;
@@ -64,6 +73,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_navigation);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        initFavoriteRecyclerView();
 
         homeDrawable = new DrawerArrowDrawable(toolbar.getContext());
         toolbar.setNavigationIcon(homeDrawable);
@@ -90,6 +100,7 @@ public class MainActivity extends BaseActivity
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             setHomeAsUp(true);
         }
+        mainPresenter.requestFavoriteItems();
     }
 
     @Override
@@ -138,7 +149,6 @@ public class MainActivity extends BaseActivity
                 break;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -150,7 +160,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showSuggestScreen() {
-        replaceFragment(R.id.fl_main_frame, SuggestFragment.newInstance(), false);
+        replaceFragment(R.id.fl_main_frame, SuggestFragment.newInstance(), true);
     }
 
     @Override
@@ -178,9 +188,31 @@ public class MainActivity extends BaseActivity
     public void hideLoad() {}
 
     @Override
+    public void displayFavoriteItems(List<FavoritePlace> favoritePlaces) {
+        Log.d("MainView", String.valueOf(favoritePlaces.size()));
+        adapter.setData(favoritePlaces);
+    }
+
+    @Override
     public void cityChanged() {
         navigationView.setCheckedItem(R.id.nav_home);
-        getPresenter().selectedHome();
+        onBackPressed();
+    }
+
+    @Override
+    public void onFavoriteClick(FavoritePlace favoritePlace) {
+        drawer.closeDrawer(GravityCompat.START);
+        mainPresenter.changeCurrentPlace(favoritePlace);
+    }
+
+    @Override
+    public void onFavoriteRemoveClick(int position, FavoritePlace favoritePlace) {
+        mainPresenter.removePlaceFromFavorites(favoritePlace, position);
+    }
+
+    @Override
+    public void confirmFavoriteRemoved(int position) {
+        adapter.removeItem(position);
     }
 
     @Override
@@ -219,5 +251,12 @@ public class MainActivity extends BaseActivity
             anim.setDuration(400);
             anim.start();
         }
+    }
+
+    private void initFavoriteRecyclerView() {
+        favoritesRecyclerView = navigationView.getHeaderView(0).findViewById(R.id.favoritesRecyclerView);
+        favoritesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        favoritesRecyclerView.setAdapter(adapter);
+        adapter.setOnFavoriteClickListener(this);
     }
 }

@@ -5,8 +5,10 @@ import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.WeatherApi;
 import com.example.weather.domain.ModelMapper;
+import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.domain.models.ForecastModel;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class WeatherRepositoryImpl implements WeatherRepository {
@@ -41,4 +43,26 @@ public class WeatherRepositoryImpl implements WeatherRepository {
                 .filter(forecastModel -> forecastModel.getCurrentWeatherModels() != null).firstOrError();
     }
 
+    @Override
+    public Completable writeCurrentPlaceToFavorites() {
+        String name = preferencesManager.getCurrentCityName();
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        FavoritePlace favoritePlace = new FavoritePlace(name, latitude, longitude);
+        return realmHelper.writeFavoritePlace(favoritePlace);
+    }
+
+    @Override
+    public Completable deleteCurrentPlaceFromFavorites() {
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        return realmHelper.removeFavoritePlace(latitude, longitude);
+    }
+
+    @Override
+    public Single<Boolean> checkIsCurrentPlaceFavorite() {
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        return realmHelper.checkCurrentPlaceInFavorites(latitude, longitude);
+    }
 }

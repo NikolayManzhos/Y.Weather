@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.weather.R;
@@ -41,6 +42,7 @@ public class HomeFragment extends BaseMainFragment
 
     private boolean twoPane;
     private boolean backFromDetails = false;
+    private boolean isFavorite;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -74,13 +76,13 @@ public class HomeFragment extends BaseMainFragment
             twoPane = false;
         }
         initRecyclerView();
-        initFavoriteFab();
         if (savedInstanceState == null && !backFromDetails) {
             homePresenter.getCurrentWeather(false, true);
-            backFromDetails = false;
         } else {
             homePresenter.getCurrentWeather(false, false);
+            backFromDetails = false;
         }
+        homePresenter.checkCurrentPlaceFavoriteStatus();
     }
 
     @Override
@@ -105,13 +107,23 @@ public class HomeFragment extends BaseMainFragment
     }
 
     @Override
+    public void setFavoriteStatus(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        favorite.setImageResource(isFavorite ? R.drawable.ic_favorite_black_24dp : R.drawable.ic_favorite_border_black_24dp);
+    }
+
+    @Override
     public void onRefresh() {
         homePresenter.getCurrentWeather(true, false);
     }
 
     @OnClick(R.id.favoriteFab)
     void onFavoriteClick() {
-
+        if (isFavorite) {
+            homePresenter.removeCurrentPlaceFromFavorites();
+        } else {
+            homePresenter.addCurrentPlaceToFavorites();
+        }
     }
 
     @Override
@@ -136,28 +148,5 @@ public class HomeFragment extends BaseMainFragment
         homeAdapter.setOnDayClickListener(this);
         forecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         forecastRecyclerView.setAdapter(homeAdapter);
-        if (!twoPane) {
-            forecastRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    if (dy >0) {
-                        if (favorite.isShown()) {
-                            favorite.hide();
-                        }
-                    }
-                    else if (dy <0) {
-                        if (!favorite.isShown()) {
-                            favorite.show();
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    private void initFavoriteFab() {
-        favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
     }
 }

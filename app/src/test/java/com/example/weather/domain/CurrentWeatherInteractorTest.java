@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
@@ -91,6 +92,36 @@ public class CurrentWeatherInteractorTest {
                 .assertNoErrors()
                 .assertValueCount(1)
                 .assertValues(response2);
+    }
+
+    @Test
+    public void addToFavoritesSuccess() {
+        when(weatherRepository.writeCurrentPlaceToFavorites()).thenReturn(Completable.complete());
+
+        interactor.addToFavorites()
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+    }
+
+    @Test
+    public void removeFromFavoritesSuccess() {
+        when(weatherRepository.deleteCurrentPlaceFromFavorites()).thenReturn(Completable.complete());
+
+        interactor.removeFromFavorites()
+                .test()
+                .assertNoErrors()
+                .assertComplete();
+    }
+
+    @Test
+    public void checkCurrentPlaceInFavoritesSuccess() {
+        when(weatherRepository.checkIsCurrentPlaceFavorite()).thenReturn(Single.just(true));
+
+        interactor.checkCurrentPlaceInFavorites()
+                .test()
+                .assertNoErrors()
+                .assertValue(true);
     }
 
     private ForecastModel provideFilledModel() {

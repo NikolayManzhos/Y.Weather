@@ -111,4 +111,10 @@ public class PreferencesManagerTest {
 
         assertEquals(CITY_NAME, preferencesManager.getCurrentCityName());
     }
+
+    @Test
+    public void checkPressureDefault() {
+        String DEFAULT_PRESSURE = "hpa";
+        assertEquals(DEFAULT_PRESSURE, preferencesManager.getPressureUnits());
+    }
 }

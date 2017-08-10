@@ -5,4 +5,5 @@ import com.example.weather.presentation.main.home_screen.view_model.HomeViewMode
 
 public interface HomeView extends BaseMainView {
     void showWeather(HomeViewModel viewModel);
+    void setFavoriteStatus(boolean isFavorite);
 }

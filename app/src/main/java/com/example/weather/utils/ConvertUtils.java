@@ -45,23 +45,23 @@ public class ConvertUtils {
         switch (preferencesManager.getWindSpeedUnits()) {
             case "meters":
                 speed = (int) round(windSpeed);
-                result = String.valueOf(speed) + resources.getString(R.string.meters);
+                result = String.valueOf(speed) + " " + resources.getString(R.string.meters);
                 break;
             case "kilometers":
                 speed = (int) round(3.6*windSpeed);
-                result = String.valueOf(speed) + resources.getString(R.string.kilometers);
+                result = String.valueOf(speed) + " " +resources.getString(R.string.kilometers);
                 break;
             case "miles":
                 speed = (int) round(2.237*windSpeed);
-                result = String.valueOf(speed) + resources.getString(R.string.miles);
+                result = String.valueOf(speed) + " " + resources.getString(R.string.miles);
                 break;
             case "knots":
                 speed = (int) round(1.9*windSpeed);
-                result = String.valueOf(speed) + resources.getString(R.string.knots);
+                result = String.valueOf(speed) + " " + resources.getString(R.string.knots);
                 break;
             default:
                 speed = (int) round(windSpeed);
-                result = String.valueOf(speed) + resources.getString(R.string.meters);
+                result = String.valueOf(speed) + " " + resources.getString(R.string.meters);
                 break;
         }
         return result;
@@ -72,13 +72,13 @@ public class ConvertUtils {
         int pressureInt = (int) round(pressure);
         switch (preferencesManager.getPressureUnits()) {
             case "hpa":
-                result = String.valueOf(pressureInt) + resources.getString(R.string.hPa);
+                result = String.valueOf(pressureInt) + " " + resources.getString(R.string.hPa);
                 break;
             case "mbar":
-                result = String.valueOf(pressureInt) + resources.getString(R.string.mbar);
+                result = String.valueOf(pressureInt) + " " + resources.getString(R.string.mbar);
                 break;
             default:
-                result = String.valueOf(pressureInt) + resources.getString(R.string.hPa);
+                result = String.valueOf(pressureInt) +  " " + resources.getString(R.string.hPa);
                 break;
         }
         return result;

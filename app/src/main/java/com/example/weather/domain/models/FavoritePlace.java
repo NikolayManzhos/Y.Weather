@@ -1,11 +1,12 @@
 package com.example.weather.domain.models;
 
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 import static java.lang.String.*;
 
-public class FavoritePlace {
+public class FavoritePlace extends RealmObject {
 
     @PrimaryKey
     private String primaryKey;
@@ -21,6 +22,8 @@ public class FavoritePlace {
         this.longitude = longitude;
         this.primaryKey = valueOf(latitude) + valueOf(longitude);
     }
+
+    public FavoritePlace() {}
 
     public String getPrimaryKey() {
         return primaryKey;

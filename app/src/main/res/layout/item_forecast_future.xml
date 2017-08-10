@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:clickable="true"
     android:padding="16dp">
 
     <ImageView
@@ -39,10 +38,10 @@
 
     <TextView
         android:id="@+id/temperatureNight"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/temperatureDay"
-        android:layout_alignStart="@+id/temperatureDay"/>
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

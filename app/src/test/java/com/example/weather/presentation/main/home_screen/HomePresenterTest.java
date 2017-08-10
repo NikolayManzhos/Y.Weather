@@ -4,8 +4,11 @@ package com.example.weather.presentation.main.home_screen;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.domain.models.ForecastModel;
+import com.example.weather.presentation.main.MainRouter;
 import com.example.weather.presentation.main.common.ViewModelMapper;
 import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
+import com.example.weather.utils.rx.RxBus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,14 +36,21 @@ public class HomePresenterTest {
     @Mock
     private HomeView view;
 
+    @Mock
+    private MainRouter mainRouter;
+
+    @Mock
+    private RxBus rxBus;
+
     private HomePresenter presenter;
     private TestScheduler testScheduler;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        presenter = new HomePresenter(interactor, viewModelMapper);
+        presenter = new HomePresenter(interactor, viewModelMapper, rxBus);
         presenter.setView(view);
+        presenter.setRouter(mainRouter);
         testScheduler = new TestScheduler();
     }
 
@@ -72,11 +82,23 @@ public class HomePresenterTest {
     }
 
     @Test
+    public void showDetailScreen() {
+        WeatherViewModel weatherViewModel = provideFilledWeatherViewModel();
+        presenter.showDetailsScreen(weatherViewModel);
+        verify(mainRouter).showDetailsScreen(weatherViewModel);
+    }
+
+    @Test
     public void detachPresenter() {
         presenter.onDetach();
+        verify(rxBus).unsubscribe(presenter);
     }
 
     private ForecastModel provideFilledModel() {
         return random(ForecastModel.class);
+    }
+
+    private WeatherViewModel provideFilledWeatherViewModel() {
+        return random(WeatherViewModel.class);
     }
 }

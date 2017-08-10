@@ -7,7 +7,9 @@ import com.example.weather.utils.rx.SchedulerProvider;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.ReplaySubject;
 
@@ -48,5 +50,23 @@ public class CurrentWeatherInteractorImpl implements CurrentWeatherInteractor {
                     .subscribe(weatherReplaySubject::onNext, weatherReplaySubject::onError);
         }
         return weatherReplaySubject;
+    }
+
+    @Override
+    public Completable addToFavorites() {
+        return weatherRepository.writeCurrentPlaceToFavorites()
+                .compose(schedulerProvider.applyIoSchedulersCompletable());
+    }
+
+    @Override
+    public Completable removeFromFavorites() {
+        return weatherRepository.deleteCurrentPlaceFromFavorites()
+                .compose(schedulerProvider.applyIoSchedulersCompletable());
+    }
+
+    @Override
+    public Single<Boolean> checkCurrentPlaceInFavorites() {
+        return weatherRepository.checkIsCurrentPlaceFavorite()
+                .compose(schedulerProvider.applyIoSchedulers());
     }
 }

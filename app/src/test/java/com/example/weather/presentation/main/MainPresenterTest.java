@@ -1,6 +1,9 @@
 package com.example.weather.presentation.main;
 
 
+import com.example.weather.domain.interactor.MainViewInteractor;
+import com.example.weather.utils.rx.RxBus;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,12 +16,18 @@ public class MainPresenterTest {
     @Mock
     private MainRouter router;
 
+    @Mock
+    private MainViewInteractor interactor;
+
+    @Mock
+    private RxBus rxBus;
+
     private MainPresenter presenter;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        presenter = new MainPresenter();
+        presenter = new MainPresenter(interactor, rxBus);
         presenter.setRouter(router);
     }
 
