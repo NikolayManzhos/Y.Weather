@@ -83,6 +83,7 @@ public class RealmHelper {
                     .equalTo("latitude", latitude)
                     .equalTo("longitude", longitude)
                     .findFirst();
+            realm.close();
             return place != null;
         });
     }

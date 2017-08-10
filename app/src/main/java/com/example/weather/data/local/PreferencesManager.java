@@ -1,5 +1,6 @@
 package com.example.weather.data.local;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 public class PreferencesManager {
@@ -44,8 +45,9 @@ public class PreferencesManager {
         sharedPreferences.edit().putBoolean(FIRST_TIME_USE, status).apply();
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentLatitude(double latitude) {
-        sharedPreferences.edit().putFloat(LAT, (float) latitude).apply();
+        sharedPreferences.edit().putFloat(LAT, (float) latitude).commit();
     }
 
     public float getCurrentLatitude() {
@@ -53,8 +55,9 @@ public class PreferencesManager {
         return sharedPreferences.getFloat(LAT, (float) 55.7558);
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentLongitude(double longitude) {
-        sharedPreferences.edit().putFloat(LNG, (float) longitude).apply();
+        sharedPreferences.edit().putFloat(LNG, (float) longitude).commit();
     }
 
     public float getCurrentLongitude() {
@@ -62,8 +65,9 @@ public class PreferencesManager {
         return sharedPreferences.getFloat(LNG, (float) 37.6173);
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentCityName(String cityName) {
-        sharedPreferences.edit().putString(CURRENT_NAME, cityName).apply();
+        sharedPreferences.edit().putString(CURRENT_NAME, cityName).commit();
     }
 
     public String getCurrentCityName() {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class HomeFragment extends BaseMainFragment
 
     private boolean twoPane;
     private boolean backFromDetails = false;
-    private boolean isFavorite;
+    private boolean isFavorite = false;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -146,7 +147,9 @@ public class HomeFragment extends BaseMainFragment
     private void initRecyclerView() {
         homeAdapter.setUseTodayLayout(!twoPane);
         homeAdapter.setOnDayClickListener(this);
-        forecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        forecastRecyclerView.setLayoutManager(linearLayoutManager);
+        forecastRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation()));
         forecastRecyclerView.setAdapter(homeAdapter);
     }
 }

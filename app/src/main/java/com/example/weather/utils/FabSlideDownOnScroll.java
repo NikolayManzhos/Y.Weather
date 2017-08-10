@@ -26,9 +26,9 @@ public class FabSlideDownOnScroll extends FloatingActionButton.Behavior {
         if (dyConsumed > 0) {
             CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
             int fab_bottomMargin = layoutParams.bottomMargin;
-            child.animate().setDuration(150).translationY(child.getHeight() + fab_bottomMargin).setInterpolator(new LinearInterpolator()).start();
+            ViewCompat.animate(child).setDuration(150).translationY(child.getHeight() + fab_bottomMargin).setInterpolator(new LinearInterpolator()).start();
         } else if (dyConsumed < 0) {
-            child.animate().setDuration(150).translationY(0).setInterpolator(new LinearInterpolator()).start();
+            ViewCompat.animate(child).setDuration(150).translationY(0).setInterpolator(new LinearInterpolator()).start();
         }
     }
 
