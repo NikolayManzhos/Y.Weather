@@ -22,6 +22,9 @@ public class DetailFragment extends BaseFragment {
     @BindView(R.id.condition)
     TextView condition;
 
+    @BindView(R.id.currentDate)
+    TextView currentDate;
+
     @BindView(R.id.temperatureDay)
     TextView temperatureDay;
 
@@ -56,6 +59,7 @@ public class DetailFragment extends BaseFragment {
         WeatherViewModel weatherViewModel = getArguments().getParcelable(GlobalConstants.EXTRAS_DETAILED_WEATHER);
         if (weatherViewModel != null) {
             icon.setImageResource(weatherViewModel.getIconId());
+            currentDate.setText(weatherViewModel.getDate());
             condition.setText(weatherViewModel.getCondition());
             temperatureDay.setText(weatherViewModel.getTemperature());
             temperatureNight.setText(weatherViewModel.getTemperatureNight());

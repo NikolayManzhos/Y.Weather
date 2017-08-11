@@ -1,12 +1,10 @@
 package com.example.weather.presentation.main.home_screen;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.weather.R;
 import com.example.weather.presentation.di.ActivityContext;
@@ -106,10 +104,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void configureTodayViewHolder(TodayViewHolder vh, int aPosition) {
         WeatherViewModel currentWeather = items.get(aPosition);
         vh.icon.setImageResource(currentWeather.getIconId());
-        final String transitionName = "weather_image" + String.valueOf(aPosition);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            vh.icon.setTransitionName(transitionName);
-        }
+        vh.currentDate.setText(currentWeather.getDate());
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));
@@ -118,6 +113,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void configureFutureViewHolder(FutureViewHolder vh, int aPosition) {
         WeatherViewModel currentWeather = items.get(aPosition);
         vh.icon.setImageResource(currentWeather.getIconId());
+        vh.date.setText(currentWeather.getDate());
         vh.condition.setText(currentWeather.getCondition());
         vh.temperatureDay.setText(String.valueOf(currentWeather.getTemperature()));
         vh.temperatureNight.setText(String.valueOf(currentWeather.getTemperatureNight()));

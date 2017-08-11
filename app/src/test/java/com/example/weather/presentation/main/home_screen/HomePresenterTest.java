@@ -8,6 +8,7 @@ import com.example.weather.presentation.main.MainRouter;
 import com.example.weather.presentation.main.common.ViewModelMapper;
 import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
 import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
+import com.example.weather.utils.GlobalConstants;
 import com.example.weather.utils.rx.RxBus;
 
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.TestScheduler;
 
@@ -22,6 +24,8 @@ import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -100,5 +104,25 @@ public class HomePresenterTest {
 
     private WeatherViewModel provideFilledWeatherViewModel() {
         return random(WeatherViewModel.class);
+    }
+
+    @Test
+    public void addCurrentPlaceToFavoritesSuccess() {
+        when(interactor.addToFavorites()).thenReturn(Completable.complete());
+        presenter.addCurrentPlaceToFavorites();
+
+        verify(view).setFavoriteStatus(true);
+        verify(rxBus).publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
+    }
+
+    @Test
+    public void addCurrentPlaceToFavoritesFailure() {
+        when(interactor.addToFavorites()).thenReturn(Completable.error(new Throwable()));
+
+        presenter.addCurrentPlaceToFavorites();
+
+        verify(view).setFavoriteStatus(false);
+        verify(view, never()).setFavoriteStatus(true);
+        verify(rxBus, never()).publish(anyString(), any());
     }
 }

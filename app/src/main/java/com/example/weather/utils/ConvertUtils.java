@@ -1,9 +1,13 @@
 package com.example.weather.utils;
 
 import android.content.res.Resources;
+import android.text.format.Time;
 
 import com.example.weather.R;
 import com.example.weather.data.local.PreferencesManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -113,5 +117,51 @@ public class ConvertUtils {
             return R.drawable.ic_cloudy;
         }
         return R.drawable.ic_clear_day;
+    }
+
+    public String convertTime(long dateInMillis) {
+        Time time = new Time();
+        time.setToNow();
+        long currentTime = System.currentTimeMillis();
+        int julianDay = Time.getJulianDay(dateInMillis, time.gmtoff);
+        int currentJulianDay = Time.getJulianDay(currentTime, time.gmtoff);
+
+        if (julianDay == currentJulianDay) {
+            String today = resources.getString(R.string.today);
+            int formatId = R.string.format_full_friendly_date;
+            return resources.getString(
+                    formatId,
+                    today,
+                    getFormattedMonthDay(dateInMillis));
+        } else if ( julianDay < currentJulianDay + 7 ) {
+            return getDayName(dateInMillis);
+        } else {
+            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd", Locale.getDefault());
+            return shortenedDateFormat.format(dateInMillis);
+        }
+    }
+
+    private String getDayName(long dateInMillis) {
+        Time t = new Time();
+        t.setToNow();
+        int julianDay = Time.getJulianDay(dateInMillis, t.gmtoff);
+        int currentJulianDay = Time.getJulianDay(System.currentTimeMillis(), t.gmtoff);
+        if (julianDay == currentJulianDay) {
+            return resources.getString(R.string.today);
+        } else if ( julianDay == currentJulianDay +1 ) {
+            return resources.getString(R.string.tomorrow);
+        } else {
+            Time time = new Time();
+            time.setToNow();
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+            return dayFormat.format(dateInMillis);
+        }
+    }
+
+    private String getFormattedMonthDay(long dateInMillis ) {
+        Time time = new Time();
+        time.setToNow();
+        SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMMM dd", Locale.getDefault());
+        return  monthDayFormat.format(dateInMillis);
     }
 }

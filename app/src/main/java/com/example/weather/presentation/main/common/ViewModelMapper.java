@@ -32,9 +32,10 @@ public class ViewModelMapper {
     private List<WeatherViewModel> provideWeatherList(RealmList<CurrentWeatherModel> weatherModels) {
         return Observable
                 .fromIterable(weatherModels)
+                .filter(currentWeatherModel -> (long) currentWeatherModel.getDate() * 1000 > System.currentTimeMillis())
                 .map(currentWeatherModel -> new WeatherViewModel(
                         currentWeatherModel.getCondition(),
-                        "Date", // TODO Convert date to display in right format
+                        utils.convertTime((long)currentWeatherModel.getDate() * 1000),
                         utils.convertId(currentWeatherModel.getIconId()),
                         utils.convertTemperature(currentWeatherModel.getTemperature()),
                         utils.convertTemperature(currentWeatherModel.getTemperatureNight()),

@@ -77,7 +77,6 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                         () -> {
                             if (getView() != null) getView().setFavoriteStatus(true);
                                 rxBus.publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
-
                         },
                         err -> {
                             if (getView() != null) getView().setFavoriteStatus(false);
