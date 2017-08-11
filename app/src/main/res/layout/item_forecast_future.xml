@@ -15,7 +15,8 @@
 
     <TextView
         android:id="@+id/date"
-        android:text="FUTURE"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/icon"
@@ -23,6 +24,8 @@
 
     <TextView
         android:id="@+id/condition"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date"

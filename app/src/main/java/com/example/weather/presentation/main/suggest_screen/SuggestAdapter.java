@@ -2,7 +2,13 @@ package com.example.weather.presentation.main.suggest_screen;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +61,12 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
     @Override
     public void onBindViewHolder(SuggestViewHolder holder, int position) {
         int aPosition = holder.getAdapterPosition();
-        holder.cityName.setText(predictions.get(aPosition).getDescription());
+        String place = predictions.get(aPosition).getDescription();
+        SpannableString s = new SpannableString(place);
+        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+        s.setSpan(new ForegroundColorSpan(Color.RED),0,1,Spannable.SPAN_COMPOSING);
+        s.setSpan(boldSpan, 0, 1, Spannable.SPAN_COMPOSING);
+        holder.cityName.setText(s, TextView.BufferType.SPANNABLE);
     }
 
     @Override

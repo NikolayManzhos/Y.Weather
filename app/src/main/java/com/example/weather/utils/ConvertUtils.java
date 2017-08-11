@@ -136,7 +136,7 @@ public class ConvertUtils {
         } else if ( julianDay < currentJulianDay + 7 ) {
             return getDayName(dateInMillis);
         } else {
-            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd", Locale.getDefault());
+            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
             return shortenedDateFormat.format(dateInMillis);
         }
     }
@@ -153,7 +153,7 @@ public class ConvertUtils {
         } else {
             Time time = new Time();
             time.setToNow();
-            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
             return dayFormat.format(dateInMillis);
         }
     }
@@ -161,7 +161,7 @@ public class ConvertUtils {
     private String getFormattedMonthDay(long dateInMillis ) {
         Time time = new Time();
         time.setToNow();
-        SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMMM dd", Locale.getDefault());
+        SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMMM dd");
         return  monthDayFormat.format(dateInMillis);
     }
 }

@@ -96,7 +96,6 @@ public class MainActivity extends BaseActivity
         if (savedInstanceState == null) {
             checkFirstTimeUser();
             getPresenter().selectedHome();
-            navigationView.setCheckedItem(R.id.nav_home);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             setHomeAsUp(true);
         }
@@ -132,9 +131,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.nav_home:
-                getPresenter().selectedHome();
-                break;
+//            case R.id.nav_home:
+//                getPresenter().selectedHome();
+//                break;
             case R.id.nav_change_city:
                 getPresenter().selectSuggestScreen();
                 break;
@@ -195,7 +194,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void cityChanged() {
-        navigationView.setCheckedItem(R.id.nav_home);
+//        navigationView.setCheckedItem(R.id.nav_home);
         onBackPressed();
     }
 

@@ -3,6 +3,7 @@ package com.example.weather.presentation.main.suggest_screen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -185,6 +186,8 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
 
     private void initRecyclerView() {
         suggestRecycler.setAdapter(adapter);
-        suggestRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        suggestRecycler.setLayoutManager(layoutManager);
+        suggestRecycler.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
     }
 }
