@@ -23,7 +23,7 @@ public class MainViewRepositoryImpl implements MainViewRepository {
 
     @Override
     public Single<List<FavoritePlace>> getFavoriteItems() {
-        return realmHelper.queryFavoriteItems();
+        return realmHelper.queryAllFavoriteItems();
     }
 
     @Override
@@ -33,11 +33,23 @@ public class MainViewRepositoryImpl implements MainViewRepository {
             preferencesManager.setCurrentLatitude(favoritePlace.getLatitude());
             preferencesManager.setCurrentLongitude(favoritePlace.getLongitude());
             return true;
+        }).doOnSubscribe(disposable -> {
+            double currentLatitude = preferencesManager.getCurrentLatitude();
+            double currentLongitude = preferencesManager.getCurrentLongitude();
+            realmHelper.checkCurrentPlaceInFavorites(currentLatitude, currentLongitude)
+                    .subscribe(isFavorite -> {
+                        if (!isFavorite) {
+                            realmHelper.removeForecast(currentLatitude, currentLongitude);
+                        }
+                    }
+                    );
         });
     }
 
     @Override
     public Completable removeFavoriteItem(FavoritePlace favoritePlace) {
-        return realmHelper.removeItem(favoritePlace);
+        boolean isCurrentPlace = favoritePlace.getLatitude() == preferencesManager.getCurrentLatitude()
+                && favoritePlace.getLongitude() == preferencesManager.getCurrentLongitude();
+        return realmHelper.removeFavoritePlace(favoritePlace.getLatitude(), favoritePlace.getLongitude(), isCurrentPlace);
     }
 }

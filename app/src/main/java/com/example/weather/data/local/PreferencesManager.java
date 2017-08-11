@@ -47,22 +47,22 @@ public class PreferencesManager {
 
     @SuppressLint("ApplySharedPref")
     public void setCurrentLatitude(double latitude) {
-        sharedPreferences.edit().putFloat(LAT, (float) latitude).commit();
+        sharedPreferences.edit().putLong(LAT, Double.doubleToRawLongBits(latitude)).commit();
     }
 
-    public float getCurrentLatitude() {
+    public double getCurrentLatitude() {
         //Default Moscow
-        return sharedPreferences.getFloat(LAT, (float) 55.7558);
+        return Double.longBitsToDouble(sharedPreferences.getLong(LAT, Double.doubleToLongBits(55.7558)));
     }
 
     @SuppressLint("ApplySharedPref")
     public void setCurrentLongitude(double longitude) {
-        sharedPreferences.edit().putFloat(LNG, (float) longitude).commit();
+        sharedPreferences.edit().putLong(LNG, Double.doubleToRawLongBits(longitude)).commit();
     }
 
-    public float getCurrentLongitude() {
+    public double getCurrentLongitude() {
         //Default Moscow
-        return sharedPreferences.getFloat(LNG, (float) 37.6173);
+        return Double.longBitsToDouble(sharedPreferences.getLong(LNG, Double.doubleToLongBits(37.6173)));
     }
 
     @SuppressLint("ApplySharedPref")

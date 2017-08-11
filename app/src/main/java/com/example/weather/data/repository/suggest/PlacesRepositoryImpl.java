@@ -6,6 +6,7 @@ import com.example.weather.data.entities.autocomplete.SuggestResponse;
 import com.example.weather.data.entities.details.Location;
 import com.example.weather.data.entities.details.Result;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.PlacesApi;
 
 import java.util.Locale;
@@ -17,11 +18,14 @@ public class PlacesRepositoryImpl implements PlacesRepository {
 
     private PlacesApi placesApi;
     private PreferencesManager preferencesManager;
+    private RealmHelper realmHelper;
 
     public PlacesRepositoryImpl(PlacesApi placesApi,
-                                PreferencesManager preferencesManager) {
+                                PreferencesManager preferencesManager,
+                                RealmHelper realmHelper) {
         this.placesApi = placesApi;
         this.preferencesManager = preferencesManager;
+        this.realmHelper = realmHelper;
     }
 
     @Override
@@ -39,6 +43,14 @@ public class PlacesRepositoryImpl implements PlacesRepository {
                 .doOnSuccess(detailsResponse -> {
                     Result result = detailsResponse.getResult();
                     Location location = result.getGeometry().getLocation();
+                    double currentLatitude = preferencesManager.getCurrentLatitude();
+                    double currentLongitude = preferencesManager.getCurrentLongitude();
+                    realmHelper.checkCurrentPlaceInFavorites(
+                            currentLatitude,
+                            currentLongitude)
+                            .subscribe(isFavorite -> {
+                                if (!isFavorite) realmHelper.removeForecast(currentLatitude, currentLongitude);
+                            });
                     preferencesManager.setCurrentCityName(result.getVicinity());
                     preferencesManager.setCurrentLatitude(location.getLat());
                     preferencesManager.setCurrentLongitude(location.getLng());

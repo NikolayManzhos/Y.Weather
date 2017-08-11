@@ -6,6 +6,7 @@ import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.data.entities.details.Location;
 import com.example.weather.data.entities.details.Result;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.PlacesApi;
 import com.example.weather.data.repository.suggest.PlacesRepository;
 import com.example.weather.data.repository.suggest.PlacesRepositoryImpl;
@@ -34,6 +35,9 @@ public class PlacesRepositoryTest {
     @Mock
     private PreferencesManager preferenceManager;
 
+    @Mock
+    private RealmHelper realmHelper;
+
     private PlacesRepository repository;
     private final String PLACE_ID = "Kn1oi90aJAMWLBN";
 
@@ -41,7 +45,7 @@ public class PlacesRepositoryTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        repository = new PlacesRepositoryImpl(placesApi, preferenceManager);
+        repository = new PlacesRepositoryImpl(placesApi, preferenceManager, realmHelper);
     }
 
     @Test
@@ -61,11 +65,14 @@ public class PlacesRepositoryTest {
     public void getPlaceDetailsCallSuccess() {
         DetailsResponse detailsResponse = provideRandomDetailsResponse();
         when(placesApi.getPlaceDetails(anyString(), anyString(), anyString())).thenReturn(Single.just(detailsResponse));
+        when(realmHelper.checkCurrentPlaceInFavorites(anyDouble(), anyDouble())).thenReturn(Single.just(false));
 
         repository.getPlaceDetails(PLACE_ID)
                 .test()
                 .assertNoErrors()
                 .assertComplete();
+
+        verify(realmHelper).removeForecast(anyDouble(), anyDouble());
 
 
         Result result = detailsResponse.getResult();

@@ -52,8 +52,9 @@ public class DataModule {
     @Provides
     @Singleton
     PlacesRepository provideSuggestRepository(@Named("places") PlacesApi placesApi,
-                                              PreferencesManager preferencesManager) {
-        return new PlacesRepositoryImpl(placesApi, preferencesManager);
+                                              PreferencesManager preferencesManager,
+                                              RealmHelper realmHelper) {
+        return new PlacesRepositoryImpl(placesApi, preferencesManager, realmHelper);
     }
 
     @Provides

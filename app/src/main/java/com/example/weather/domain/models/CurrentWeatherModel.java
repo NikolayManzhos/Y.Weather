@@ -1,12 +1,10 @@
 package com.example.weather.domain.models;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class CurrentWeatherModel extends RealmObject {
 
     private String condition;
-    @PrimaryKey
     private int date;
     private int iconId;
     private double temperature;

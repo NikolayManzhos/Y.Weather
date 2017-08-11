@@ -20,6 +20,7 @@ import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyString;
@@ -45,8 +46,8 @@ public class WeatherRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         weatherRepository = new WeatherRepositoryImpl(api, preferencesManager, realmHelper, mapper);
-        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5F);
-        when(preferencesManager.getCurrentLongitude()).thenReturn(34.4F);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.4);
     }
 
     @Test
@@ -104,8 +105,8 @@ public class WeatherRepositoryTest {
     @Test
     public void writePlaceToFavoriteCall() {
         when(preferencesManager.getCurrentCityName()).thenReturn("Moscow");
-        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
-        when(preferencesManager.getCurrentLatitude()).thenReturn(35.4f);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(35.4);
         when(realmHelper.writeFavoritePlace(any(FavoritePlace.class))).thenReturn(Completable.complete());
 
         weatherRepository.writeCurrentPlaceToFavorites()
@@ -116,9 +117,9 @@ public class WeatherRepositoryTest {
 
     @Test
     public void deleteCurrentPlaceFromFavoritesCall() {
-        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
-        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5f);
-        when(realmHelper.removeFavoritePlace(anyDouble(), anyDouble())).thenReturn(Completable.complete());
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5);
+        when(realmHelper.removeFavoritePlace(anyDouble(), anyDouble(), anyBoolean())).thenReturn(Completable.complete());
 
         weatherRepository.deleteCurrentPlaceFromFavorites()
                 .test()
@@ -128,8 +129,8 @@ public class WeatherRepositoryTest {
 
     @Test
     public void checkIsCurrentPlaceFavorite() {
-        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5f);
-        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5f);
+        when(preferencesManager.getCurrentLatitude()).thenReturn(55.5);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(34.5);
         when(realmHelper.checkCurrentPlaceInFavorites(anyDouble(), anyDouble())).thenReturn(Single.just(true));
 
         weatherRepository.checkIsCurrentPlaceFavorite()

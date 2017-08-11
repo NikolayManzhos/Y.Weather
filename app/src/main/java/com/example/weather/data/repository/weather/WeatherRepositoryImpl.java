@@ -30,8 +30,8 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 
     @Override
     public Single<ForecastModel> getWeather(boolean force) {
-        float latitude = preferencesManager.getCurrentLatitude();
-        float longitude = preferencesManager.getCurrentLongitude();
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
         Single<ForecastModel> networkWeather =
                 weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
                         .map(mapper::entityToModel)
@@ -56,7 +56,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
     public Completable deleteCurrentPlaceFromFavorites() {
         double latitude = preferencesManager.getCurrentLatitude();
         double longitude = preferencesManager.getCurrentLongitude();
-        return realmHelper.removeFavoritePlace(latitude, longitude);
+        return realmHelper.removeFavoritePlace(latitude, longitude, true);
     }
 
     @Override

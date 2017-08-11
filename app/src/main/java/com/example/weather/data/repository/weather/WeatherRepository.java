@@ -1,6 +1,5 @@
 package com.example.weather.data.repository.weather;
 
-import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.domain.models.ForecastModel;
 
 import io.reactivex.Completable;

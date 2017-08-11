@@ -78,6 +78,10 @@ dependencies {
     //Material Preferences
     implementation "com.yarolegovich:mp:$materialprefs"
 
+    //RealmDB Viewer
+    debugApi "com.facebook.stetho:stetho:$stetho"
+    debugApi "com.uphyca:stetho_realm:$stethoRealm"
+
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "org.robolectric:robolectric:$robolectric"

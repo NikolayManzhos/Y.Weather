@@ -15,6 +15,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
     }
 }
 
@@ -37,6 +38,9 @@ ext {
     gson = '2.8.1'
     materialprefs = '1.0.5'
     places = '11.0.2'
+
+    stetho = '1.5.0'
+    stethoRealm = '2.0.0'
 
     junit = '4.12'
     random_beans = '3.7.0'

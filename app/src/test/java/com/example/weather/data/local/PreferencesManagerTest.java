@@ -44,13 +44,13 @@ public class PreferencesManagerTest {
 
     @Test
     public void checkDefaultLatitude() {
-        float DEFAULT_LATITUDE = 55.7558F;
+        double DEFAULT_LATITUDE = 55.7558;
         assertEquals(DEFAULT_LATITUDE, preferencesManager.getCurrentLatitude());
     }
 
     @Test
     public void checkDefaultLongitude() {
-        float DEFAULT_LONGITUDE = 37.6173F;
+        double DEFAULT_LONGITUDE = 37.6173;
         assertEquals(DEFAULT_LONGITUDE, preferencesManager.getCurrentLongitude());
     }
 
@@ -63,7 +63,7 @@ public class PreferencesManagerTest {
 
     @Test
     public void setActualLatitude() {
-        float ACTUAL_LATITUDE = 51.5074F;
+        double ACTUAL_LATITUDE = 51.5074;
         preferencesManager.setCurrentLatitude(ACTUAL_LATITUDE);
 
         assertEquals(ACTUAL_LATITUDE, preferencesManager.getCurrentLatitude());
@@ -71,7 +71,7 @@ public class PreferencesManagerTest {
 
     @Test
     public void setActualLongitude() {
-        float ACTUAL_LONGITUDE = 0.1278F;
+        double ACTUAL_LONGITUDE = 0.1278;
         preferencesManager.setCurrentLongitude(ACTUAL_LONGITUDE);
 
         assertEquals(ACTUAL_LONGITUDE, preferencesManager.getCurrentLongitude());

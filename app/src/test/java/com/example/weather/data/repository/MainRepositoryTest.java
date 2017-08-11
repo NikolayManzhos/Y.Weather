@@ -19,6 +19,10 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MainRepositoryTest {
@@ -29,7 +33,7 @@ public class MainRepositoryTest {
     @Mock
     private PreferencesManager preferencesManager;
 
-    private MainViewRepository mainViewRepository;
+    private MainViewRepositoryImpl mainViewRepository;
 
     @Before
     public void setup() {
@@ -41,7 +45,7 @@ public class MainRepositoryTest {
     public void getFavoriteItemsCall() {
         List<FavoritePlace> databaseResponse = new ArrayList<>();
         Single<List<FavoritePlace>> single = Single.just(databaseResponse);
-        when(realmHelper.queryFavoriteItems()).thenReturn(single);
+        when(realmHelper.queryAllFavoriteItems()).thenReturn(single);
 
         mainViewRepository.getFavoriteItems()
                 .test()
@@ -55,20 +59,27 @@ public class MainRepositoryTest {
         when(preferencesManager.getCurrentCityName())
                 .thenReturn(favoritePlace.getName());
         when(preferencesManager.getCurrentLatitude())
-                .thenReturn((float) favoritePlace.getLatitude());
+                .thenReturn(favoritePlace.getLatitude());
         when(preferencesManager.getCurrentLongitude())
-                .thenReturn((float) favoritePlace.getLongitude());
+                .thenReturn(favoritePlace.getLongitude());
+        when(realmHelper.checkCurrentPlaceInFavorites(anyDouble(), anyDouble()))
+                .thenReturn(Single.just(false));
 
         mainViewRepository.setCurrentPlace(favoritePlace)
                 .test()
                 .assertNoErrors()
                 .assertComplete();
+        verify(realmHelper).removeForecast(anyDouble(), anyDouble());
     }
 
+    //TODO Test if statement
     @Test
-    public void removeFavoriteCall() {
+    public void removeCurrentFavoriteItem() {
         FavoritePlace placeToRemove = provideRandomFavoritePlace();
-        when(realmHelper.removeItem(placeToRemove)).thenReturn(Completable.complete());
+        when(preferencesManager.getCurrentLatitude()).thenReturn(placeToRemove.getLatitude() + 1);
+        when(preferencesManager.getCurrentLongitude()).thenReturn(placeToRemove.getLatitude() + 1);
+        when(realmHelper.removeFavoritePlace(anyDouble(), anyDouble(), eq(Boolean.FALSE)))
+                .thenReturn(Completable.complete());
 
         mainViewRepository.removeFavoriteItem(placeToRemove)
                 .test()

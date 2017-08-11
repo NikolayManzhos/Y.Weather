@@ -7,6 +7,9 @@ import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.example.weather.WeatherApp;
+import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.data.local.RealmHelper;
+import com.example.weather.data.repository.weather.WeatherRepository;
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 
 import javax.inject.Inject;
@@ -16,7 +19,13 @@ public class WeatherJob extends Job {
     static final String TAG = "job_weather_tag";
 
     @Inject
-    CurrentWeatherInteractor currentWeatherInteractor;
+    WeatherRepository weatherRepository;
+
+    @Inject
+    PreferencesManager preferencesManager;
+
+    @Inject
+    RealmHelper realmHelper;
 
     private Result result;
 
@@ -25,8 +34,13 @@ public class WeatherJob extends Job {
     protected Result onRunJob(Params params) {
         inject();
         Log.i(TAG, "onRunJob: ");
-        currentWeatherInteractor.requestWeather(true, false).subscribe(detailedWeather -> {
+        weatherRepository.getWeather(true).subscribe(detailedWeather -> {
             Log.i(TAG, "onRunJob: get weather");
+            double latitude = preferencesManager.getCurrentLatitude();
+            double longitude = preferencesManager.getCurrentLongitude();
+            if (detailedWeather.getLatitude() != latitude || detailedWeather.getLongitude() != longitude) {
+                realmHelper.removeForecast(detailedWeather.getLatitude(), detailedWeather.getLongitude());
+            }
             result = Result.SUCCESS;
         }, throwable -> {
             Log.i(TAG, "onRunJob: error" + throwable.getMessage());
@@ -40,8 +54,8 @@ public class WeatherJob extends Job {
 
         new JobRequest.Builder(WeatherJob.TAG)
                 .setPersisted(true)
-                .setUpdateCurrent(true)
                 .setPeriodic(interval)
+                .setRequiresDeviceIdle(true)
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .build()
                 .schedule();
