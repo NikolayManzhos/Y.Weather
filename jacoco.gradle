@@ -1,6 +1,4 @@
-apply plugin: 'jacoco-android'
-
-task jacocoTest(type: JacocoReport) {
+task jacocoTestReport(type: JacocoReport) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports"
 
