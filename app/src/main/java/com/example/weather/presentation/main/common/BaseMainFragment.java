@@ -15,6 +15,6 @@ public abstract class BaseMainFragment extends BaseViewFragment implements BaseM
 
     @Override
     public void showError() {
-        Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), getString(R.string.home_network_error), Toast.LENGTH_LONG).show();
     }
 }

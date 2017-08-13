@@ -10,7 +10,6 @@ import com.example.weather.WeatherApp;
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.repository.weather.WeatherRepository;
-import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 
 import javax.inject.Inject;
 

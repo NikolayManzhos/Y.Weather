@@ -1,7 +1,5 @@
 package com.example.weather.presentation.main.common;
 
-import android.util.Log;
-
 import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
@@ -9,7 +7,6 @@ import com.example.weather.presentation.main.home_screen.view_model.WeatherViewM
 import com.example.weather.utils.ConvertUtils;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 

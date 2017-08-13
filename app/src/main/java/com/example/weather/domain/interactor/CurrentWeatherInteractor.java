@@ -1,7 +1,6 @@
 package com.example.weather.domain.interactor;
 
 
-import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.domain.models.ForecastModel;
 
 import io.reactivex.Completable;

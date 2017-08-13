@@ -6,7 +6,6 @@ import com.example.weather.domain.models.FavoritePlace;
 
 import java.util.List;
 
-
 import io.reactivex.Completable;
 import io.reactivex.Single;
 

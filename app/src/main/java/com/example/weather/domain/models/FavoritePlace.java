@@ -4,7 +4,7 @@ package com.example.weather.domain.models;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-import static java.lang.String.*;
+import static java.lang.String.valueOf;
 
 public class FavoritePlace extends RealmObject {
 

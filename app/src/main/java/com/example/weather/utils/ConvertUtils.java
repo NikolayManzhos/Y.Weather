@@ -1,5 +1,6 @@
 package com.example.weather.utils;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.text.format.Time;
 
@@ -7,7 +8,6 @@ import com.example.weather.R;
 import com.example.weather.data.local.PreferencesManager;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -136,6 +136,7 @@ public class ConvertUtils {
         } else if ( julianDay < currentJulianDay + 7 ) {
             return getDayName(dateInMillis);
         } else {
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
             return shortenedDateFormat.format(dateInMillis);
         }
@@ -153,6 +154,7 @@ public class ConvertUtils {
         } else {
             Time time = new Time();
             time.setToNow();
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
             return dayFormat.format(dateInMillis);
         }
@@ -161,6 +163,7 @@ public class ConvertUtils {
     private String getFormattedMonthDay(long dateInMillis ) {
         Time time = new Time();
         time.setToNow();
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat monthDayFormat = new SimpleDateFormat("MMMM dd");
         return  monthDayFormat.format(dateInMillis);
     }

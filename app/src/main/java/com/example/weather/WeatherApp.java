@@ -1,5 +1,6 @@
 package com.example.weather;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.evernote.android.job.JobManager;
@@ -10,8 +11,8 @@ import com.example.weather.presentation.di.module.AppModule;
 
 import io.realm.Realm;
 
+@SuppressLint("Registered")
 public class WeatherApp extends Application {
-    public static final String PREF_NAME = "weather_prefs";
 
     private AppComponent appComponent;
 

@@ -34,7 +34,7 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             testCoverageEnabled true
@@ -83,8 +83,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
     //Android Job
     implementation "com.evernote:android-job:$androidjob"
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$picasso"
     //Gson
     implementation "com.google.code.gson:gson:$gson"
     //Material Preferences

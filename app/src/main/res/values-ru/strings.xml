@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Погода</string>
+    <string name="app_name">Ямблз.Погода</string>
 
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
@@ -17,6 +17,7 @@
 
     <!--Home strings-->
     <string name="home_toolbar_title">Обзор</string>
+    <string name="home_network_error">Ошибка сети. Попробуйте еще раз.</string>
     <string name="home_remove_from_fav_error">Ошибка при удалении из избранного</string>
 
     <!--Suggest fragment-->
@@ -35,6 +36,8 @@
 
     <!--About strings-->
     <string name="about_toolbar_title">О приложении</string>
+    <string name="about_app_name">Ямблз.Погода</string>
+    <string name="about_version">Версия 1.0</string>
 
     <!--Drawer strings-->
     <string name="drawer_home">Погода</string>
@@ -59,5 +62,4 @@
     <string name="hour_6">6 часов</string>
     <string name="hour_12">12 часов</string>
     <string name="hour_24">24 часа</string>
-    <string name="error">Ошибка</string>
 </resources>
