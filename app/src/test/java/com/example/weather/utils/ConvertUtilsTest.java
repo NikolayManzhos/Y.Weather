@@ -3,6 +3,7 @@ package com.example.weather.utils;
 
 import android.content.res.Resources;
 
+import com.example.weather.R;
 import com.example.weather.TestResources;
 import com.example.weather.data.local.PreferencesManager;
 
@@ -88,5 +89,22 @@ public class ConvertUtilsTest {
     @Test
     public void convertHumidity() {
         assertEquals("22%", utils.convertHumidity(22));
+    }
+
+    @Test
+    public void convertWeatherIdToIcon() {
+        assertEquals(R.drawable.ic_wind, utils.convertId(200));
+        assertEquals(R.drawable.ic_rain, utils.convertId(300));
+        assertEquals(R.drawable.ic_rain, utils.convertId(500));
+        assertEquals(R.drawable.ic_snow, utils.convertId(511));
+        assertEquals(R.drawable.ic_rain, utils.convertId(520));
+        assertEquals(R.drawable.ic_snow, utils.convertId(600));
+        assertEquals(R.drawable.ic_fog, utils.convertId(701));
+        assertEquals(R.drawable.ic_wind, utils.convertId(781));
+        assertEquals(R.drawable.ic_clear_day, utils.convertId(800));
+        assertEquals(R.drawable.ic_partly_cloudy_day, utils.convertId(801));
+        assertEquals(R.drawable.ic_cloudy, utils.convertId(802));
+
+        assertEquals( R.drawable.ic_clear_day, utils.convertId(1000));
     }
 }
