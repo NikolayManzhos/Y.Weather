@@ -1,0 +1,24 @@
+{
+  "language": "android",
+  "jdk": "oraclejdk8",
+  "android": {
+    "components": [
+      "tools",
+      "platform-tools",
+      "build-tools-23.0.3",
+      "android-23",
+      "extra-android-m2repository",
+      "sys-img-${ANDROID_ABI}-${ANDROID_TARGET}"
+    ]
+  },
+  "script": [
+    "./gradlew build jacocoTestReport",
+  ],
+  "after_success": [
+    "bash <(curl -s https://codecov.io/bash)"
+  ],
+  "global_env": "ANDROID_TARGET=android-15 ANDROID_ABI=armeabi-v7a",
+  "group": "stable",
+  "dist": "trusty",
+  "os": "linux"
+}

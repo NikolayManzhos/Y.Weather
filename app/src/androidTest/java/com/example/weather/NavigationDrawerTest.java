@@ -31,12 +31,6 @@ public class NavigationDrawerTest {
     }
 
     @Test
-    public void navigateToHome() throws Exception {
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_home));
-//        onView(withId(R.id.tv_city)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void navigateToSettings() throws Exception {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
         onView(withId(R.id.updateSwitchPreference)).check(matches(isDisplayed()));

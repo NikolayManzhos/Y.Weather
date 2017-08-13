@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'jacoco-android'
+
+apply plugin: 'jacoco'
+apply from: "$rootDir/jacoco.gradle"
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -33,6 +35,9 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     buildTypes.each {
