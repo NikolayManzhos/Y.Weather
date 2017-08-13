@@ -6,7 +6,6 @@ import com.example.weather.domain.models.CurrentWeatherModel;
 import com.example.weather.domain.models.ForecastModel;
 import com.example.weather.utils.ConvertUtils;
 
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -20,7 +19,7 @@ public class ModelMapper {
     private ConvertUtils utils;
 
     @Inject
-    public ModelMapper(PreferencesManager preferencesManager,
+    ModelMapper(PreferencesManager preferencesManager,
                        ConvertUtils utils) {
         this.preferencesManager = preferencesManager;
         this.utils = utils;
@@ -33,11 +32,11 @@ public class ModelMapper {
                         list.getWeather().get(0).getMain(),
                         list.getDt(),
                         list.getWeather().get(0).getId(),
-                        utils.convertTemperature(list.getTemp().getDay()),
-                        utils.convertTemperature(list.getTemp().getNight()),
-                        utils.convertWindSpeed(list.getSpeed()),
+                        list.getTemp().getDay(),
+                        list.getTemp().getNight(),
+                        list.getSpeed(),
                         list.getHumidity(),
-                        (int)list.getPressure() // TODO FOR TEST, FIX ASAP!!!
+                        list.getPressure()
                 )));
         return new ForecastModel(preferencesManager.getCurrentCityName(),
                 weatherList,

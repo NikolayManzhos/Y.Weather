@@ -7,9 +7,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface WeatherApi {
-    @GET("forecast/daily?cnt=10")
+    @GET("forecast/daily?cnt=16")
     Single<ForecastWeather> getCurrentWeather(
-            @Query("lat") float latitude,
-            @Query("lon") float longitude,
+            @Query("lat") double latitude,
+            @Query("lon") double longitude,
             @Query("appid") String key);
 }

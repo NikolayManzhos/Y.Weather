@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerMatchers.isOpen;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
@@ -31,20 +30,17 @@ public class NavigationDrawerTest {
     }
 
     @Test
-    public void navigateToHome() throws Exception {
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_home));
-        onView(withId(R.id.tv_city)).check(matches(isDisplayed()));
+    public void navigateToSuggest() throws Exception {
+        onView(withId(R.id.nav_change_city)).perform(NavigationViewActions.navigateTo(R.id.nav_change_city));
     }
 
     @Test
     public void navigateToSettings() throws Exception {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
-        onView(withId(R.id.updateSwitchPreference)).check(matches(isDisplayed()));
     }
 
     @Test
     public void navigateToAbout() throws Exception {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_about_app));
-        onView(withId(R.id.tv_about_app)).check(matches(isDisplayed()));
     }
 }

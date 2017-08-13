@@ -3,6 +3,8 @@ package com.example.weather.presentation.di.module;
 
 import com.example.weather.domain.interactor.CurrentWeatherInteractor;
 import com.example.weather.domain.interactor.CurrentWeatherInteractorImpl;
+import com.example.weather.domain.interactor.MainViewInteractor;
+import com.example.weather.domain.interactor.MainViewInteractorImpl;
 import com.example.weather.domain.interactor.SuggestViewInteractor;
 import com.example.weather.domain.interactor.SuggestViewInteractorImpl;
 
@@ -20,5 +22,9 @@ public abstract class DomainModule {
 
     @Binds
     @Singleton
-    abstract SuggestViewInteractor providesSuggestViewInteractor(SuggestViewInteractorImpl suggestViewInteractor);
+    abstract SuggestViewInteractor provideSuggestViewInteractor(SuggestViewInteractorImpl suggestViewInteractor);
+
+    @Binds
+    @Singleton
+    abstract MainViewInteractor provideMainViewInteractor(MainViewInteractorImpl mainViewInteractor);
 }

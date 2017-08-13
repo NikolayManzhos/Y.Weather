@@ -1,5 +1,6 @@
 package com.example.weather.data.local;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 public class PreferencesManager {
@@ -14,6 +15,11 @@ public class PreferencesManager {
 
     public PreferencesManager(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
+    }
+
+    public String getPressureUnits() {
+        String UNITS_PRESSURE = "b_pressure";
+        return sharedPreferences.getString(UNITS_PRESSURE, "hpa");
     }
 
     public String getWindSpeedUnits() {
@@ -39,26 +45,29 @@ public class PreferencesManager {
         sharedPreferences.edit().putBoolean(FIRST_TIME_USE, status).apply();
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentLatitude(double latitude) {
-        sharedPreferences.edit().putFloat(LAT, (float) latitude).apply();
+        sharedPreferences.edit().putLong(LAT, Double.doubleToRawLongBits(latitude)).commit();
     }
 
-    public float getCurrentLatitude() {
+    public double getCurrentLatitude() {
         //Default Moscow
-        return sharedPreferences.getFloat(LAT, (float) 55.7558);
+        return Double.longBitsToDouble(sharedPreferences.getLong(LAT, Double.doubleToLongBits(55.7558)));
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentLongitude(double longitude) {
-        sharedPreferences.edit().putFloat(LNG, (float) longitude).apply();
+        sharedPreferences.edit().putLong(LNG, Double.doubleToRawLongBits(longitude)).commit();
     }
 
-    public float getCurrentLongitude() {
+    public double getCurrentLongitude() {
         //Default Moscow
-        return sharedPreferences.getFloat(LNG, (float) 37.6173);
+        return Double.longBitsToDouble(sharedPreferences.getLong(LNG, Double.doubleToLongBits(37.6173)));
     }
 
+    @SuppressLint("ApplySharedPref")
     public void setCurrentCityName(String cityName) {
-        sharedPreferences.edit().putString(CURRENT_NAME, cityName).apply();
+        sharedPreferences.edit().putString(CURRENT_NAME, cityName).commit();
     }
 
     public String getCurrentCityName() {

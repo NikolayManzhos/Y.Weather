@@ -15,6 +15,6 @@ public class HomeFragmentTest {
 
         homeFragment.homePresenter = presenter;
         homeFragment.onRefresh();
-        verify(presenter).getCurrentWeather(true);
+        verify(presenter).getCurrentWeather(true, false);
     }
 }

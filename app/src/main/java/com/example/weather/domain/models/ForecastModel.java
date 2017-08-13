@@ -1,8 +1,6 @@
 package com.example.weather.domain.models;
 
 
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -41,7 +39,7 @@ public class ForecastModel extends RealmObject {
         return longitude;
     }
 
-    public List<CurrentWeatherModel> getCurrentWeatherModels() {
+    public RealmList<CurrentWeatherModel> getCurrentWeatherModels() {
         return currentWeatherModels;
     }
 

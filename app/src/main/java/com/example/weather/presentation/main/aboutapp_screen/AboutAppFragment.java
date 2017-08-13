@@ -31,5 +31,5 @@ public class AboutAppFragment extends BaseFragment implements AboutAppView {
     public void hideLoad() {}
 
     @Override
-    public void showError(int message) {}
+    public void showError() {}
 }

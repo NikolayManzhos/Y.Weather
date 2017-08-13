@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+apply plugin: 'jacoco'
+apply from: "$rootDir/jacoco.gradle"
+
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 def apiPropertiesFile = rootProject.file("api.properties")
@@ -31,7 +34,10 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     buildTypes.each {
@@ -43,6 +49,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
@@ -70,12 +83,14 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
     //Android Job
     implementation "com.evernote:android-job:$androidjob"
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$picasso"
     //Gson
     implementation "com.google.code.gson:gson:$gson"
     //Material Preferences
     implementation "com.yarolegovich:mp:$materialprefs"
+
+    //RealmDB Viewer
+    debugApi "com.facebook.stetho:stetho:$stetho"
+    debugApi "com.uphyca:stetho_realm:$stethoRealm"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"

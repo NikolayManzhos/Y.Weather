@@ -3,11 +3,14 @@ package com.example.weather.presentation.di.module;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
 import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.presentation.di.ApplicationContext;
+import com.example.weather.utils.rx.AppMainScheduler;
 import com.example.weather.utils.rx.AppSchedulerProvider;
+import com.example.weather.utils.rx.MainScheduler;
 import com.example.weather.utils.rx.SchedulerProvider;
 
 import javax.inject.Singleton;
@@ -23,11 +26,17 @@ public class AppModule {
         this.application = application;
     }
 
-    @ApplicationContext
     @Singleton
+    @ApplicationContext
     @Provides
     Context provideContext() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    Resources provideResources() {
+        return application.getResources();
     }
 
     @Singleton
@@ -40,5 +49,11 @@ public class AppModule {
     @Provides
     SchedulerProvider provideSchedulers() {
         return new AppSchedulerProvider();
+    }
+
+    @Singleton
+    @Provides
+    MainScheduler provideMainScheduler() {
+        return new AppMainScheduler();
     }
 }

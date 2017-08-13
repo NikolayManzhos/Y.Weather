@@ -9,6 +9,8 @@ import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.PlacesApi;
 import com.example.weather.data.network.WeatherApi;
+import com.example.weather.data.repository.main.MainViewRepository;
+import com.example.weather.data.repository.main.MainViewRepositoryImpl;
 import com.example.weather.data.repository.suggest.PlacesRepository;
 import com.example.weather.data.repository.suggest.PlacesRepositoryImpl;
 import com.example.weather.data.repository.weather.WeatherRepository;
@@ -50,8 +52,16 @@ public class DataModule {
     @Provides
     @Singleton
     PlacesRepository provideSuggestRepository(@Named("places") PlacesApi placesApi,
-                                              PreferencesManager preferencesManager) {
-        return new PlacesRepositoryImpl(placesApi, preferencesManager);
+                                              PreferencesManager preferencesManager,
+                                              RealmHelper realmHelper) {
+        return new PlacesRepositoryImpl(placesApi, preferencesManager, realmHelper);
+    }
+
+    @Provides
+    @Singleton
+    MainViewRepository provideMainViewRepository(RealmHelper realmHelper,
+                                                 PreferencesManager preferencesManager) {
+        return new MainViewRepositoryImpl(realmHelper, preferencesManager);
     }
 
     @Provides
