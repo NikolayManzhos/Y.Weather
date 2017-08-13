@@ -9,6 +9,7 @@ import com.example.weather.presentation.di.module.AppModule;
 import com.example.weather.presentation.di.module.DataModule;
 import com.example.weather.presentation.di.module.DomainModule;
 import com.example.weather.presentation.main.common.ViewModelMapper;
+import com.example.weather.utils.KeyboardUtils;
 import com.example.weather.utils.rx.RxBus;
 
 import javax.inject.Singleton;
@@ -24,5 +25,6 @@ public interface AppComponent {
     MainViewInteractor mainViewInteractor();
     ViewModelMapper viewModelMapper();
     RxBus rxBus();
+    KeyboardUtils keyboardUtils();
     void inject(WeatherJob weatherJob);
 }

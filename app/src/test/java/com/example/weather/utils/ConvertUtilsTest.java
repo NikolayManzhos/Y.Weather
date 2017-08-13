@@ -3,7 +3,6 @@ package com.example.weather.utils;
 
 import android.content.res.Resources;
 
-import com.example.weather.R;
 import com.example.weather.TestResources;
 import com.example.weather.data.local.PreferencesManager;
 

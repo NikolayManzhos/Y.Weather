@@ -18,6 +18,7 @@ import com.example.weather.R;
 import com.example.weather.data.entities.autocomplete.Prediction;
 import com.example.weather.presentation.di.ActivityContext;
 import com.example.weather.presentation.di.scope.PerFragment;
+import com.example.weather.utils.KeyboardUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,12 +32,15 @@ import butterknife.ButterKnife;
 public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestViewHolder> {
 
     private Context context;
+    private KeyboardUtils keyboardUtils;
     private List<Prediction> predictions;
     private OnPlaceClickListener placeClickListener;
 
     @Inject
-    SuggestAdapter(@ActivityContext Context context) {
+    SuggestAdapter(@ActivityContext Context context,
+                   KeyboardUtils keyboardUtils) {
         this.context = context;
+        this.keyboardUtils = keyboardUtils;
         predictions = new LinkedList<>();
     }
 
@@ -54,7 +58,10 @@ public class SuggestAdapter extends RecyclerView.Adapter<SuggestAdapter.SuggestV
     public SuggestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         SuggestViewHolder vh = new SuggestViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.item_suggest, parent, false));
-        vh.itemView.setOnClickListener(view -> placeClickListener.placeClicked(predictions.get(vh.getAdapterPosition()).getPlaceId()) );
+        vh.itemView.setOnClickListener(view -> {
+            placeClickListener.placeClicked(predictions.get(vh.getAdapterPosition()).getPlaceId());
+            keyboardUtils.hideKeyboard(context, view);
+        });
         return vh;
     }
 
