@@ -11,9 +11,14 @@
       "sys-img-${ANDROID_ABI}-${ANDROID_TARGET}"
     ]
   },
-    "before_script": [
+  "licenses": [
+      "android-sdk-preview-license-52d11cd2",
+      "android-sdk-license-.+",
+      "google-gdk-license-.+"
+  ],
+  "before_script": [
       "chmod +x gradlew"
-    ],
+  ],
   "script": [
     "./gradlew build jacocoTestReport",
   ],
