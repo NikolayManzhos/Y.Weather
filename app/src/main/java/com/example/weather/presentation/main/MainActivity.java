@@ -194,8 +194,12 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void cityChanged() {
-//        navigationView.setCheckedItem(R.id.nav_home);
         onBackPressed();
+    }
+
+    @Override
+    public void showFavRemoveError() {
+
     }
 
     @Override

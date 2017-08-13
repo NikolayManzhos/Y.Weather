@@ -8,4 +8,5 @@ import java.util.List;
 public interface MainView extends BaseMainView {
     void displayFavoriteItems(List<FavoritePlace> favoritePlaces);
     void confirmFavoriteRemoved(int position);
+    void showFavRemoveError();
 }

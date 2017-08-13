@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.weather.R;
 import com.example.weather.presentation.common.BasePresenter;
@@ -105,6 +106,11 @@ public class HomeFragment extends BaseMainFragment
     public void showWeather(HomeViewModel homeViewModel) {
         getActivity().setTitle(homeViewModel.getCityName());
         homeAdapter.setData(homeViewModel.getForecast());
+    }
+
+    @Override
+    public void showRemoveError() {
+        Toast.makeText(getContext().getApplicationContext(), R.string.home_remove_from_fav_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

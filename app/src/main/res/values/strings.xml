@@ -24,6 +24,7 @@
 
     <!--Home strings-->
     <string name="home_toolbar_title">Overview</string>
+    <string name="home_remove_from_fav_error">Failed to remove. Please try again.</string>
 
     <!--Suggest strings-->
     <string name="suggest_toolbar_title">Select your location</string>

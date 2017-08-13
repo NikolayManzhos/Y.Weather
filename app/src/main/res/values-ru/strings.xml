@@ -17,6 +17,7 @@
 
     <!--Home strings-->
     <string name="home_toolbar_title">Обзор</string>
+    <string name="home_remove_from_fav_error">Ошибка при удалении из избранного</string>
 
     <!--Suggest fragment-->
     <string name="suggest_toolbar_title">Выберите местоположение</string>

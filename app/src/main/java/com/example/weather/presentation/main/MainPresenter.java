@@ -1,7 +1,5 @@
 package com.example.weather.presentation.main;
 
-import android.util.Log;
-
 import com.example.weather.domain.interactor.MainViewInteractor;
 import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.presentation.di.scope.PerActivity;
@@ -18,7 +16,7 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
     private RxBus rxBus;
 
     @Inject
-    public MainPresenter(MainViewInteractor mainViewInteractor,
+    MainPresenter(MainViewInteractor mainViewInteractor,
                          RxBus rxBus) {
         this.mainViewInteractor = mainViewInteractor;
         this.rxBus = rxBus;
@@ -36,23 +34,23 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
         rxBus.unsubscribe(this);
     }
 
-    public void selectedHome() {
+    void selectedHome() {
         getRouter().showHomeScreen();
     }
 
-    public void selectSuggestScreen() {
+    void selectSuggestScreen() {
         getRouter().showSuggestScreen();
     }
 
-    public void selectedSettings() {
+    void selectedSettings() {
         getRouter().showSettingsScreen();
     }
 
-    public void selectedAboutApp() {
+    void selectedAboutApp() {
         getRouter().showAboutApplicationScreen();
     }
 
-    public void requestFavoriteItems() {
+    void requestFavoriteItems() {
         getCompositeDisposable().add(
                 mainViewInteractor.requestFavoriteItems()
                 .subscribe(
@@ -70,7 +68,7 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
         );
     }
 
-    public void changeCurrentPlace(FavoritePlace favoritePlace) {
+    void changeCurrentPlace(FavoritePlace favoritePlace) {
         getCompositeDisposable().add(
                 mainViewInteractor.changeCurrentPlace(favoritePlace)
                 .subscribe(
@@ -80,7 +78,7 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
         );
     }
 
-    public void removePlaceFromFavorites(FavoritePlace favoritePlace, int position) {
+    void removePlaceFromFavorites(FavoritePlace favoritePlace, int position) {
         getCompositeDisposable().add(
                 mainViewInteractor.removeItemFromDatabase(favoritePlace)
                 .subscribe(
@@ -91,7 +89,9 @@ public class MainPresenter extends BaseMainPresenter<MainView> {
                             }
                         },
                         err -> {
-                            Log.d("MainPresenter", err.toString());
+                            if (getView() != null) {
+                                getView().showFavRemoveError();
+                            }
                         }
                 )
         );

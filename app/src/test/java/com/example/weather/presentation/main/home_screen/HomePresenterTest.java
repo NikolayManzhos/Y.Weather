@@ -9,6 +9,7 @@ import com.example.weather.presentation.main.common.ViewModelMapper;
 import com.example.weather.presentation.main.home_screen.view_model.HomeViewModel;
 import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
 import com.example.weather.utils.GlobalConstants;
+import com.example.weather.utils.rx.MainScheduler;
 import com.example.weather.utils.rx.RxBus;
 
 import org.junit.Before;
@@ -18,6 +19,9 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.schedulers.TestScheduler;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.*;
@@ -124,5 +128,56 @@ public class HomePresenterTest {
         verify(view).setFavoriteStatus(false);
         verify(view, never()).setFavoriteStatus(true);
         verify(rxBus, never()).publish(anyString(), any());
+    }
+
+    @Test
+    public void removeCurrentPlaceFromFavoritesSuccess() {
+        when(interactor.removeFromFavorites()).thenReturn(Completable.complete());
+
+        presenter.removeCurrentPlaceFromFavorites();
+
+        verify(view).setFavoriteStatus(false);
+        verify(view, never()).showRemoveError();
+    }
+
+    @Test
+    public void removeCurrentPlaceFromFavoritesFailure() {
+        Throwable error = new Throwable();
+        when(interactor.removeFromFavorites()).thenReturn(Completable.error(error));
+
+        presenter.removeCurrentPlaceFromFavorites();
+
+        verify(view).showRemoveError();
+        verify(view, never()).setFavoriteStatus(false);
+    }
+
+    @Test
+    public void checkCurrentFavoriteStatusSuccess() {
+        when(interactor.checkCurrentPlaceInFavorites()).thenReturn(Single.just(true));
+
+        presenter.checkCurrentPlaceFavoriteStatus();
+
+        verify(view).setFavoriteStatus(true);
+    }
+
+    @Test
+    public void checkCurrentFavoriteStatusFailure() {
+        when(interactor.checkCurrentPlaceInFavorites()).thenReturn(Single.error(new Throwable()));
+
+        presenter.checkCurrentPlaceFavoriteStatus();
+
+        verify(view, never()).setFavoriteStatus(anyBoolean());
+    }
+
+    @Test
+    public void onEventDispatch() {
+        rxBus = new RxBus(Schedulers::trampoline);
+        presenter = new HomePresenter(interactor,viewModelMapper, rxBus);
+        when(interactor.checkCurrentPlaceInFavorites()).thenReturn(Single.just(true));
+
+        presenter.onAttach();
+        rxBus.publish(GlobalConstants.EVENT_FAVORITES_CHANGED, true);
+
+        verify(interactor).checkCurrentPlaceInFavorites();
     }
 }

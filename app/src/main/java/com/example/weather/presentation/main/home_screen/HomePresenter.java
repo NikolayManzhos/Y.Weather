@@ -35,9 +35,7 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
     public void onAttach() {
         rxBus.subscribe(GlobalConstants.EVENT_FAVORITES_CHANGED,
                 this,
-                object -> {
-                    checkCurrentPlaceFavoriteStatus();
-                });
+                message -> checkCurrentPlaceFavoriteStatus());
     }
 
     @Override
@@ -93,7 +91,9 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                             if (getView() != null) getView().setFavoriteStatus(false);
                             rxBus.publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
                         },
-                        err -> {}
+                        err -> {
+                            if (getView() != null) getView().showRemoveError();
+                        }
                 )
         );
     }
@@ -105,9 +105,7 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
                         status -> {
                             if (getView() != null) getView().setFavoriteStatus(status);
                         },
-                        err -> {
-                            Log.d("HomePresenter", err.toString());
-                        }
+                        err -> {}
                 )
         );
     }
