@@ -24,7 +24,7 @@
         <item>@string/fahrenheit</item>
     </string-array>
 
-    <string-array name="units_temperature_values">
+    <string-array name="units_temperature_values" translatable="false">
         <item>C</item>
         <item>F</item>
     </string-array>
@@ -36,7 +36,7 @@
         <item>@string/knots</item>
     </string-array>
 
-    <string-array name="units_wind_speed_values">
+    <string-array name="units_wind_speed_values" translatable="false">
         <item>meters</item>
         <item>kilometers</item>
         <item>miles</item>
@@ -48,7 +48,7 @@
         <item>@string/mbar</item>
     </string-array>
 
-    <string-array name="units_pressure_values">
+    <string-array name="units_pressure_values" translatable="false">
         <item>hpa</item>
         <item>mbar</item>
     </string-array>
