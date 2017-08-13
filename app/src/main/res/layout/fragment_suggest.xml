@@ -46,7 +46,7 @@
     
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/suggestRecyclerView"
             android:layout_width="match_parent"
@@ -59,6 +59,12 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
     </FrameLayout>
+
+    <ImageView
+        android:src="@drawable/orig"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom|center_horizontal"/>
 
     <ProgressBar
         android:id="@+id/detailsProgressBar"
