@@ -12,10 +12,19 @@
             android:id="@+id/suggestEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:layout_gravity="center"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
             android:hint="@string/suggest_edit_text_hint"
             android:singleLine="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryText"
+            android:layout_gravity="bottom"/>
 
         <ImageView
             android:layout_width="wrap_content"

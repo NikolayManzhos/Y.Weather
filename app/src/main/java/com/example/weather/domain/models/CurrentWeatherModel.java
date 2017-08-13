@@ -1,30 +1,28 @@
 package com.example.weather.domain.models;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class CurrentWeatherModel extends RealmObject {
 
     private String condition;
-    @PrimaryKey
     private int date;
     private int iconId;
-    private int temperature;
-    private int temperatureNight;
-    private int windSpeed;
+    private double temperature;
+    private double temperatureNight;
+    private double windSpeed;
     private int humidity;
-    private int pressure;
+    private double pressure;
 
     public CurrentWeatherModel() {}
 
     public CurrentWeatherModel(String condition,
                                int date,
                                int iconId,
-                               int temperature,
-                               int temperatureNight,
-                               int windSpeed,
+                               double temperature,
+                               double temperatureNight,
+                               double windSpeed,
                                int humidity,
-                               int pressure) {
+                               double pressure) {
         this.condition = condition;
         this.date = date;
         this.iconId = iconId;
@@ -39,7 +37,7 @@ public class CurrentWeatherModel extends RealmObject {
         return condition;
     }
 
-    public int getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
@@ -47,15 +45,15 @@ public class CurrentWeatherModel extends RealmObject {
         return humidity;
     }
 
-    public int getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public int getPressure() {
+    public double getPressure() {
         return pressure;
     }
 
-    public int getTemperatureNight() {
+    public double getTemperatureNight() {
         return temperatureNight;
     }
 

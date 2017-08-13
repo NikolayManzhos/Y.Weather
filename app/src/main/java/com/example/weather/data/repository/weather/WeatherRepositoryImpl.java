@@ -5,8 +5,10 @@ import com.example.weather.data.local.PreferencesManager;
 import com.example.weather.data.local.RealmHelper;
 import com.example.weather.data.network.WeatherApi;
 import com.example.weather.domain.ModelMapper;
+import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.domain.models.ForecastModel;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class WeatherRepositoryImpl implements WeatherRepository {
@@ -28,18 +30,39 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 
     @Override
     public Single<ForecastModel> getWeather(boolean force) {
-        float latitude = preferencesManager.getCurrentLatitude();
-        float longitude = preferencesManager.getCurrentLongitude();
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
         Single<ForecastModel> networkWeather =
                 weatherApi.getCurrentWeather(latitude, longitude, BuildConfig.WEATHER_KEY)
                         .map(mapper::entityToModel)
                         .doOnSuccess(realmHelper::writeForecast);
-        Single<ForecastModel> cachedWeather =
-                Single.fromCallable(() -> realmHelper.readForecast(latitude, longitude))
+        Single<ForecastModel> cachedWeather = realmHelper.readForecast(latitude, longitude)
                         .onErrorReturnItem(new ForecastModel());
 
         return force ? networkWeather : Single.concat(cachedWeather, networkWeather)
                 .filter(forecastModel -> forecastModel.getCurrentWeatherModels() != null).firstOrError();
     }
 
+    @Override
+    public Completable writeCurrentPlaceToFavorites() {
+        String name = preferencesManager.getCurrentCityName();
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        FavoritePlace favoritePlace = new FavoritePlace(name, latitude, longitude);
+        return realmHelper.writeFavoritePlace(favoritePlace);
+    }
+
+    @Override
+    public Completable deleteCurrentPlaceFromFavorites() {
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        return realmHelper.removeFavoritePlace(latitude, longitude, true);
+    }
+
+    @Override
+    public Single<Boolean> checkIsCurrentPlaceFavorite() {
+        double latitude = preferencesManager.getCurrentLatitude();
+        double longitude = preferencesManager.getCurrentLongitude();
+        return realmHelper.checkCurrentPlaceInFavorites(latitude, longitude);
+    }
 }

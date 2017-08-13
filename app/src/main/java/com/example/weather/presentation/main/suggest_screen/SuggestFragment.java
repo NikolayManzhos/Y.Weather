@@ -3,16 +3,16 @@ package com.example.weather.presentation.main.suggest_screen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.weather.R;
-import com.example.weather.data.entities.details.DetailsResponse;
 import com.example.weather.presentation.common.BasePresenter;
 import com.example.weather.presentation.main.MainActivity;
 import com.example.weather.presentation.main.common.BaseMainFragment;
@@ -152,6 +152,11 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
     }
 
     @Override
+    public void showError() {
+        Toast.makeText(getContext().getApplicationContext(), R.string.suggest_error_message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void receivePlaceDetails() {
         if (!(getActivity() instanceof OnCityChangeListener)) {
             throw new IllegalStateException("Activity must implement OnCityChangeListener.");
@@ -181,6 +186,8 @@ public class SuggestFragment extends BaseMainFragment implements SuggestView, Su
 
     private void initRecyclerView() {
         suggestRecycler.setAdapter(adapter);
-        suggestRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        suggestRecycler.setLayoutManager(layoutManager);
+        suggestRecycler.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
     }
 }

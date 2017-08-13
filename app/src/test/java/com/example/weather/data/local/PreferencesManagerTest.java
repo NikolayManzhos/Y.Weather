@@ -44,13 +44,13 @@ public class PreferencesManagerTest {
 
     @Test
     public void checkDefaultLatitude() {
-        float DEFAULT_LATITUDE = 55.7558F;
+        double DEFAULT_LATITUDE = 55.7558;
         assertEquals(DEFAULT_LATITUDE, preferencesManager.getCurrentLatitude());
     }
 
     @Test
     public void checkDefaultLongitude() {
-        float DEFAULT_LONGITUDE = 37.6173F;
+        double DEFAULT_LONGITUDE = 37.6173;
         assertEquals(DEFAULT_LONGITUDE, preferencesManager.getCurrentLongitude());
     }
 
@@ -63,7 +63,7 @@ public class PreferencesManagerTest {
 
     @Test
     public void setActualLatitude() {
-        float ACTUAL_LATITUDE = 51.5074F;
+        double ACTUAL_LATITUDE = 51.5074;
         preferencesManager.setCurrentLatitude(ACTUAL_LATITUDE);
 
         assertEquals(ACTUAL_LATITUDE, preferencesManager.getCurrentLatitude());
@@ -71,7 +71,7 @@ public class PreferencesManagerTest {
 
     @Test
     public void setActualLongitude() {
-        float ACTUAL_LONGITUDE = 0.1278F;
+        double ACTUAL_LONGITUDE = 0.1278;
         preferencesManager.setCurrentLongitude(ACTUAL_LONGITUDE);
 
         assertEquals(ACTUAL_LONGITUDE, preferencesManager.getCurrentLongitude());
@@ -84,5 +84,37 @@ public class PreferencesManagerTest {
         preferencesManager.setFirstTimeUser(ACTUAL_FIRST_TIME_USER);
 
         assertEquals(ACTUAL_FIRST_TIME_USER, preferencesManager.getFirstTimeUser());
+    }
+
+    @Test
+    public void checkDefaultTempUnits() {
+        String DEFAULT_TEMP_UNITS = "C";
+        assertEquals(DEFAULT_TEMP_UNITS, preferencesManager.getTemperatureUnits());
+    }
+
+    @Test
+    public void checkDefaultWindSpeedUnits() {
+        String DEFAULT_WIND_SPEED_UNITS = "meters";
+        assertEquals(DEFAULT_WIND_SPEED_UNITS, preferencesManager.getWindSpeedUnits());
+    }
+
+    @Test
+    public void checkDefaultCityName() {
+        String DEFAULT_CITY_NAME = "Moscow";
+        assertEquals(DEFAULT_CITY_NAME, preferencesManager.getCurrentCityName());
+    }
+
+    @Test
+    public void setCurrentCityName() {
+        String CITY_NAME = "Sidney";
+        preferencesManager.setCurrentCityName(CITY_NAME);
+
+        assertEquals(CITY_NAME, preferencesManager.getCurrentCityName());
+    }
+
+    @Test
+    public void checkPressureDefault() {
+        String DEFAULT_PRESSURE = "hpa";
+        assertEquals(DEFAULT_PRESSURE, preferencesManager.getPressureUnits());
     }
 }

@@ -7,7 +7,9 @@ import com.example.weather.utils.rx.SchedulerProvider;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.ReplaySubject;
 
@@ -28,17 +30,43 @@ public class CurrentWeatherInteractorImpl implements CurrentWeatherInteractor {
     }
 
     @Override
-    public Observable<ForecastModel> requestWeather(boolean force) {
+    public Observable<ForecastModel> requestWeather(boolean force, boolean checkForCityChange) {
+        if (weatherDisposable != null && weatherReplaySubject.hasThrowable()) {
+            weatherDisposable.dispose();
+            weatherDisposable = null;
+        }
         if (force && weatherDisposable != null) {
             weatherDisposable.dispose();
+            weatherDisposable = null;
+        } else if (!force && checkForCityChange && weatherDisposable != null) {
+            weatherDisposable.dispose();
+            weatherDisposable = null;
         }
-        if (weatherDisposable == null || weatherDisposable.isDisposed()) {
-            weatherReplaySubject = ReplaySubject.create(1);
+        if (weatherDisposable == null) {
+            weatherReplaySubject = ReplaySubject.create();
 
             weatherDisposable = weatherRepository.getWeather(force)
                     .compose(schedulerProvider.applyIoSchedulers())
                     .subscribe(weatherReplaySubject::onNext, weatherReplaySubject::onError);
         }
         return weatherReplaySubject;
+    }
+
+    @Override
+    public Completable addToFavorites() {
+        return weatherRepository.writeCurrentPlaceToFavorites()
+                .compose(schedulerProvider.applyIoSchedulersCompletable());
+    }
+
+    @Override
+    public Completable removeFromFavorites() {
+        return weatherRepository.deleteCurrentPlaceFromFavorites()
+                .compose(schedulerProvider.applyIoSchedulersCompletable());
+    }
+
+    @Override
+    public Single<Boolean> checkCurrentPlaceInFavorites() {
+        return weatherRepository.checkIsCurrentPlaceFavorite()
+                .compose(schedulerProvider.applyIoSchedulers());
     }
 }

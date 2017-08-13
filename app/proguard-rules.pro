@@ -25,6 +25,8 @@
 #-renamesourcefileattribute SourceFile
 -ignorewarnings
 
--keep class * {
-    public private *;
-}
+-assumenosideeffects class android.util.Log { *; }
+
+#-keep class * {
+#    public private *;
+#}

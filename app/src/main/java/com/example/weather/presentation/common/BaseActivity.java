@@ -16,23 +16,13 @@ public abstract class BaseActivity extends AppCompatActivity implements HasCompo
         inject();
         getPresenter().setView(this);
         getPresenter().setRouter(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         getPresenter().onAttach();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        getPresenter().onDetach();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        getPresenter().onDetach();
         getPresenter().setRouter(null);
         getPresenter().setView(null);
     }

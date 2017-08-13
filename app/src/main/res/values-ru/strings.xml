@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Погода</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Ямблз.Погода</string>
 
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
 
+    <!--Date strings -->
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="format_full_friendly_date"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="day">%2$s</xliff:g></string>
+
+    <!--Details strings-->
+    <string name="details_humidity">Влажность</string>
+    <string name="details_wind_speed">Скорость ветра</string>
+    <string name="details_pressure">Давление</string>
+
     <!--Home strings-->
     <string name="home_toolbar_title">Обзор</string>
+    <string name="home_network_error">Ошибка сети. Попробуйте еще раз.</string>
+    <string name="home_remove_from_fav_error">Ошибка при удалении из избранного</string>
 
     <!--Suggest fragment-->
     <string name="suggest_toolbar_title">Выберите местоположение</string>
     <string name="suggest_edit_text_hint">Введите город</string>
+    <string name="suggest_error_message">Что-то пошло не так :( Пожалуйста, попробуйте еще раз.</string>
 
     <!--Settings strings -->
     <string name="settings_toolbar_title">Настройки</string>
@@ -23,6 +36,8 @@
 
     <!--About strings-->
     <string name="about_toolbar_title">О приложении</string>
+    <string name="about_app_name">Ямблз.Погода</string>
+    <string name="about_version">Версия 1.0</string>
 
     <!--Drawer strings-->
     <string name="drawer_home">Погода</string>
@@ -38,7 +53,7 @@
 
     <!--Units pressure description-->
     <string name="hPa">гПа</string>
-    <string name="bar">Бар</string>
+    <string name="mbar">мБар</string>
 
     <string name="minutes_15">15 минут</string>
     <string name="minutes_30">30 минут</string>
@@ -47,5 +62,4 @@
     <string name="hour_6">6 часов</string>
     <string name="hour_12">12 часов</string>
     <string name="hour_24">24 часа</string>
-    <string name="error">Ошибка</string>
 </resources>

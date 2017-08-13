@@ -35,7 +35,7 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
                         err -> {
                             if (getView() != null) {
                                 getView().hideLoad();
-                                //TODO Handle error
+                                getView().showError();
                             }
                         }
                 )
@@ -50,7 +50,7 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
         getCompositeDisposable().add(
                 interactor.requestPlaceDetails(placeId)
                 .subscribe(
-                        detailsResponse -> {
+                        () -> {
                             if (getView() != null) {
                                 getView().hideDetailsLoad();
                                 getView().showContainerData();
@@ -61,7 +61,7 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
                             if (getView() != null) {
                                 getView().hideDetailsLoad();
                                 getView().showContainerData();
-                                //TODO Handle error
+                                getView().showError();
                             }
                         }
                 )

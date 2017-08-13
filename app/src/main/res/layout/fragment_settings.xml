@@ -1,70 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.yarolegovich.mp.MaterialPreferenceCategory
-        android:id="@+id/backgroundCategory"
+    android:scrollbars="none">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-        <com.yarolegovich.mp.MaterialSwitchPreference
-            android:id="@+id/updateSwitchPreference"
+        android:layout_height="wrap_content">
+        <com.yarolegovich.mp.MaterialPreferenceCategory
+            android:id="@+id/backgroundCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_key="b_update"
-            app:mp_default_value="true"
-            app:mp_title="@string/settings_update_switch"/>
+            android:layout_marginTop="10dp">
+            <com.yarolegovich.mp.MaterialSwitchPreference
+                android:id="@+id/updateSwitchPreference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="b_update"
+                app:mp_default_value="true"
+                app:mp_title="@string/settings_update_switch"/>
 
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:id="@+id/updateIntervalPreference"
+            <com.yarolegovich.mp.MaterialChoicePreference
+                android:id="@+id/updateIntervalPreference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="b_interval"
+                app:mp_default_value="3600000"
+                app:mp_title="@string/settings_update_interval"
+                app:mp_entry_descriptions="@array/intervals"
+                app:mp_entry_values="@array/intervals_values"
+                app:mp_show_value="onRight"/>
+        </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+        <com.yarolegovich.mp.MaterialPreferenceCategory
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_key="b_interval"
-            app:mp_default_value="3600000"
-            app:mp_title="@string/settings_update_interval"
-            app:mp_entry_descriptions="@array/intervals"
-            app:mp_entry_values="@array/intervals_values"
-            app:mp_show_value="onRight"/>
-    </com.yarolegovich.mp.MaterialPreferenceCategory>
+            app:mpc_title="@string/settings_units">
+            <com.yarolegovich.mp.MaterialChoicePreference
+                android:id="@+id/unitsTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="b_temperature"
+                app:mp_title="@string/settings_units_temperature_title"
+                app:mp_default_value="C"
+                app:mp_entry_descriptions="@array/units_temperature_description"
+                app:mp_entry_values="@array/units_temperature_values"
+                app:mp_show_value="onRight"/>
 
-    <com.yarolegovich.mp.MaterialPreferenceCategory
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mpc_title="@string/settings_units">
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:id="@+id/unitsTemperature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_key="b_temperature"
-            app:mp_title="@string/settings_units_temperature_title"
-            app:mp_default_value="C"
-            app:mp_entry_descriptions="@array/units_temperature_description"
-            app:mp_entry_values="@array/units_temperature_values"
-            app:mp_show_value="onRight"/>
+            <com.yarolegovich.mp.MaterialChoicePreference
+                android:id="@+id/unitsWindSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="b_wind_speed"
+                app:mp_title="@string/settings_units_wind_speed_title"
+                app:mp_default_value="meters"
+                app:mp_entry_descriptions="@array/units_wind_speed_description"
+                app:mp_entry_values="@array/units_wind_speed_values"
+                app:mp_show_value="onRight"/>
 
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:id="@+id/unitsWindSpeed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_key="b_wind_speed"
-            app:mp_title="@string/settings_units_wind_speed_title"
-            app:mp_default_value="meters"
-            app:mp_entry_descriptions="@array/units_wind_speed_description"
-            app:mp_entry_values="@array/units_wind_speed_values"
-            app:mp_show_value="onRight"/>
-
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:id="@+id/unitsPressure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_key="b_pressure"
-            app:mp_title="@string/settings_units_pressure_title"
-            app:mp_default_value="hpa"
-            app:mp_entry_descriptions="@array/units_pressure_description"
-            app:mp_entry_values="@array/units_pressure_values"
-            app:mp_show_value="onRight"/>
-    </com.yarolegovich.mp.MaterialPreferenceCategory>
-
-</LinearLayout>
+            <com.yarolegovich.mp.MaterialChoicePreference
+                android:id="@+id/unitsPressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="b_pressure"
+                app:mp_title="@string/settings_units_pressure_title"
+                app:mp_default_value="hpa"
+                app:mp_entry_descriptions="@array/units_pressure_description"
+                app:mp_entry_values="@array/units_pressure_values"
+                app:mp_show_value="onRight"/>
+        </com.yarolegovich.mp.MaterialPreferenceCategory>
+    </LinearLayout>
+</ScrollView>

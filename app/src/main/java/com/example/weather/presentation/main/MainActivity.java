@@ -3,36 +3,45 @@ package com.example.weather.presentation.main;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
 import com.example.weather.R;
 import com.example.weather.WeatherApp;
 import com.example.weather.data.local.PreferencesManager;
+import com.example.weather.domain.models.FavoritePlace;
 import com.example.weather.presentation.android_job.WeatherJob;
 import com.example.weather.presentation.common.BaseActivity;
 import com.example.weather.presentation.di.component.ActivityComponent;
 import com.example.weather.presentation.di.component.DaggerActivityComponent;
 import com.example.weather.presentation.di.module.ActivityModule;
 import com.example.weather.presentation.main.aboutapp_screen.AboutAppFragment;
+import com.example.weather.presentation.main.detail_screen.DetailFragment;
 import com.example.weather.presentation.main.home_screen.HomeFragment;
+import com.example.weather.presentation.main.home_screen.view_model.WeatherViewModel;
 import com.example.weather.presentation.main.settings_screen.SettingsFragment;
 import com.example.weather.presentation.main.suggest_screen.SuggestFragment;
 import com.example.weather.utils.OnCityChangeListener;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
-        implements MainRouter, MainView, NavigationView.OnNavigationItemSelectedListener, OnCityChangeListener, FragmentManager.OnBackStackChangedListener {
+        implements MainRouter, MainView, NavigationView.OnNavigationItemSelectedListener,
+        OnCityChangeListener, FragmentManager.OnBackStackChangedListener, FavoritesAdapter.OnFavoriteClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -47,19 +56,25 @@ public class MainActivity extends BaseActivity
     MainPresenter mainPresenter;
 
     @Inject
+    FavoritesAdapter adapter;
+
+    @Inject
     PreferencesManager preferencesManager;
 
     private ActivityComponent activityComponent;
 
     private DrawerArrowDrawable homeDrawable;
+    private RecyclerView favoritesRecyclerView;
     private boolean isHomeAsUp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        initFavoriteRecyclerView();
 
         homeDrawable = new DrawerArrowDrawable(toolbar.getContext());
         toolbar.setNavigationIcon(homeDrawable);
@@ -77,14 +92,15 @@ public class MainActivity extends BaseActivity
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         navigationView.setNavigationItemSelectedListener(this);
+        favoritesRecyclerView = navigationView.findViewById(R.id.favoritesRecyclerView);
 
         if (savedInstanceState == null) {
             checkFirstTimeUser();
             getPresenter().selectedHome();
-            navigationView.setCheckedItem(R.id.nav_home);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             setHomeAsUp(true);
         }
+        mainPresenter.requestFavoriteItems();
     }
 
     @Override
@@ -116,9 +132,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.nav_home:
-                getPresenter().selectedHome();
-                break;
+//            case R.id.nav_home:
+//                getPresenter().selectedHome();
+//                break;
             case R.id.nav_change_city:
                 getPresenter().selectSuggestScreen();
                 break;
@@ -133,7 +149,6 @@ public class MainActivity extends BaseActivity
                 break;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -145,7 +160,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showSuggestScreen() {
-        replaceFragment(R.id.fl_main_frame, SuggestFragment.newInstance(), false);
+        replaceFragment(R.id.fl_main_frame, SuggestFragment.newInstance(), true);
     }
 
     @Override
@@ -159,7 +174,12 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void showError(@StringRes int message) {}
+    public void showDetailsScreen(WeatherViewModel weatherViewModel) {
+        replaceFragment(R.id.fl_main_frame, DetailFragment.newInstance(weatherViewModel), true);
+    }
+
+    @Override
+    public void showError() {}
 
     @Override
     public void showLoad() {}
@@ -168,9 +188,35 @@ public class MainActivity extends BaseActivity
     public void hideLoad() {}
 
     @Override
+    public void displayFavoriteItems(List<FavoritePlace> favoritePlaces) {
+        Log.d("MainView", String.valueOf(favoritePlaces.size()));
+        adapter.setData(favoritePlaces);
+    }
+
+    @Override
     public void cityChanged() {
-        navigationView.setCheckedItem(R.id.nav_home);
-        getPresenter().selectedHome();
+        onBackPressed();
+    }
+
+    @Override
+    public void showFavRemoveError() {
+
+    }
+
+    @Override
+    public void onFavoriteClick(FavoritePlace favoritePlace) {
+        drawer.closeDrawer(GravityCompat.START);
+        mainPresenter.changeCurrentPlace(favoritePlace);
+    }
+
+    @Override
+    public void onFavoriteRemoveClick(int position, FavoritePlace favoritePlace) {
+        mainPresenter.removePlaceFromFavorites(favoritePlace, position);
+    }
+
+    @Override
+    public void confirmFavoriteRemoved(int position) {
+        adapter.removeItem(position);
     }
 
     @Override
@@ -209,5 +255,12 @@ public class MainActivity extends BaseActivity
             anim.setDuration(400);
             anim.start();
         }
+    }
+
+    private void initFavoriteRecyclerView() {
+        favoritesRecyclerView = navigationView.getHeaderView(0).findViewById(R.id.favoritesRecyclerView);
+        favoritesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        favoritesRecyclerView.setAdapter(adapter);
+        adapter.setOnFavoriteClickListener(this);
     }
 }
