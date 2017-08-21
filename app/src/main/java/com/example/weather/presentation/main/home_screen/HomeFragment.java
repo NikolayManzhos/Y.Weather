@@ -65,17 +65,7 @@ public class HomeFragment extends BaseMainFragment
         super.onViewCreated(view, savedInstanceState);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        if (view.findViewById(R.id.details_container) != null) {
-            twoPane = true;
-
-//            if (savedInstanceState == null) {
-//                getChildFragmentManager().beginTransaction()
-//                        .replace(R.id.details_container, DetailFragment.newInstance())
-//                        .commit();
-//            }
-        } else {
-            twoPane = false;
-        }
+        twoPane = view.findViewById(R.id.details_container) != null;
         initRecyclerView();
         if (savedInstanceState == null && !backFromDetails) {
             homePresenter.getCurrentWeather(false, true);
