@@ -14,14 +14,13 @@ import javax.inject.Inject;
 
 @PerFragment
 public class HomePresenter extends BaseMainPresenter<HomeView> {
-    public static final String TAG = "tag_home_presenter";
 
     private CurrentWeatherInteractor currentWeatherInteractor;
     private ViewModelMapper viewMapper;
     private RxBus rxBus;
 
     @Inject
-    public HomePresenter(CurrentWeatherInteractor currentWeatherInteractor,
+    HomePresenter(CurrentWeatherInteractor currentWeatherInteractor,
                          ViewModelMapper viewMapper,
                          RxBus rxBus) {
         this.currentWeatherInteractor = currentWeatherInteractor;
@@ -41,68 +40,56 @@ public class HomePresenter extends BaseMainPresenter<HomeView> {
         rxBus.unsubscribe(this);
     }
 
-    public void getCurrentWeather(boolean force, boolean checkForCityChange) {
-        if (getView() != null) {
-            getView().showLoad();
-        }
+    void getCurrentWeather(boolean force, boolean checkForCityChange) {
+        getView().showLoad();
         getCompositeDisposable().add(
                 currentWeatherInteractor.requestWeather(force, checkForCityChange).subscribe(
                         forecastModel -> {
-                            if (getView() != null) {
-                                getView().showWeather(viewMapper.forecastModelToViewModel(forecastModel));
-                                getView().hideLoad();
-                            }
+                            getView().showWeather(viewMapper.forecastModelToViewModel(forecastModel));
+                            getView().hideLoad();
                         }, throwable -> {
-                            if (getView() != null) {
-                                getView().showError();
-                                getView().hideLoad();
-                            }
+                            getView().showError();
+                            getView().hideLoad();
                         }
                 )
         );
     }
 
-    public void showDetailsScreen(WeatherViewModel weatherViewModel) {
+    void showDetailsScreen(WeatherViewModel weatherViewModel) {
         getRouter().showDetailsScreen(weatherViewModel);
     }
 
-    public void addCurrentPlaceToFavorites() {
+    void addCurrentPlaceToFavorites() {
         getCompositeDisposable().add(
                 currentWeatherInteractor.addToFavorites()
                 .subscribe(
                         () -> {
-                            if (getView() != null) getView().setFavoriteStatus(true);
-                                rxBus.publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
+                            getView().setFavoriteStatus(true);
+                            rxBus.publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
                         },
-                        err -> {
-                            if (getView() != null) getView().setFavoriteStatus(false);
-                        }
+                        err -> getView().setFavoriteStatus(false)
                 )
         );
     }
 
-    public void removeCurrentPlaceFromFavorites() {
+    void removeCurrentPlaceFromFavorites() {
         getCompositeDisposable().add(
                 currentWeatherInteractor.removeFromFavorites()
                 .subscribe(
                         () -> {
-                            if (getView() != null) getView().setFavoriteStatus(false);
+                            getView().setFavoriteStatus(false);
                             rxBus.publish(GlobalConstants.EVENT_FAVORITE_ADDED_REMOVED, true);
                         },
-                        err -> {
-                            if (getView() != null) getView().showRemoveError();
-                        }
+                        err -> getView().showRemoveError()
                 )
         );
     }
 
-    public void checkCurrentPlaceFavoriteStatus() {
+    void checkCurrentPlaceFavoriteStatus() {
         getCompositeDisposable().add(
                 currentWeatherInteractor.checkCurrentPlaceInFavorites()
                 .subscribe(
-                        status -> {
-                            if (getView() != null) getView().setFavoriteStatus(status);
-                        },
+                        status -> getView().setFavoriteStatus(status),
                         err -> {}
                 )
         );
