@@ -17,52 +17,40 @@ public class SuggestPresenter extends BaseMainPresenter<SuggestView> {
         this.interactor = interactor;
     }
 
-    public void getSuggestions(String query) {
-        if (getView() != null) {
-            getView().showLoad();
-            getView().hideRecyclerData();
-        }
+    void getSuggestions(String query) {
+        getView().showLoad();
+        getView().hideRecyclerData();
         getCompositeDisposable().add(
                 interactor.requestSuggestItems(query)
                 .subscribe(
                         suggestResponse -> {
-                            if (getView() != null) {
-                                getView().hideLoad();
-                                getView().showRecyclerData();
-                                getView().showSuggestionList(SuggestViewModel.create(suggestResponse));
-                            }
+                            getView().hideLoad();
+                            getView().showRecyclerData();
+                            getView().showSuggestionList(SuggestViewModel.create(suggestResponse));
                         },
                         err -> {
-                            if (getView() != null) {
-                                getView().hideLoad();
-                                getView().showError();
-                            }
+                            getView().hideLoad();
+                            getView().showError();
                         }
                 )
         );
     }
 
     public void getPlaceDetails(String placeId) {
-        if (getView() != null) {
-            getView().showDetailsLoad();
-            getView().hideContainerData();
-        }
+        getView().showDetailsLoad();
+        getView().hideContainerData();
         getCompositeDisposable().add(
                 interactor.requestPlaceDetails(placeId)
                 .subscribe(
                         () -> {
-                            if (getView() != null) {
-                                getView().hideDetailsLoad();
-                                getView().showContainerData();
-                                getView().receivePlaceDetails();
-                            }
+                            getView().hideDetailsLoad();
+                            getView().showContainerData();
+                            getView().receivePlaceDetails();
                         },
                         err -> {
-                            if (getView() != null) {
-                                getView().hideDetailsLoad();
-                                getView().showContainerData();
-                                getView().showError();
-                            }
+                            getView().hideDetailsLoad();
+                            getView().showContainerData();
+                            getView().showError();
                         }
                 )
         );

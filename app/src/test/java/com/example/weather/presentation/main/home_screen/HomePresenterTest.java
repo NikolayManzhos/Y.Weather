@@ -13,6 +13,7 @@ import com.example.weather.utils.rx.MainScheduler;
 import com.example.weather.utils.rx.RxBus;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -172,10 +173,11 @@ public class HomePresenterTest {
     @Test
     public void onEventDispatch() {
         rxBus = new RxBus(Schedulers::trampoline);
-        presenter = new HomePresenter(interactor,viewModelMapper, rxBus);
+        presenter = new HomePresenter(interactor, viewModelMapper, rxBus);
         when(interactor.checkCurrentPlaceInFavorites()).thenReturn(Single.just(true));
 
         presenter.onAttach();
+        presenter.setView(view);
         rxBus.publish(GlobalConstants.EVENT_FAVORITES_CHANGED, true);
 
         verify(interactor).checkCurrentPlaceInFavorites();

@@ -132,9 +132,6 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         switch (id) {
-//            case R.id.nav_home:
-//                getPresenter().selectedHome();
-//                break;
             case R.id.nav_change_city:
                 getPresenter().selectSuggestScreen();
                 break;
