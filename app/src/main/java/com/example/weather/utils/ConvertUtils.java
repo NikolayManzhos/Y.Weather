@@ -8,6 +8,7 @@ import com.example.weather.R;
 import com.example.weather.data.local.PreferencesManager;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -154,9 +155,12 @@ public class ConvertUtils {
         } else {
             Time time = new Time();
             time.setToNow();
-            @SuppressLint("SimpleDateFormat")
-            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
-            return dayFormat.format(dateInMillis);
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+            String baseDate = dayFormat.format(dateInMillis);
+            if (Locale.getDefault().getDisplayLanguage().equals("русский")) {
+                return baseDate.substring(0, 1).toUpperCase() + baseDate.substring(1);
+            }
+            return baseDate;
         }
     }
 
