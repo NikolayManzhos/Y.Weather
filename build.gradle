@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta7'
+        classpath 'com.android.tools.build:gradle:3.0.0-rc1'
         classpath "io.realm:realm-gradle-plugin:3.5.0"
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     }
@@ -24,7 +24,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    support = '26.0.1'
+    support = '26.1.0'
     constraint = '1.0.2'
     rxjava = '2.1.1'
     rxbindings = '2.0.0'
@@ -32,7 +32,7 @@ ext {
     retrofit = '2.3.0'
     okhttp = '3.8.1'
     dagger = '2.11'
-    butterknife = '8.7.0'
+    butterknife = '8.8.1'
     androidjob = '1.1.11'
     picasso = '2.5.2'
     gson = '2.8.1'
